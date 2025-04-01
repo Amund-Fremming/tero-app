@@ -1,6 +1,6 @@
 import { Text, TouchableOpacity } from "react-native";
 import { styles } from "./bigButtonStyles";
-import { Colors } from "../../assets/Colors";
+import { Colors } from "../../assets/constants/Colors";
 
 interface IBigButton {
   text: string;

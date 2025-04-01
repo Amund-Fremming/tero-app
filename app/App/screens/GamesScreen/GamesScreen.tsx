@@ -1,9 +1,9 @@
 import { View, Text, Button } from "react-native";
 
-export const HubScreen = ({ navigation }: any) => {
+export const GamesScreen = ({ navigation }: any) => {
   return (
     <View>
-      <Text>HubScreen</Text>
+      <Text>GamesScreen</Text>
       <Button
         title="Go to SpinGame"
         onPress={() => navigation.navigate("SpinGame")}
@@ -12,4 +12,4 @@ export const HubScreen = ({ navigation }: any) => {
   );
 };
 
-export default HubScreen;
+export default GamesScreen;

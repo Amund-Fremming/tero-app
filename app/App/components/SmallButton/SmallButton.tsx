@@ -1,7 +1,7 @@
 import { Text, TouchableOpacity } from "react-native";
 
 import { styles } from "./smallButtonStyles";
-import { Colors } from "../../assets/Colors";
+import { Colors } from "../../assets/constants/Colors";
 
 interface ISmallButton {
   text: string;
