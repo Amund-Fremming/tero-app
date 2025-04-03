@@ -15,7 +15,7 @@ export const AdminScreen = () => {
         label="Hjem"
         destination={Screen.Home}
         primary={Colors.Black}
-        secondary={Colors.Red}
+        secondary={Colors.White}
       />
     </View>
   );

@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     height: "100%",
-    backgroundColor: Colors.Red,
+    backgroundColor: Colors.White,
   },
 
   leadContainer: {
