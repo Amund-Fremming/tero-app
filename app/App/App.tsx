@@ -9,6 +9,8 @@ import HubScreen from "./screens/HubScreen/HubScreen";
 import JoinScreen from "./screens/JoinScreen/JoinScreen";
 import GamesScreen from "./screens/GamesScreen/GamesScreen";
 import Screen from "./assets/constants/Screen";
+import CreateScreen from "./screens/CreateScreen/CreateScreen";
+import ChooseScreen from "./screens/ChooseScreen/ChooseScreen";
 
 const Stack = createStackNavigator();
 
@@ -19,6 +21,7 @@ export const App = () => {
       screenOptions={{
         ...TransitionPresets.FadeFromBottomAndroid,
         headerShown: false,
+        headerStatusBarHeight: 0,
       }}
     >
       <Stack.Screen name={Screen.Home} component={HomeScreen} />
@@ -27,6 +30,8 @@ export const App = () => {
       <Stack.Screen name={Screen.Games} component={GamesScreen} />
       <Stack.Screen name={Screen.SpinGame} component={SpinGame} />
       <Stack.Screen name={Screen.AskGame} component={AskGame} />
+      <Stack.Screen name={Screen.Create} component={CreateScreen} />
+      <Stack.Screen name={Screen.Choose} component={ChooseScreen} />
     </Stack.Navigator>
   );
 };

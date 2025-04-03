@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     height: "100%",
-    backgroundColor: Colors.Beige,
+    backgroundColor: Colors.Purple,
   },
 
   leadContainer: {
@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
   },
 
   header: {
-    color: Colors.Purple,
+    color: Colors.White,
     fontSize: moderateScale(40),
     fontWeight: 900,
   },

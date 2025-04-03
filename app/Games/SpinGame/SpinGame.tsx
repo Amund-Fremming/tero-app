@@ -1,11 +1,25 @@
+import {
+  createStackNavigator,
+  TransitionPresets,
+} from "@react-navigation/stack";
 import React from "react";
-import { View, Text } from "react-native";
+import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
+import { SpinScreen } from "./assets/SpinScreen";
 
-export const SpinGame = () => {
+var Stack = createStackNavigator();
+
+export const SpinGame = ({ navigation }: any) => {
   return (
-    <View>
-      <Text>SpinGame</Text>
-    </View>
+    <Stack.Navigator
+      initialRouteName={SpinScreen.Lobby}
+      screenOptions={{
+        ...TransitionPresets.FadeFromBottomAndroid,
+        headerShown: false,
+        headerStatusBarHeight: 0,
+      }}
+    >
+      <Stack.Screen name={SpinScreen.Lobby} component={LobbyScreen} />
+    </Stack.Navigator>
   );
 };
 

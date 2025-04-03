@@ -12,27 +12,55 @@ export const HomeScreen = ({ navigation }: any) => {
       <View style={styles.buttonContainer}>
         <Pressable
           style={{ ...styles.buttonBase, ...styles.topLeft }}
-          onPress={() => navigation.navigate(Screen.Games)}
+          onPress={() => navigation.navigate(Screen.Create)}
         >
-          <Text style={styles.buttonText}>Lag spill</Text>
-        </Pressable>
-        <Pressable
-          style={{ ...styles.buttonBase, ...styles.topRight }}
-          onPress={() => navigation.navigate(Screen.Games)}
-        >
-          <Text style={styles.buttonText}>Velg spill</Text>
+          <View style={styles.buttonTextWrapper}>
+            <Text style={{ ...styles.textBase, ...styles.textTopLeft }}>
+              Lag
+            </Text>
+            <Text style={{ ...styles.textBase, ...styles.textTopLeft }}>
+              spill
+            </Text>
+          </View>
         </Pressable>
         <Pressable
           style={{ ...styles.buttonBase, ...styles.bottomLeft }}
           onPress={() => navigation.navigate(Screen.Hub)}
         >
-          <Text style={styles.buttonText}>Til hub</Text>
+          <View style={styles.buttonTextWrapper}>
+            <Text style={{ ...styles.textBase, ...styles.textBottomLeft }}>
+              Til
+            </Text>
+            <Text style={{ ...styles.textBase, ...styles.textBottomLeft }}>
+              hub
+            </Text>
+          </View>
+        </Pressable>
+        <Pressable
+          style={{ ...styles.buttonBase, ...styles.topRight }}
+          onPress={() => navigation.navigate(Screen.Choose)}
+        >
+          <View style={styles.buttonTextWrapper}>
+            <Text style={{ ...styles.textBase, ...styles.textTopRight }}>
+              Velg
+            </Text>
+            <Text style={{ ...styles.textBase, ...styles.textTopRight }}>
+              spill
+            </Text>
+          </View>
         </Pressable>
         <Pressable
           style={{ ...styles.buttonBase, ...styles.bottomRight }}
           onPress={() => navigation.navigate(Screen.Join)}
         >
-          <Text style={styles.buttonText}>Bli med</Text>
+          <View style={styles.buttonTextWrapper}>
+            <Text style={{ ...styles.textBase, ...styles.textBottomRight }}>
+              Bli
+            </Text>
+            <Text style={{ ...styles.textBase, ...styles.textBottomRight }}>
+              med
+            </Text>
+          </View>
         </Pressable>
       </View>
     </View>

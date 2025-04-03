@@ -1,13 +1,27 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { TransitionPresets } from "@react-navigation/stack";
 
-export const AskGame = ({ navigation }: any) => {
+import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
+import FinishedScreen from "./screens/FinishedScreen/FinishedScreen";
+import { AskScreen } from "./assets/AskScreen";
+
+const Stack = createStackNavigator();
+
+export const App = () => {
   return (
-    <View>
-      <Text>AskGame</Text>
-      <Button title="Home" onPress={() => navigation.navigate("Home")} />
-    </View>
+    <Stack.Navigator
+      initialRouteName={AskScreen.Lobby}
+      screenOptions={{
+        ...TransitionPresets.FadeFromBottomAndroid,
+        headerShown: false,
+        headerStatusBarHeight: 0,
+      }}
+    >
+      <Stack.Screen name={AskScreen.Lobby} component={LobbyScreen} />
+      <Stack.Screen name={AskScreen.Finished} component={FinishedScreen} />
+    </Stack.Navigator>
   );
 };
 
-export default AskGame;
+export default App;
