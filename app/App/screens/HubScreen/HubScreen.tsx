@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
 import styles from "./hubScreenStyles";
 import { AbsoluteNavButton } from "../../components/AbsoluteNavButton/AbsoluteNavButton";
 import Screen from "../../assets/constants/Screen";
@@ -10,6 +10,11 @@ export const HubScreen = ({ navigation }: any) => {
       <View style={styles.leadContainer}>
         <Text style={styles.header}>Hub</Text>
       </View>
+
+      <Button
+        title="Admin dashboard"
+        onPress={() => navigation.navigate(Screen.Admin)}
+      />
 
       <AbsoluteNavButton
         label="Back"

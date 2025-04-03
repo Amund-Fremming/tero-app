@@ -11,6 +11,7 @@ import GamesScreen from "./screens/GamesScreen/GamesScreen";
 import Screen from "./assets/constants/Screen";
 import CreateScreen from "./screens/CreateScreen/CreateScreen";
 import ChooseScreen from "./screens/ChooseScreen/ChooseScreen";
+import AdminScreen from "./screens/AdminScreen/AdminScreen";
 
 const Stack = createStackNavigator();
 
@@ -32,6 +33,7 @@ export const App = () => {
       <Stack.Screen name={Screen.AskGame} component={AskGame} />
       <Stack.Screen name={Screen.Create} component={CreateScreen} />
       <Stack.Screen name={Screen.Choose} component={ChooseScreen} />
+      <Stack.Screen name={Screen.Admin} component={AdminScreen} />
     </Stack.Navigator>
   );
 };

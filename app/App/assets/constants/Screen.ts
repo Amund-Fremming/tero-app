@@ -7,6 +7,7 @@ export enum Screen {
   AskGame = "AskGame",
   Create = "Create",
   Choose = "Choose",
+  Admin = "Admin",
 }
 
 export default Screen;
