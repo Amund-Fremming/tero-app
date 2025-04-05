@@ -4,22 +4,25 @@ import {
 } from "@react-navigation/stack";
 import React from "react";
 import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
-import { SpinScreen } from "./assets/SpinScreen";
+import { SpinScreen } from "./constants/SpinScreen";
+import GameStateProvider from "./context/GameStateProvider";
 
 var Stack = createStackNavigator();
 
-export const SpinGame = ({ navigation }: any) => {
+export const SpinGame = () => {
   return (
-    <Stack.Navigator
-      initialRouteName={SpinScreen.Lobby}
-      screenOptions={{
-        ...TransitionPresets.FadeFromBottomAndroid,
-        headerShown: false,
-        headerStatusBarHeight: 0,
-      }}
-    >
-      <Stack.Screen name={SpinScreen.Lobby} component={LobbyScreen} />
-    </Stack.Navigator>
+    <GameStateProvider>
+      <Stack.Navigator
+        initialRouteName={SpinScreen.Lobby}
+        screenOptions={{
+          ...TransitionPresets.FadeFromBottomAndroid,
+          headerShown: false,
+          headerStatusBarHeight: 0,
+        }}
+      >
+        <Stack.Screen name={SpinScreen.Lobby} component={LobbyScreen} />
+      </Stack.Navigator>
+    </GameStateProvider>
   );
 };
 

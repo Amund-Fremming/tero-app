@@ -14,8 +14,8 @@ export const CreateScreen = () => {
       <AbsoluteNavButton
         label="Hjem"
         destination={Screen.Home}
-        primary={Colors.Red}
-        secondary={Colors.Black}
+        primary={Colors.White}
+        secondary={Colors.Red}
       />
     </View>
   );

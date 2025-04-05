@@ -4,7 +4,7 @@ import AbsoluteNavButton from "../../components/AbsoluteNavButton/AbsoluteNavBut
 import Screen from "../../assets/constants/Screen";
 import Colors from "../../assets/constants/Colors";
 
-export const JoinScreen = ({ navigation }: any) => {
+export const JoinScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.leadContainer}>
