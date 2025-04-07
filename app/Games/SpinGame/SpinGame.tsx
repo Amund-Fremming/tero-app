@@ -5,13 +5,13 @@ import {
 import React from "react";
 import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
 import { SpinScreen } from "./constants/SpinScreen";
-import GameStateProvider from "./context/GameStateProvider";
+import SpinGameProvider from "./context/SpinGameProvider";
 
 var Stack = createStackNavigator();
 
 export const SpinGame = () => {
   return (
-    <GameStateProvider>
+    <SpinGameProvider>
       <Stack.Navigator
         initialRouteName={SpinScreen.Lobby}
         screenOptions={{
@@ -22,7 +22,7 @@ export const SpinGame = () => {
       >
         <Stack.Screen name={SpinScreen.Lobby} component={LobbyScreen} />
       </Stack.Navigator>
-    </GameStateProvider>
+    </SpinGameProvider>
   );
 };
 

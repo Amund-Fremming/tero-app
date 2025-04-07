@@ -5,13 +5,13 @@ import { TransitionPresets } from "@react-navigation/stack";
 import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
 import FinishedScreen from "./screens/FinishedScreen/FinishedScreen";
 import { AskScreen } from "./constants/AskScreen";
-import GameStateProvider from "./context/GameStateProvider";
+import AskGameProvider from "./context/AskGameProvider";
 
 const Stack = createStackNavigator();
 
 export const AskGame = () => {
   return (
-    <GameStateProvider>
+    <AskGameProvider>
       <Stack.Navigator
         initialRouteName={AskScreen.Lobby}
         screenOptions={{
@@ -23,7 +23,7 @@ export const AskGame = () => {
         <Stack.Screen name={AskScreen.Lobby} component={LobbyScreen} />
         <Stack.Screen name={AskScreen.Finished} component={FinishedScreen} />
       </Stack.Navigator>
-    </GameStateProvider>
+    </AskGameProvider>
   );
 };
 
