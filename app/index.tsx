@@ -1,13 +1,13 @@
-import App from "./App/App";
-import ActionModalProvider from "./App/context/ActionModalProvider";
-import GlobalContext from "./App/context/GlobalProvider";
-import InfoModalProvider from "./App/context/InfoModalProvider";
+import ActionModalProvider from "./Hub/context/ActionModalProvider";
+import GlobalContext from "./Hub/context/GlobalProvider";
+import InfoModalProvider from "./Hub/context/InfoModalProvider";
+import Hub from "./Hub/Hub";
 
 export default () => (
   <ActionModalProvider>
     <InfoModalProvider>
       <GlobalContext>
-        <App />
+        <Hub />
       </GlobalContext>
     </InfoModalProvider>
   </ActionModalProvider>

@@ -1,6 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TransitionPresets } from "@react-navigation/stack";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
 import SpinGame from "../Games/SpinGame/SpinGame";
@@ -15,7 +16,7 @@ import AdminScreen from "./screens/AdminScreen/AdminScreen";
 
 const Stack = createStackNavigator();
 
-export const App = () => {
+export const Hub = () => {
   return (
     <Stack.Navigator
       initialRouteName={Screen.Home}
@@ -38,4 +39,4 @@ export const App = () => {
   );
 };
 
-export default App;
+export default Hub;
