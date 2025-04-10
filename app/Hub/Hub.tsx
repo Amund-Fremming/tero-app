@@ -1,7 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TransitionPresets } from "@react-navigation/stack";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
 import SpinGame from "../Games/SpinGame/SpinGame";
@@ -17,26 +16,26 @@ import AdminScreen from "./screens/AdminScreen/AdminScreen";
 const Stack = createStackNavigator();
 
 export const Hub = () => {
-  return (
-    <Stack.Navigator
-      initialRouteName={Screen.Home}
-      screenOptions={{
-        ...TransitionPresets.FadeFromBottomAndroid,
-        headerShown: false,
-        headerStatusBarHeight: 0,
-      }}
-    >
-      <Stack.Screen name={Screen.Home} component={HomeScreen} />
-      <Stack.Screen name={Screen.Hub} component={HubScreen} />
-      <Stack.Screen name={Screen.Join} component={JoinScreen} />
-      <Stack.Screen name={Screen.Games} component={GamesScreen} />
-      <Stack.Screen name={Screen.SpinGame} component={SpinGame} />
-      <Stack.Screen name={Screen.AskGame} component={AskGame} />
-      <Stack.Screen name={Screen.Create} component={CreateScreen} />
-      <Stack.Screen name={Screen.Choose} component={ChooseScreen} />
-      <Stack.Screen name={Screen.Admin} component={AdminScreen} />
-    </Stack.Navigator>
-  );
+    return (
+        <Stack.Navigator
+            initialRouteName={Screen.Home}
+            screenOptions={{
+                ...TransitionPresets.FadeFromBottomAndroid,
+                headerShown: false,
+                headerStatusBarHeight: 0,
+            }}
+        >
+            <Stack.Screen name={Screen.Home} component={HomeScreen} />
+            <Stack.Screen name={Screen.Hub} component={HubScreen} />
+            <Stack.Screen name={Screen.Join} component={JoinScreen} />
+            <Stack.Screen name={Screen.Games} component={GamesScreen} />
+            <Stack.Screen name={Screen.SpinGame} component={SpinGame} />
+            <Stack.Screen name={Screen.AskGame} component={AskGame} />
+            <Stack.Screen name={Screen.Create} component={CreateScreen} />
+            <Stack.Screen name={Screen.Choose} component={ChooseScreen} />
+            <Stack.Screen name={Screen.Admin} component={AdminScreen} />
+        </Stack.Navigator>
+    );
 };
 
 export default Hub;
