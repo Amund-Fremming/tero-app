@@ -2,13 +2,13 @@ import React, { createContext, ReactNode, useContext, useState } from "react";
 import InfoModal from "../components/InfoModal/InfoModal";
 
 interface IInfoModalContext {
-  openErrorModal: (errorMessage: string) => void;
-  openInfoModal: (infoModal: string) => void;
+  displayErrorModal: (errorMessage: string) => void;
+  displayInfoModal: (infoModal: string) => void;
 }
 
 const defaultContextValue: IInfoModalContext = {
-  openErrorModal: () => {},
-  openInfoModal: () => {},
+  displayErrorModal: () => {},
+  displayInfoModal: () => {},
 };
 
 const InfoModalContext = createContext<IInfoModalContext>(defaultContextValue);
@@ -24,21 +24,21 @@ export const InfoModalProvider = ({ children }: InfoModalProviderProps) => {
   const [message, setMessage] = useState<string>("");
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
-  const openErrorModal = (errorMessage: string) => {
+  const displayErrorModal = (errorMessage: string) => {
     setMessage(errorMessage);
     setIsError(true);
     setModalVisible(true);
   };
 
-  const openInfoModal = (infoMessage: string) => {
+  const displayInfoModal = (infoMessage: string) => {
     setMessage(infoMessage);
     setIsError(false);
     setModalVisible(true);
   };
 
   const value = {
-    openErrorModal,
-    openInfoModal,
+    displayErrorModal,
+    displayInfoModal,
   };
 
   return (
