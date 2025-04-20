@@ -1,8 +1,8 @@
 import { View, Text } from "react-native";
 import styles from "./createScreenStyles";
 import AbsoluteNavButton from "../../components/AbsoluteNavButton/AbsoluteNavButton";
-import Screen from "../../assets/constants/Screen";
-import Colors from "../../assets/constants/Colors";
+import Screen from "../../constants/Screen";
+import Colors from "../../constants/Color";
 
 export const CreateScreen = () => {
   return (

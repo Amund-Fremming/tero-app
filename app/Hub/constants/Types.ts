@@ -1,0 +1,24 @@
+export interface GameBase {
+  id: number;
+  universalId: string;
+  name: string;
+  iterations: number;
+  currentIteration: number;
+}
+
+export interface UserBase {
+  id: number;
+  guid: string;
+  lastActive: Date;
+}
+
+export enum Category {
+  Random,
+  Friendly,
+  Dirty,
+  Flirty,
+  ForTheBoys,
+  ForTheGirls,
+}
+
+export default GameBase;

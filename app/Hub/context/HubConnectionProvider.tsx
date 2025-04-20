@@ -13,19 +13,19 @@ import { useInfoModalProvider } from "./InfoModalProvider";
 interface IHubConnectionContext {
   connect: (endpoint: string) => void;
   disconnect: () => void;
-  getConnection: () => signalR.HubConnection | undefined;
+  connection: signalR.HubConnection | undefined;
 }
 
 const defaultContextValue: IHubConnectionContext = {
   connect: (endpoint: string) => {},
   disconnect: () => {},
-  getConnection: () => undefined,
+  connection: undefined,
 };
 
 const HubConnectionContext =
   createContext<IHubConnectionContext>(defaultContextValue);
 
-export const useGlobalProvider = () => useContext(HubConnectionContext);
+export const useHubConnectionProvider = () => useContext(HubConnectionContext);
 
 interface HubConnectionProviderProps {
   children: ReactNode;
@@ -53,8 +53,10 @@ export const HubConnectionProvider = ({
     }
 
     if (!connectionRef.current) {
-      // TODO - call invalidate / disconnect user from game (that gets a new host also)
-      displayErrorModal("You disconnected, please try to reconnect.");
+      // TODO - For games with hub call invalidate user from the correct api.
+      displayErrorModal(
+        "Du mistet tilkoblingen, vennligst forsøk å koble til igjen."
+      );
       return;
     }
 
@@ -76,7 +78,7 @@ export const HubConnectionProvider = ({
       // TODO - remove log
       setConnectedState(false);
       console.error(error);
-      displayErrorModal("Something went wrong trying to create a connection.");
+      displayErrorModal("En feil skjedde ved tilkoblingen.");
     }
   };
 
@@ -84,7 +86,7 @@ export const HubConnectionProvider = ({
     try {
       setConnectedState(false);
       if (!connection) {
-        displayInfoModal("You are not connected to any game!");
+        displayInfoModal("Du er ikke tilkoblet noe spill!");
         return;
       }
 
@@ -93,14 +95,12 @@ export const HubConnectionProvider = ({
       // TODO - remove log
       setConnectedState(false);
       console.error(error);
-      displayErrorModal("Something went wrong trying to disconnect.");
+      displayErrorModal("En feil skjedde når du skulle forlate spillet.");
     }
   };
 
-  const getConnection = () => connection;
-
   const value = {
-    getConnection,
+    connection,
     connect,
     disconnect,
   };

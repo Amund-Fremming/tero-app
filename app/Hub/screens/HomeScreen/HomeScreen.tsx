@@ -1,5 +1,5 @@
 import { View, Text, Pressable } from "react-native";
-import Screen from "../../assets/constants/Screen";
+import Screen from "../../constants/Screen";
 import styles from "./homeScreenStyles";
 
 export const HomeScreen = ({ navigation }: any) => {

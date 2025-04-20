@@ -1,5 +1,5 @@
 import { View, Text, Button } from "react-native";
-import Screen from "../../assets/constants/Screen";
+import Screen from "../../constants/Screen";
 
 export const GamesScreen = ({ navigation }: any) => {
   return (

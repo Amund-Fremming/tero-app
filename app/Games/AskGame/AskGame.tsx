@@ -2,8 +2,8 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TransitionPresets } from "@react-navigation/stack";
 
-import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
-import FinishedScreen from "./screens/FinishedScreen/FinishedScreen";
+import LobbyScreen from "../SpinGame/screens/LobbyScreen/LobbyScreen";
+import FinishedScreen from "../SpinGame/screens/FinishedScreen/FinishedScreen";
 import { AskScreen } from "./constants/AskScreen";
 import AskGameProvider from "./context/AskGameProvider";
 

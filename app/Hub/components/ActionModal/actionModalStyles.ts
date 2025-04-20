@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Colors } from "../../assets/constants/Colors";
+import { Colors } from "../../constants/Color";
 import {
   horizontalScale,
   moderateScale,
