@@ -5,6 +5,8 @@ export const Color = {
   White: "#FFFFFF",
   Yellow: "#FEECA9",
   Beige: "#F1D6CE",
+  Green: "green",
+  Gray: "gray",
 };
 
 export default Color;

@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     height: "100%",
     backgroundColor: Colors.Red,
+    gap: verticalScale(10),
   },
 
   leadContainer: {

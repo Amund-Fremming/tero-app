@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Colors } from "../../constants/Color";
+import { Color } from "../../constants/Color";
 import {
   horizontalScale,
   moderateScale,
@@ -22,12 +22,12 @@ export const styles = StyleSheet.create({
     gap: verticalScale(20),
   },
   messageContainer: {
-    backgroundColor: Colors.White,
-    borderColor: Colors.Green,
+    backgroundColor: Color.White,
+    borderColor: Color.Green,
   },
   errorContainer: {
-    backgroundColor: Colors.White,
-    borderColor: Colors.Red,
+    backgroundColor: Color.White,
+    borderColor: Color.Red,
   },
   header: {
     fontFamily: "SpaceMono",

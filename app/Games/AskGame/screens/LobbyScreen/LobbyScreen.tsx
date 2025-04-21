@@ -1,12 +1,15 @@
 import Color from "@/app/Hub/constants/Color";
 import MediumButton from "@/app/Hub/components/MediumButton/MediumButton";
 import { useInfoModalProvider } from "@/app/Hub/context/InfoModalProvider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import styles from "./lobbyScreenStyles";
 import { useHubConnectionProvider } from "@/app/Hub/context/HubConnectionProvider";
 import { useGlobalProvider } from "@/app/Hub/context/GlobalProvider";
+import { HubChannel } from "@/app/Hub/constants/HubChannel";
+import { AskGameState } from "../../constants/AskTypes";
+import AskScreen from "../../constants/AskScreen";
 
 export const LobbyScreen = ({ navigation }: any) => {
   const [input, setInput] = useState<string>("");
@@ -15,11 +18,28 @@ export const LobbyScreen = ({ navigation }: any) => {
   const { gameId, setGameId } = useGlobalProvider();
   const { connection } = useHubConnectionProvider();
 
-  const { displayErrorModal } = useInfoModalProvider();
+  const { displayInfoModal, displayErrorModal } = useInfoModalProvider();
 
-  const handleAddQuestion = () => {
+  useEffect(() => {
+    connection?.on(HubChannel.Message, (message: string) =>
+      displayInfoModal(message)
+    );
+
+    connection?.on(HubChannel.State, (state: AskGameState) => {
+      if (state === AskGameState.Closed) {
+        navigation.navigate(AskScreen.Started);
+      }
+    });
+
+    connection?.on(HubChannel.Error, (message: string) =>
+      displayErrorModal(message)
+    );
+  }, []);
+
+  const handleAddQuestion = async () => {
     try {
-      // TODO
+      // TODO - finish this
+      var result = await connection?.invoke("", gameId, input);
     } catch (error) {
       console.error(error);
       displayErrorModal("Klarte ikke legge til spørsmål.");

@@ -1,13 +1,14 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import AskGame from "../constants/AskTypes";
+import EmptyAskGame from "../constants/EmptyObjects";
 
 interface IAskGameContext {
-  askGame: AskGame | undefined;
-  setAskGame: React.Dispatch<React.SetStateAction<AskGame | undefined>>;
+  askGame: AskGame;
+  setAskGame: React.Dispatch<React.SetStateAction<AskGame>>;
 }
 
 const defaultContextValue: IAskGameContext = {
-  askGame: undefined,
+  askGame: EmptyAskGame,
   setAskGame: () => {},
 };
 
@@ -20,7 +21,7 @@ interface AskGameProviderProps {
 }
 
 export const AskGameProvider = ({ children }: AskGameProviderProps) => {
-  const [askGame, setAskGame] = useState<AskGame | undefined>(undefined);
+  const [askGame, setAskGame] = useState<AskGame>(EmptyAskGame);
 
   const value = {
     askGame,

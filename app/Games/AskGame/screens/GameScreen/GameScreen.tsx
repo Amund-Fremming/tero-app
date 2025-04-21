@@ -1,27 +1,32 @@
 import Color from "@/app/Hub/constants/Color";
 import MediumButton from "@/app/Hub/components/MediumButton/MediumButton";
 import { Text, View } from "react-native";
-import { useSpinGameProvider } from "../../../SpinGame/context/SpinGameProvider";
 import { useAskGameProvider } from "../../context/AskGameProvider";
-import { useState } from "react";
+import AskGame from "../../constants/AskTypes";
+import styles from "./gameScreenStyles";
 
 export const GameScreen = ({ navigation }: any) => {
-  const [questionsRemaining, setQuestionsRemaining] = useState<number>(0);
+  const { askGame, setAskGame } = useAskGameProvider();
 
-  const { askGame } = useAskGameProvider();
+  const handlePrevPressed = () =>
+    setAskGame((prevState: AskGame) => ({
+      ...prevState,
+      currentIteration: prevState.currentIteration - 1,
+    }));
 
-  const handlePrevPressed = () => {
-    // TODO
-  };
-
-  const handleNextPressed = () => {
-    // TODO
-  };
+  const handleNextPressed = () =>
+    setAskGame((prevState: AskGame) => ({
+      ...prevState,
+      currentIteration: prevState.currentIteration + 1,
+    }));
 
   return (
-    <View>
-      <Text>{questionsRemaining}</Text>
-      <Text>Spillet er i gang</Text>
+    <View style={styles.container}>
+      <Text>
+        Gjenstående spørsmål:{" "}
+        {askGame.questions.length - askGame.currentIteration}
+      </Text>
+      <Text>{askGame.questions[askGame.currentIteration].text}</Text>
       <MediumButton
         text="Forrige"
         color={Color.Beige}

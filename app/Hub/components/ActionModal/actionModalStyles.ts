@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Colors } from "../../constants/Color";
+import { Color } from "../../constants/Color";
 import {
   horizontalScale,
   moderateScale,
@@ -20,8 +20,8 @@ export const styles = StyleSheet.create({
     height: verticalScale(220),
     borderWidth: moderateScale(2.5),
     gap: verticalScale(20),
-    backgroundColor: Colors.White,
-    borderColor: Colors.Gray,
+    backgroundColor: Color.White,
+    borderColor: Color.Gray,
   },
   header: {
     fontFamily: "SpaceMono",
