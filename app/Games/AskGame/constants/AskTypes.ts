@@ -20,4 +20,11 @@ export enum AskGameState {
   Closed,
 }
 
+export interface CreateAskGameRequest {
+  userId: number;
+  gameName: string;
+  description: string;
+  category: Category;
+}
+
 export default AskGame;

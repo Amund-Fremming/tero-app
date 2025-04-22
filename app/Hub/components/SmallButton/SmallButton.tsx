@@ -1,7 +1,7 @@
 import { Text, TouchableOpacity } from "react-native";
 
 import { styles } from "./smallButtonStyles";
-import { Colors } from "../../constants/Color";
+import { Color } from "../../constants/Color";
 
 interface ISmallButton {
   text: string;
@@ -20,7 +20,7 @@ export const SmallButton = ({
     if (inverted) {
       return {
         ...styles.container,
-        backgroundColor: Colors.White,
+        backgroundColor: Color.White,
         borderColor: color,
         borderWidth: 2,
       };
@@ -33,7 +33,7 @@ export const SmallButton = ({
     if (inverted) {
       return { ...styles.text, color: color };
     } else {
-      return { ...styles.text, color: Colors.White };
+      return { ...styles.text, color: Color.White };
     }
   };
 

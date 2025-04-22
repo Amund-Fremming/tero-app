@@ -1,18 +1,26 @@
 import { View, Text, Pressable } from "react-native";
 import Screen from "../../constants/Screen";
 import styles from "./homeScreenStyles";
+import { useGlobalGameProvider } from "../../context/GlobalGameProvider";
 
 export const HomeScreen = ({ navigation }: any) => {
+  const { setIsCreator } = useGlobalGameProvider();
+
+  const handleSelectGame = (creator: boolean) => {
+    setIsCreator(creator);
+    navigation.navigate(Screen.SelectGame);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.leadContainer}>
-        <Text style={styles.header}>buzzify</Text>
-        <Text style={styles.subHeader}>Lets get cronked</Text>
+        <Text style={styles.header}>name</Text>
+        <Text style={styles.subHeader}>lorem ipsum dolor amet</Text>
       </View>
       <View style={styles.buttonContainer}>
         <Pressable
           style={{ ...styles.buttonBase, ...styles.topLeft }}
-          onPress={() => navigation.navigate(Screen.Create)}
+          onPress={() => handleSelectGame(true)}
         >
           <View style={styles.buttonTextWrapper}>
             <Text style={{ ...styles.textBase, ...styles.textTopLeft }}>
@@ -38,7 +46,7 @@ export const HomeScreen = ({ navigation }: any) => {
         </Pressable>
         <Pressable
           style={{ ...styles.buttonBase, ...styles.topRight }}
-          onPress={() => navigation.navigate(Screen.Choose)}
+          onPress={() => handleSelectGame(false)}
         >
           <View style={styles.buttonTextWrapper}>
             <Text style={{ ...styles.textBase, ...styles.textTopRight }}>

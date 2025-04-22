@@ -3,30 +3,30 @@
         "name": "Spin",
         "description": "Hver runde runde starter med en spin, her vil du endten få vite oppgaven på forhånd eller når noen blir utvalgt. Når spinneren stopper blir noen av dere nødt til å utføre oppgaven.",
         "icon": "",
-        "screen": ""
+        "screen": "SpinGame"
     },
     {
         "name": "Spin (utslag)",
         "description": "Denne versjonen av Spin vil maksimalt ha to personer i hver oppgave som vil være en \"challenge\". Den som taper, vil bli slått ut av spillet, vinneren er siste som gjenstår.",
         "icon": "",
-        "screen": ""
+        "screen": "Home"
     },
     {
         "name": "100 Spm",
         "description": "Dette spillet kan spillet litt som en vil selv. Man kan svare på spørsmålene på rundtur i rommet, eller spille med en snusboks. Da vil personen som har boksen måtte svare, og får dermed lov til å kaste den til neste person.",
         "icon": "",
-        "screen": ""
+        "screen": "AskGame"
     },
     {
         "name": "Imposter",
         "description": "På tur, si din assosiasjon med det valgte ordet. Twisten er at en eller fler av dere har fått en blank lapp!",
         "icon": "",
-        "screen": ""
+        "screen": "Home"
     },
     {
         "name": "Terning",
         "description": "Superenkel terning som kan brukes til hva som helst. For eksempel Opus!",
         "icon": "",
-        "screen": ""
+        "screen": "Home"
     }
 ]

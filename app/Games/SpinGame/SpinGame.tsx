@@ -3,7 +3,7 @@ import {
   TransitionPresets,
 } from "@react-navigation/stack";
 import React from "react";
-import LobbyScreen from "../AskGame/screens/LobbyScreen/LobbyScreen";
+import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
 import { SpinScreen } from "./constants/SpinScreen";
 import SpinGameProvider from "./context/SpinGameProvider";
 

@@ -1,10 +1,10 @@
 import { View, Text, Button } from "react-native";
 import Screen from "../../constants/Screen";
 
-export const GamesScreen = ({ navigation }: any) => {
+export const GameListScreen = ({ navigation }: any) => {
   return (
     <View>
-      <Text>GamesScreen</Text>
+      <Text>GameListScreen</Text>
       <Button
         title="Go to SpinGame"
         onPress={() => navigation.navigate("SpinGame")}
@@ -17,4 +17,4 @@ export const GamesScreen = ({ navigation }: any) => {
   );
 };
 
-export default GamesScreen;
+export default GameListScreen;

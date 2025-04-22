@@ -1,6 +1,6 @@
 import { Text, TouchableOpacity } from "react-native";
 import { styles } from "./mediumButtonStyles";
-import { Colors } from "../../constants/Color";
+import { Color } from "../../constants/Color";
 
 interface IMediumButton {
   text: string;
@@ -19,7 +19,7 @@ export const MediumButton = ({
     if (inverted) {
       return {
         ...styles.container,
-        backgroundColor: Colors.White,
+        backgroundColor: Color.White,
         borderColor: color,
         borderWidth: 2,
       };
@@ -32,7 +32,7 @@ export const MediumButton = ({
     if (inverted) {
       return { ...styles.text, color: color };
     } else {
-      return { ...styles.text, color: Colors.White };
+      return { ...styles.text, color: Color.White };
     }
   };
 

@@ -1,7 +1,8 @@
 export const enum AskScreen {
   Lobby = "Lobby",
+  Create = "Create",
   Started = "Started",
-  Finished = "Finished",
+  Game = "Game",
 }
 
 export default AskScreen;

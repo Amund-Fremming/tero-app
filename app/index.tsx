@@ -1,6 +1,6 @@
 import ActionModalProvider from "./Hub/context/ActionModalProvider";
 import ConnectionProvider from "./Hub/context/HubConnectionProvider";
-import GlobalContext from "./Hub/context/GlobalProvider";
+import GlobalContext from "./Hub/context/GlobalGameProvider";
 import InfoModalProvider from "./Hub/context/InfoModalProvider";
 import Hub from "./Hub/Hub";
 

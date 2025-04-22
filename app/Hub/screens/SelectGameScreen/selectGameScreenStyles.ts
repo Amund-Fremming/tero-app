@@ -4,9 +4,8 @@ import { moderateScale, verticalScale } from "../../utils/dimensions";
 
 export const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
     height: "100%",
-    backgroundColor: Colors.Purple,
+    backgroundColor: Colors.Red,
   },
 
   leadContainer: {
