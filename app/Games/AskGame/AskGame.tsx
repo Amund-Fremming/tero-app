@@ -8,14 +8,13 @@ import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
 import { CreateScreen } from "./screens/CreateScreen/CreateScreen";
 import StartedScreen from "./screens/StartedScreen/StartedScreen";
 import { GameScreen } from "./screens/GameScreen/GameScreen";
+import ChooseScreen from "./screens/ChooseScreen/ChooseScreen";
 
 const Stack = createStackNavigator();
 
 export const AskGame = () => {
   const { isCreator } = useGlobalGameProvider();
-  const initialScreen = isCreator ? AskScreen.Create : AskScreen.Lobby;
-  console.log("HEYYYYY");
-  console.log(initialScreen);
+  const initialScreen = isCreator ? AskScreen.Create : AskScreen.Choose;
 
   return (
     <AskGameProvider>
@@ -31,6 +30,7 @@ export const AskGame = () => {
         <Stack.Screen name={AskScreen.Create} component={CreateScreen} />
         <Stack.Screen name={AskScreen.Started} component={StartedScreen} />
         <Stack.Screen name={AskScreen.Game} component={GameScreen} />
+        <Stack.Screen name={AskScreen.Choose} component={ChooseScreen} />
       </Stack.Navigator>
     </AskGameProvider>
   );

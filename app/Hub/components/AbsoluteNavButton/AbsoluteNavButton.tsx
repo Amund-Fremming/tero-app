@@ -2,7 +2,6 @@ import { Pressable, Text } from "react-native";
 import styles from "./absoluteNavButtonStyles";
 import Screen from "../../constants/Screen";
 import { useNavigation } from "@react-navigation/native";
-import Colors from "../../constants/Color";
 
 interface AbsoluteNavButtonProps {
   label: string;

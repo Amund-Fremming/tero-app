@@ -1,20 +1,23 @@
 import { StyleSheet } from "react-native";
-import Colors from "../../constants/Color";
-import { moderateScale, verticalScale } from "../../utils/dimensions";
+import Colors, { Color } from "../../constants/Color";
+import {
+  horizontalScale,
+  moderateScale,
+  verticalScale,
+} from "../../utils/dimensions";
 
 export const styles = StyleSheet.create({
   container: {
-    height: "100%",
-    backgroundColor: Colors.Red,
-  },
-
-  leadContainer: {
-    paddingTop: verticalScale(20),
-    width: "90%",
+    backgroundColor: Color.Red,
+    width: "100%",
     justifyContent: "center",
+    alignItems: "center",
   },
 
   header: {
+    paddingTop: verticalScale(20),
+    paddingLeft: horizontalScale(20),
+    width: "100%",
     color: Colors.White,
     fontSize: moderateScale(40),
     fontWeight: 900,

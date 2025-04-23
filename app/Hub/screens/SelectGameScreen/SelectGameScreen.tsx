@@ -4,25 +4,15 @@ import Screen from "../../constants/Screen";
 import Colors from "../../constants/Color";
 import items from "./GameData.json";
 import GameCard from "../../components/GameCard/GameCard";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
-import { verticalScale } from "../../utils/dimensions";
+import VerticalScroll from "../../wrappers/VerticalScroll";
 
 export const SelectGameScreen = () => {
   return (
-    <>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={styles.container}
-        contentContainerStyle={{
-          alignItems: "center",
-          gap: verticalScale(10),
-        }}
-      >
-        <View style={styles.leadContainer}>
-          <Text style={styles.header}>Velg spill type</Text>
-        </View>
-
+    <View style={styles.container}>
+      <VerticalScroll>
+        <Text style={styles.header}>Velg spill type</Text>
         {items &&
           items.map((item, index) => (
             <GameCard
@@ -33,15 +23,14 @@ export const SelectGameScreen = () => {
               screen={item.screen}
             />
           ))}
-
-        <AbsoluteNavButton
-          label="Hjem"
-          destination={Screen.Home}
-          primary={Colors.White}
-          secondary={Colors.Red}
-        />
-      </ScrollView>
-    </>
+      </VerticalScroll>
+      <AbsoluteNavButton
+        label="Hjem"
+        destination={Screen.Home}
+        primary={Colors.White}
+        secondary={Colors.Red}
+      />
+    </View>
   );
 };
 

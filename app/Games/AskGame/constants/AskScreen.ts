@@ -3,6 +3,7 @@ export const enum AskScreen {
   Create = "Create",
   Started = "Started",
   Game = "Game",
+  Choose = "Choose",
 }
 
 export default AskScreen;

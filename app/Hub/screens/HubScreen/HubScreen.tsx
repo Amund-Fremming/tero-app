@@ -7,9 +7,7 @@ import Colors from "../../constants/Color";
 export const HubScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
-      <View style={styles.leadContainer}>
-        <Text style={styles.header}>Hub</Text>
-      </View>
+      <Text style={styles.header}>Hub</Text>
 
       <Button
         title="Admin dashboard"

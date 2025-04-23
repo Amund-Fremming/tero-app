@@ -7,9 +7,7 @@ import Colors from "../../constants/Color";
 export const JoinScreen = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.leadContainer}>
-        <Text style={styles.header}>Bli med</Text>
-      </View>
+      <Text style={styles.header}>Bli med</Text>
 
       <AbsoluteNavButton
         label="Hjem"

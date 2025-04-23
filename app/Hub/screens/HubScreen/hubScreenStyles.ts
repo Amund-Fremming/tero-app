@@ -1,6 +1,10 @@
 import { StyleSheet } from "react-native";
 import Colors from "../../constants/Color";
-import { moderateScale, verticalScale } from "../../utils/dimensions";
+import {
+  horizontalScale,
+  moderateScale,
+  verticalScale,
+} from "../../utils/dimensions";
 
 export const styles = StyleSheet.create({
   container: {
@@ -9,13 +13,10 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.Beige,
   },
 
-  leadContainer: {
-    paddingTop: verticalScale(20),
-    width: "90%",
-    justifyContent: "center",
-  },
-
   header: {
+    paddingTop: verticalScale(20),
+    paddingLeft: horizontalScale(20),
+    width: "100%",
     color: Colors.Purple,
     fontSize: moderateScale(40),
     fontWeight: 900,
