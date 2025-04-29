@@ -12,6 +12,12 @@ export interface UserBase {
   lastActive: Date;
 }
 
+export interface RegisteredUserRequest {
+  name: string;
+  email: string;
+  password: string;
+}
+
 export enum Category {
   Random,
   Friendly,
@@ -20,5 +26,3 @@ export enum Category {
   ForTheBoys,
   ForTheGirls,
 }
-
-export default GameBase;

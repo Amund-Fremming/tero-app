@@ -7,6 +7,10 @@ export const startGame = async (gameId: number) => {
       method: "GET",
     });
 
+    if (response.status !== 200) {
+      throw new Error("Status was not 200");
+    }
+
     var data: AskGame = await response.json();
     return data;
   } catch (error) {
@@ -23,6 +27,10 @@ export const createGame = async (createGameRequest: CreateAskGameRequest) => {
       },
       body: JSON.stringify(createGameRequest),
     });
+
+    if (response.status !== 200) {
+      throw new Error("Status was not 200");
+    }
 
     var data: AskGame = await response.json();
     return data;

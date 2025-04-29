@@ -3,15 +3,18 @@ import ConnectionProvider from "./Hub/context/HubConnectionProvider";
 import GlobalContext from "./Hub/context/GlobalGameProvider";
 import InfoModalProvider from "./Hub/context/InfoModalProvider";
 import Hub from "./Hub/Hub";
+import UserProvider from "./Hub/context/UserProvider";
 
 export default () => (
   <ActionModalProvider>
     <InfoModalProvider>
-      <GlobalContext>
-        <ConnectionProvider>
-          <Hub />
-        </ConnectionProvider>
-      </GlobalContext>
+      <UserProvider>
+        <GlobalContext>
+          <ConnectionProvider>
+            <Hub />
+          </ConnectionProvider>
+        </GlobalContext>
+      </UserProvider>
     </InfoModalProvider>
   </ActionModalProvider>
 );
