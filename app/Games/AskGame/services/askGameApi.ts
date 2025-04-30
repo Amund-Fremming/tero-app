@@ -1,5 +1,5 @@
 import AskGame, { CreateAskGameRequest } from "../constants/AskTypes";
-import { AskGameUrlBase } from "../constants/Endpoints";
+import { AskGameUrlBase } from "../../../Hub/constants/Endpoints";
 
 export const startGame = async (gameId: number) => {
   try {

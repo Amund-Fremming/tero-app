@@ -3,23 +3,41 @@ import styles from "./joinScreenStyles";
 import AbsoluteNavButton from "../../components/AbsoluteNavButton/AbsoluteNavButton";
 import Screen from "../../constants/Screen";
 import Colors from "../../constants/Color";
-import { TextInput } from "react-native-gesture-handler";
+import { Pressable, TextInput } from "react-native-gesture-handler";
 import { useState } from "react";
 import { useInfoModalProvider } from "../../context/InfoModalProvider";
+import addPlayerToGame from "../../services/universalGameApi";
+import { useUserProvider } from "../../context/UserProvider";
+import { useHubConnectionProvider } from "../../context/HubConnectionProvider";
 
 export const JoinScreen = () => {
   const [userInput, setUserInput] = useState<string>("");
 
+  const { guestUserId } = useUserProvider();
   const { displayErrorModal } = useInfoModalProvider();
+  const { connect } = useHubConnectionProvider();
 
-  const handleJoinGame = () => {
-    var result = Number.parseInt(userInput);
-    if (isNaN(result)) {
+  const handleJoinGame = async () => {
+    var universalGameId = Number.parseInt(userInput);
+    if (isNaN(universalGameId)) {
       displayErrorModal("Spill id må være ett tall");
       return;
     }
 
-    // TODO: koble på hub, forsøk å bli med i spill, feiler det, dosconnect ot vis melding, ellers naviger videre
+    const result = await addPlayerToGame(guestUserId, universalGameId);
+    if (result.isErr()) {
+      displayErrorModal(result.error.message);
+      return;
+    }
+
+    var connectResult = connect(result.value.gameType);
+    if (connectResult.isErr()) {
+      displayErrorModal(connectResult.error);
+      return;
+    }
+
+    // TODO: navigate to the game screen
+    // Change gametype to enum so i can map it to a screen, and its only one place to main tain not everywhere. This also needs a update backend
   };
 
   return (
@@ -31,6 +49,10 @@ export const JoinScreen = () => {
         value={userInput}
         onChangeText={(input) => setUserInput(input)}
       />
+
+      <Pressable onPress={handleJoinGame}>
+        <Text>Bli med</Text>
+      </Pressable>
 
       <AbsoluteNavButton
         label="Hjem"

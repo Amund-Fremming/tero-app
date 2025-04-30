@@ -18,6 +18,11 @@ export interface RegisteredUserRequest {
   password: string;
 }
 
+export interface AddedToGameResult {
+  gameType: "AskGame" | "SpinGame";
+  gameId: string;
+}
+
 export enum Category {
   Random,
   Friendly,

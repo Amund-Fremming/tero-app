@@ -1,34 +1,40 @@
-import { UserUrlBase } from "@/app/Games/AskGame/constants/Endpoints";
+import { UserUrlBase } from "@/app/Hub/constants/Endpoints";
 import { RegisteredUserRequest, UserBase } from "../constants/Types";
+import { Result, ok, err } from "neverthrow";
 
-export const updateUserActivity = async (userId: number) => {
+export const updateUserActivity = async (
+  userId: number
+): Promise<Result<void, string>> => {
   try {
     const response = await fetch(`${UserUrlBase}/${userId}`, {
       method: "PUT",
     });
 
     if (response.status !== 200) {
-      throw new Error("Status was not 200");
+      return err("Status was not 200");
     }
+
+    return ok(undefined);
   } catch (error) {
     console.error(error);
+    return err("Failed to update user activity.");
   }
 };
 
-export const createGuestUser = async () => {
+export const createGuestUser = async (): Promise<Result<UserBase, string>> => {
   try {
     const response = await fetch(`${UserUrlBase}/create/guest`, {
       method: "POST",
     });
 
     if (response.status !== 200) {
-      throw new Error("Status was not 200");
+      return err("Status was not 200");
     }
 
     const data: UserBase = await response.json();
-    return data;
+    return ok(data);
   } catch (error) {
-    console.error(error);
+    return err("Failed to create guest user.");
   }
 };
 

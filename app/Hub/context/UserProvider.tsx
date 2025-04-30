@@ -6,15 +6,18 @@ import React, {
   useState,
 } from "react";
 import { createGuestUser, updateUserActivity } from "../services/userApi";
+import { useInfoModalProvider } from "./InfoModalProvider";
 
 interface IUserContext {
-  guestUserId: number | undefined;
-  setGuesUserId: React.Dispatch<React.SetStateAction<number | undefined>>;
+  guestUserId: number;
+  setGuesUserId: React.Dispatch<React.SetStateAction<number>>;
+  markUserAsActive: () => Promise<void>;
 }
 
 const defaultContextValue: IUserContext = {
-  guestUserId: undefined,
+  guestUserId: -1,
   setGuesUserId: () => {},
+  markUserAsActive: async () => {},
 };
 
 const UserContext = createContext<IUserContext>(defaultContextValue);
@@ -26,17 +29,25 @@ interface UserProviderProps {
 }
 
 export const UserProvider = ({ children }: UserProviderProps) => {
+  const { displayErrorModal } = useInfoModalProvider();
+
   const ensureGuestUserId = async () => {
     // TODO: Get from localstorage if not exist create new
     const result = await createGuestUser();
-    setGuestUserId(result?.id);
-    console.log("Gues user created with id: ", result?.id); // TODO - remove log
+    if (result.isErr()) {
+      displayErrorModal("Noe har gått galt, lukk appen og forsøk igjen.");
+      return;
+    }
+
+    setGuestUserId(result.value.id);
+    console.log("Guest user created with id: ", result.value.id); // TODO - remove log
   };
 
   const markUserAsActive = async () => {
     // TODO: more logic, update registered user or guest user logic
-    if (guestUserId) {
-      await updateUserActivity(guestUserId);
+    var result = await updateUserActivity(guestUserId);
+    if (result.isErr()) {
+      console.error(result.error);
     }
   };
 
@@ -44,9 +55,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     ensureGuestUserId();
   }, []);
 
-  const [guestUserId, setGuestUserId] = useState<number | undefined>(undefined);
+  const [guestUserId, setGuestUserId] = useState<number>(-1);
 
   const value = {
+    markUserAsActive,
     guestUserId,
     setGuesUserId: setGuestUserId,
   };

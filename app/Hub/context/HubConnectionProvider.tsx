@@ -1,5 +1,4 @@
 import * as signalR from "@microsoft/signalr";
-
 import React, {
   createContext,
   ReactNode,
@@ -9,15 +8,19 @@ import React, {
   useState,
 } from "react";
 import { useInfoModalProvider } from "./InfoModalProvider";
+import { HubUrlBase } from "../constants/Endpoints";
+import { Result, ok, err } from "neverthrow";
 
 interface IHubConnectionContext {
-  connect: (endpoint: string) => void;
+  connect: (hubName: string) => Result<void, string>;
   disconnect: () => void;
   connection: signalR.HubConnection | undefined;
 }
 
 const defaultContextValue: IHubConnectionContext = {
-  connect: (endpoint: string) => {},
+  connect: () => {
+    return err("");
+  },
   disconnect: () => {},
   connection: undefined,
 };
@@ -54,18 +57,21 @@ export const HubConnectionProvider = ({
 
     if (!connectionRef.current) {
       // TODO - For games with hub call invalidate user from the correct api.
+      // TODO - kaste bruker så tilbake til hjemmesiden
       displayErrorModal(
         "Du mistet tilkoblingen, vennligst forsøk å koble til igjen."
       );
       return;
     }
 
-    // TODO - remove
+    // TODO - remove log
     console.log("Connection still valid");
   }, 300);
 
-  const connect = (endpoint: string) => {
+  const connect = (hubName: string): Result<void, string> => {
     try {
+      var endpoint = `${HubUrlBase}/${hubName}`;
+
       var hubConnection = new signalR.HubConnectionBuilder()
         .withUrl(endpoint)
         .configureLogging(signalR.LogLevel.Information)
@@ -74,11 +80,12 @@ export const HubConnectionProvider = ({
       setConnection(hubConnection);
       hubConnection.start();
       setConnectedState(true);
+      return ok();
     } catch (error) {
       // TODO - remove log
       setConnectedState(false);
       console.error(error);
-      displayErrorModal("En feil skjedde ved tilkoblingen.");
+      return err("En feil skjedde ved tilkoblingen.");
     }
   };
 
@@ -86,16 +93,16 @@ export const HubConnectionProvider = ({
     try {
       setConnectedState(false);
       if (!connection) {
-        displayInfoModal("Du er ikke tilkoblet noe spill!");
-        return;
+        return err("Du er ikke tilkoblet noe spill!");
       }
 
       connection.stop;
+      return ok();
     } catch (error) {
       // TODO - remove log
       setConnectedState(false);
       console.error(error);
-      displayErrorModal("En feil skjedde når du skulle forlate spillet.");
+      return err("En feil skjedde når du skulle forlate spillet.");
     }
   };
 
