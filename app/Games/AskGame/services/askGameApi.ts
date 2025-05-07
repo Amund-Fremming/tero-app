@@ -1,5 +1,6 @@
 import AskGame, { CreateAskGameRequest } from "../constants/AskTypes";
 import { AskGameUrlBase } from "../../../Hub/constants/Endpoints";
+import { Result, ok, err } from "neverthrow";
 
 export const startGame = async (gameId: number) => {
   try {
@@ -18,7 +19,9 @@ export const startGame = async (gameId: number) => {
   }
 };
 
-export const createGame = async (createGameRequest: CreateAskGameRequest) => {
+export const createGame = async (
+  createGameRequest: CreateAskGameRequest
+): Promise<Result<AskGame, string>> => {
   try {
     const response = await fetch(AskGameUrlBase, {
       method: "POST",
@@ -33,9 +36,10 @@ export const createGame = async (createGameRequest: CreateAskGameRequest) => {
     }
 
     var data: AskGame = await response.json();
-    return data;
+    return ok(data);
   } catch (error) {
     console.error(error);
+    return err("Klarte ikke opprette spill.");
   }
 };
 

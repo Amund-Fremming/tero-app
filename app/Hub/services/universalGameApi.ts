@@ -1,6 +1,6 @@
 import { UniversalGameUrlBase } from "../constants/Endpoints";
 import { AddedToGameResult } from "../constants/Types";
-import { Result, ok, err, Err } from "neverthrow";
+import { Result, ok, err } from "neverthrow";
 
 export const addPlayerToGame = async (
   userId: number,
@@ -24,5 +24,3 @@ export const addPlayerToGame = async (
     return err(new Error("En feil har skjedd."));
   }
 };
-
-export default addPlayerToGame;

@@ -12,7 +12,7 @@ import { HubUrlBase } from "../constants/Endpoints";
 import { Result, ok, err } from "neverthrow";
 
 interface IHubConnectionContext {
-  connect: (hubName: string) => Result<void, string>;
+  connect: (hubName: string, gameId: number) => Result<void, string>;
   disconnect: () => void;
   connection: signalR.HubConnection | undefined;
 }
@@ -68,9 +68,9 @@ export const HubConnectionProvider = ({
     console.log("Connection still valid");
   }, 300);
 
-  const connect = (hubName: string): Result<void, string> => {
+  const connect = (hubName: string, gameId: number): Result<void, string> => {
     try {
-      var endpoint = `${HubUrlBase}/${hubName}`;
+      var endpoint = `${HubUrlBase}/${hubName}?GameId=${gameId}`;
 
       var hubConnection = new signalR.HubConnectionBuilder()
         .withUrl(endpoint)

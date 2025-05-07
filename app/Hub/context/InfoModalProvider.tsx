@@ -2,8 +2,8 @@ import React, { createContext, ReactNode, useContext, useState } from "react";
 import InfoModal from "../components/InfoModal/InfoModal";
 
 interface IInfoModalContext {
-  displayErrorModal: (errorMessage: string) => void;
-  displayInfoModal: (infoModal: string) => void;
+  displayErrorModal: (errorMessage: string, onCloseAction?: () => void) => void;
+  displayInfoModal: (infoModal: string, onCloseAction?: () => void) => void;
 }
 
 const defaultContextValue: IInfoModalContext = {

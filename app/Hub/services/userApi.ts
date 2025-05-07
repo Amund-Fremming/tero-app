@@ -25,6 +25,9 @@ export const createGuestUser = async (): Promise<Result<UserBase, string>> => {
   try {
     const response = await fetch(`${UserUrlBase}/create/guest`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     if (response.status !== 200) {

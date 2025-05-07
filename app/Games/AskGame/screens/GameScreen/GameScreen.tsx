@@ -23,7 +23,7 @@ export const GameScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <Text>
-        Gjenstående spørsmål:{" "}
+        Gjenstående spørsmål:
         {askGame.questions.length - askGame.currentIteration}
       </Text>
       <Text>{askGame.questions[askGame.currentIteration].text}</Text>

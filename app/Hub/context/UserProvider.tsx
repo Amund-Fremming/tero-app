@@ -35,6 +35,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     // TODO: Get from localstorage if not exist create new
     const result = await createGuestUser();
     if (result.isErr()) {
+      console.error(result.error); // TODO - remove log
       displayErrorModal("Noe har gått galt, lukk appen og forsøk igjen.");
       return;
     }

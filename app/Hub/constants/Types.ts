@@ -9,7 +9,7 @@ export interface GameBase {
 export interface UserBase {
   id: number;
   guid: string;
-  lastActive: Date;
+  lastActive: string;
 }
 
 export interface RegisteredUserRequest {
@@ -20,7 +20,7 @@ export interface RegisteredUserRequest {
 
 export interface AddedToGameResult {
   gameType: GameType;
-  gameId: string;
+  gameId: number;
 }
 
 export enum Category {

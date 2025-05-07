@@ -1,4 +1,4 @@
-import { View, Text, Button } from "react-native";
+import { View, Text } from "react-native";
 import styles from "./joinScreenStyles";
 import AbsoluteNavButton from "../../components/AbsoluteNavButton/AbsoluteNavButton";
 import Screen from "../../constants/Screen";
@@ -6,7 +6,7 @@ import Colors from "../../constants/Color";
 import { Pressable, TextInput } from "react-native-gesture-handler";
 import { useState } from "react";
 import { useInfoModalProvider } from "../../context/InfoModalProvider";
-import addPlayerToGame from "../../services/universalGameApi";
+import { addPlayerToGame } from "../../services/universalGameApi";
 import { useUserProvider } from "../../context/UserProvider";
 import { useHubConnectionProvider } from "../../context/HubConnectionProvider";
 
@@ -30,13 +30,13 @@ export const JoinScreen = ({ navigation }: any) => {
       return;
     }
 
-    var connectResult = connect(result.value.gameType);
+    var connectResult = connect(result.value.gameType, result.value.gameId);
     if (connectResult.isErr()) {
       displayErrorModal(connectResult.error);
       return;
     }
 
-    () => navigation.navigate(result.value.gameType);
+    navigation.navigate(result.value.gameType);
   };
 
   return (

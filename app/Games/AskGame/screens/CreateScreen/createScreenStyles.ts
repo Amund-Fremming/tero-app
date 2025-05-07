@@ -18,6 +18,10 @@ export const styles = StyleSheet.create({
   paragraph: {
     fontSize: moderateScale(16),
   },
+
+  input: {
+    fontSize: moderateScale(16),
+  },
 });
 
 export default styles;
