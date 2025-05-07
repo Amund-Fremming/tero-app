@@ -6,24 +6,33 @@ interface IInfoModal {
   isError: boolean;
   modalVisible: boolean;
   setModalVisible: (condition: boolean) => void;
+  onCloseFunc?: () => void;
 }
 
-export const InfoModal = (props: IInfoModal) => {
+export const InfoModal = ({
+  modalVisible,
+  setModalVisible,
+  isError,
+  message,
+  onCloseFunc: onClose = () => {},
+}: IInfoModal) => {
+  const handleCloseModal = () => {
+    onClose();
+    setModalVisible(!modalVisible);
+  };
+
   return (
-    <Modal visible={props.modalVisible} animationType="fade" transparent={true}>
+    <Modal visible={modalVisible} animationType="fade" transparent={true}>
       <View style={styles.overlay}>
         <View
           style={[
             styles.genericContainer,
-            props.isError ? styles.errorContainer : styles.messageContainer,
+            isError ? styles.errorContainer : styles.messageContainer,
           ]}
         >
-          <Text style={styles.header}>{props.isError ? "Ooops" : "Hey"}</Text>
-          <Text style={styles.message}>{props.message}</Text>
-          <Pressable
-            onPress={() => props.setModalVisible(!props.modalVisible)}
-            style={styles.button}
-          >
+          <Text style={styles.header}>{isError ? "Ooops" : "Hey"}</Text>
+          <Text style={styles.message}>{message}</Text>
+          <Pressable onPress={handleCloseModal} style={styles.button}>
             <Text style={styles.buttonText}>Close</Text>
           </Pressable>
         </View>

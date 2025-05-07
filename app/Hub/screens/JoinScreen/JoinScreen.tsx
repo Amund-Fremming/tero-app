@@ -10,7 +10,7 @@ import addPlayerToGame from "../../services/universalGameApi";
 import { useUserProvider } from "../../context/UserProvider";
 import { useHubConnectionProvider } from "../../context/HubConnectionProvider";
 
-export const JoinScreen = () => {
+export const JoinScreen = ({ navigation }: any) => {
   const [userInput, setUserInput] = useState<string>("");
 
   const { guestUserId } = useUserProvider();
@@ -36,8 +36,7 @@ export const JoinScreen = () => {
       return;
     }
 
-    // TODO: navigate to the game screen
-    // Change gametype to enum so i can map it to a screen, and its only one place to main tain not everywhere. This also needs a update backend
+    () => navigation.navigate(result.value.gameType);
   };
 
   return (

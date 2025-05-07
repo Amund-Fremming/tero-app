@@ -23,14 +23,27 @@ export const InfoModalProvider = ({ children }: InfoModalProviderProps) => {
   const [isError, setIsError] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [onCloseFunc, setOnCloseFunc] = useState<() => void>(() => {});
 
-  const displayErrorModal = (errorMessage: string) => {
+  const displayErrorModal = (
+    errorMessage: string,
+    onCloseAction?: () => void
+  ) => {
+    if (onCloseAction) {
+      setOnCloseFunc(onCloseAction);
+    }
     setMessage(errorMessage);
     setIsError(true);
     setModalVisible(true);
   };
 
-  const displayInfoModal = (infoMessage: string) => {
+  const displayInfoModal = (
+    infoMessage: string,
+    onCloseAction?: () => void
+  ) => {
+    if (onCloseAction) {
+      setOnCloseFunc(onCloseAction);
+    }
     setMessage(infoMessage);
     setIsError(false);
     setModalVisible(true);
@@ -49,6 +62,7 @@ export const InfoModalProvider = ({ children }: InfoModalProviderProps) => {
         isError={isError}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
+        onCloseFunc={onCloseFunc}
       />
     </InfoModalContext.Provider>
   );

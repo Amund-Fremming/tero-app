@@ -19,7 +19,7 @@ export interface RegisteredUserRequest {
 }
 
 export interface AddedToGameResult {
-  gameType: "AskGame" | "SpinGame";
+  gameType: GameType;
   gameId: string;
 }
 
@@ -30,4 +30,9 @@ export enum Category {
   Flirty,
   ForTheBoys,
   ForTheGirls,
+}
+
+export enum GameType {
+  AskGame = "AskGame",
+  SpinGame = "SpinGame",
 }
