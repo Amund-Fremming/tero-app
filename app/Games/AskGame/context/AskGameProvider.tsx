@@ -5,8 +5,6 @@ import EmptyAskGame from "../constants/EmptyObjects";
 interface IAskGameContext {
   askGame: AskGame;
   setAskGame: React.Dispatch<React.SetStateAction<AskGame>>;
-  gameId: number;
-  setGameId: React.Dispatch<React.SetStateAction<number>>;
   iterations: number;
   setIterations: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -14,8 +12,6 @@ interface IAskGameContext {
 const defaultContextValue: IAskGameContext = {
   askGame: EmptyAskGame,
   setAskGame: () => {},
-  gameId: 0,
-  setGameId: () => {},
   iterations: 0,
   setIterations: () => {},
 };
@@ -30,14 +26,11 @@ interface AskGameProviderProps {
 
 export const AskGameProvider = ({ children }: AskGameProviderProps) => {
   const [askGame, setAskGame] = useState<AskGame>(EmptyAskGame);
-  const [gameId, setGameId] = useState<number>(0);
   const [iterations, setIterations] = useState<number>(0);
 
   const value = {
     askGame,
     setAskGame,
-    gameId,
-    setGameId,
     iterations,
     setIterations,
   };

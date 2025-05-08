@@ -21,7 +21,7 @@ export const startGame = async (gameId: number) => {
 
 export const createGame = async (
   createGameRequest: CreateAskGameRequest
-): Promise<Result<AskGame, string>> => {
+): Promise<Result<number, string>> => {
   try {
     const response = await fetch(AskGameUrlBase, {
       method: "POST",
@@ -35,7 +35,7 @@ export const createGame = async (
       throw new Error("Status was not 200");
     }
 
-    var data: AskGame = await response.json();
+    var data: number = await response.json();
     return ok(data);
   } catch (error) {
     console.error(error);

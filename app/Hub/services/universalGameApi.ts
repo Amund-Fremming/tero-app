@@ -8,9 +8,12 @@ export const addPlayerToGame = async (
 ): Promise<Result<AddedToGameResult, Error>> => {
   try {
     const response = await fetch(
-      `${UniversalGameUrlBase}/${userId}/${universalGameId}`,
+      `${UniversalGameUrlBase}?userId=${userId}&universalGameId=${universalGameId}`,
       {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
     );
 

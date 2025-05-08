@@ -12,7 +12,10 @@ import { HubUrlBase } from "../constants/Endpoints";
 import { Result, ok, err } from "neverthrow";
 
 interface IHubConnectionContext {
-  connect: (hubName: string, gameId: number) => Result<void, string>;
+  connect: (
+    hubName: string,
+    gameId: number
+  ) => Result<signalR.HubConnection, string>;
   disconnect: () => void;
   connection: signalR.HubConnection | undefined;
 }
@@ -44,7 +47,7 @@ export const HubConnectionProvider = ({
 
   const connectionRef = useRef(connection);
 
-  const { displayErrorModal, displayInfoModal } = useInfoModalProvider();
+  const { displayErrorModal } = useInfoModalProvider();
 
   useEffect(() => {
     connectionRef.current = connection;
@@ -66,9 +69,12 @@ export const HubConnectionProvider = ({
 
     // TODO - remove log
     console.log("Connection still valid");
-  }, 300);
+  }, 500);
 
-  const connect = (hubName: string, gameId: number): Result<void, string> => {
+  const connect = (
+    hubName: string,
+    gameId: number
+  ): Result<signalR.HubConnection, string> => {
     try {
       var endpoint = `${HubUrlBase}/${hubName}?GameId=${gameId}`;
 
@@ -80,7 +86,7 @@ export const HubConnectionProvider = ({
       setConnection(hubConnection);
       hubConnection.start();
       setConnectedState(true);
-      return ok();
+      return ok(hubConnection);
     } catch (error) {
       // TODO - remove log
       setConnectedState(false);

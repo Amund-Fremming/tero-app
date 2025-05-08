@@ -1,20 +1,19 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
+import { GameType } from "../constants/Types";
 
 interface IGlobalGameContext {
-  universalId: number;
-  setUniversalId: React.Dispatch<React.SetStateAction<number>>;
-  gameType: "AskGame" | "SpinGame" | "";
-  setGameType: React.Dispatch<
-    React.SetStateAction<"AskGame" | "SpinGame" | "">
-  >;
+  gameId: number;
+  setGameId: React.Dispatch<React.SetStateAction<number>>;
+  gameType: GameType;
+  setGameType: React.Dispatch<React.SetStateAction<GameType>>;
   isCreator: boolean;
   setIsCreator: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const defaultContextValue: IGlobalGameContext = {
-  universalId: -1,
-  setUniversalId: () => {},
-  gameType: "",
+  gameId: -1,
+  setGameId: () => {},
+  gameType: GameType.AskGame,
   setGameType: () => {},
   isCreator: false,
   setIsCreator: () => {},
@@ -30,13 +29,13 @@ interface GlobalGameProviderProps {
 }
 
 export const GlobalGameProvider = ({ children }: GlobalGameProviderProps) => {
-  const [universalId, setUniversalId] = useState<number>(-1);
-  const [gameType, setGameType] = useState<"AskGame" | "SpinGame" | "">("");
+  const [gameId, setGameId] = useState<number>(-1);
+  const [gameType, setGameType] = useState<GameType>(GameType.AskGame);
   const [isCreator, setIsCreator] = useState<boolean>(false);
 
   const value = {
-    universalId,
-    setUniversalId,
+    gameId,
+    setGameId,
     gameType,
     setGameType,
     isCreator,

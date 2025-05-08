@@ -12,11 +12,12 @@ import { createGame } from "../../services/askGameApi";
 import { useInfoModalProvider } from "@/app/Hub/context/InfoModalProvider";
 import { useAskGameProvider } from "../../context/AskGameProvider";
 import AskScreen from "../../constants/AskScreen";
+import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
 
 export const CreateScreen = ({ navigation }: any) => {
   const { guestUserId } = useUserProvider();
   const { displayErrorModal } = useInfoModalProvider();
-  const { setAskGame } = useAskGameProvider();
+  const { setGameId } = useGlobalGameProvider();
 
   const [createRequest, setCreateRequest] = useState<CreateAskGameRequest>({
     userId: guestUserId,
@@ -32,7 +33,8 @@ export const CreateScreen = ({ navigation }: any) => {
       return;
     }
 
-    setAskGame(result.value);
+    console.log(result.value);
+    setGameId(result.value);
     navigation.navigate(AskScreen.Lobby);
   };
 

@@ -9,6 +9,7 @@ import { useInfoModalProvider } from "../../context/InfoModalProvider";
 import { addPlayerToGame } from "../../services/universalGameApi";
 import { useUserProvider } from "../../context/UserProvider";
 import { useHubConnectionProvider } from "../../context/HubConnectionProvider";
+import { useGlobalGameProvider } from "../../context/GlobalGameProvider";
 
 export const JoinScreen = ({ navigation }: any) => {
   const [userInput, setUserInput] = useState<string>("");
@@ -16,6 +17,7 @@ export const JoinScreen = ({ navigation }: any) => {
   const { guestUserId } = useUserProvider();
   const { displayErrorModal } = useInfoModalProvider();
   const { connect } = useHubConnectionProvider();
+  const { setGameId, setGameType } = useGlobalGameProvider();
 
   const handleJoinGame = async () => {
     var universalGameId = Number.parseInt(userInput);
@@ -36,6 +38,8 @@ export const JoinScreen = ({ navigation }: any) => {
       return;
     }
 
+    setGameId(result.value.gameId);
+    setGameType(result.value.gameType);
     navigation.navigate(result.value.gameType);
   };
 
