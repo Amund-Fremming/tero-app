@@ -1,6 +1,7 @@
 import AskGame, { CreateAskGameRequest } from "../constants/AskTypes";
 import { AskGameUrlBase } from "../../../Hub/constants/Endpoints";
 import { Result, ok, err } from "neverthrow";
+import { CreateGameResponse } from "@/app/Hub/constants/Types";
 
 export const startGame = async (gameId: number): Promise<Result<AskGame, string>> => {
   try {
@@ -22,7 +23,9 @@ export const startGame = async (gameId: number): Promise<Result<AskGame, string>
   }
 };
 
-export const createGame = async (createGameRequest: CreateAskGameRequest): Promise<Result<number, string>> => {
+export const createGame = async (
+  createGameRequest: CreateAskGameRequest
+): Promise<Result<CreateGameResponse, string>> => {
   try {
     const response = await fetch(AskGameUrlBase, {
       method: "POST",
@@ -37,7 +40,7 @@ export const createGame = async (createGameRequest: CreateAskGameRequest): Promi
       return err(message);
     }
 
-    const data: number = await response.json();
+    const data: CreateGameResponse = await response.json();
     return ok(data);
   } catch (error) {
     console.error("createGame");

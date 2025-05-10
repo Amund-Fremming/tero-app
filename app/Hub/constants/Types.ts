@@ -36,3 +36,8 @@ export enum GameType {
   AskGame = "AskGame",
   SpinGame = "SpinGame",
 }
+
+export interface CreateGameResponse {
+  gameId: number;
+  universalGameId: number;
+}

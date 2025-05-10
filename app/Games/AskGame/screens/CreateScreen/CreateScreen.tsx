@@ -10,17 +10,13 @@ import { Pressable, TextInput } from "react-native-gesture-handler";
 import { useUserProvider } from "@/app/Hub/context/UserProvider";
 import { createGame } from "../../services/askGameApi";
 import { useInfoModalProvider } from "@/app/Hub/context/InfoModalProvider";
-import { useAskGameProvider } from "../../context/AskGameProvider";
 import AskScreen from "../../constants/AskScreen";
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
-import { useHubConnectionProvider } from "@/app/Hub/context/HubConnectionProvider";
 
 export const CreateScreen = ({ navigation }: any) => {
   const { userId: guestUserId } = useUserProvider();
   const { displayErrorModal } = useInfoModalProvider();
-  const { setGameId } = useGlobalGameProvider();
-
-  const { connection } = useHubConnectionProvider();
+  const { setGameId, setUniversalGameId } = useGlobalGameProvider();
 
   const [createRequest, setCreateRequest] = useState<CreateAskGameRequest>({
     userId: guestUserId,
@@ -36,8 +32,8 @@ export const CreateScreen = ({ navigation }: any) => {
       return;
     }
 
-    console.log(result.value);
-    setGameId(result.value);
+    setGameId(result.value.gameId);
+    setUniversalGameId(result.value.universalGameId);
     navigation.navigate(AskScreen.Lobby);
   };
 
@@ -49,17 +45,13 @@ export const CreateScreen = ({ navigation }: any) => {
         style={styles.input}
         placeholder="Spillnavn"
         value={createRequest.gameName}
-        onChangeText={(val) =>
-          setCreateRequest((prev) => ({ ...prev, gameName: val }))
-        }
+        onChangeText={(val) => setCreateRequest((prev) => ({ ...prev, gameName: val }))}
       />
       <TextInput
         style={styles.input}
         placeholder="Forklaring"
         value={createRequest.description}
-        onChangeText={(val) =>
-          setCreateRequest((prev) => ({ ...prev, description: val }))
-        }
+        onChangeText={(val) => setCreateRequest((prev) => ({ ...prev, description: val }))}
       />
 
       <Text style={styles.paragraph}>Mangler kategorivalg her</Text>
@@ -68,12 +60,7 @@ export const CreateScreen = ({ navigation }: any) => {
         <Text>Opprett</Text>
       </Pressable>
 
-      <AbsoluteNavButton
-        primary={Color.Beige}
-        secondary={Color.White}
-        destination={Screen.Home}
-        label="Home"
-      />
+      <AbsoluteNavButton primary={Color.Beige} secondary={Color.White} destination={Screen.Home} label="Home" />
     </View>
   );
 };

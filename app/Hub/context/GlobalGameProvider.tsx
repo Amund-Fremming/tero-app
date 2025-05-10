@@ -4,6 +4,8 @@ import { GameType } from "../constants/Types";
 interface IGlobalGameContext {
   gameId: number | undefined;
   setGameId: React.Dispatch<React.SetStateAction<number | undefined>>;
+  universalGameId: number | undefined;
+  setUniversalGameId: React.Dispatch<React.SetStateAction<number | undefined>>;
   gameType: GameType;
   setGameType: React.Dispatch<React.SetStateAction<GameType>>;
   isCreator: boolean;
@@ -13,6 +15,8 @@ interface IGlobalGameContext {
 const defaultContextValue: IGlobalGameContext = {
   gameId: undefined,
   setGameId: () => {},
+  universalGameId: undefined,
+  setUniversalGameId: () => {},
   gameType: GameType.AskGame,
   setGameType: () => {},
   isCreator: false,
@@ -29,12 +33,15 @@ interface GlobalGameProviderProps {
 
 export const GlobalGameProvider = ({ children }: GlobalGameProviderProps) => {
   const [gameId, setGameId] = useState<number | undefined>(undefined);
+  const [universalGameId, setUniversalGameId] = useState<number | undefined>(undefined);
   const [gameType, setGameType] = useState<GameType>(GameType.AskGame);
   const [isCreator, setIsCreator] = useState<boolean>(false);
 
   const value = {
     gameId,
     setGameId,
+    universalGameId,
+    setUniversalGameId,
     gameType,
     setGameType,
     isCreator,

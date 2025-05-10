@@ -10,6 +10,7 @@ import { addPlayerToGame } from "../../services/universalGameApi";
 import { useUserProvider } from "../../context/UserProvider";
 import { useHubConnectionProvider } from "../../context/HubConnectionProvider";
 import { useGlobalGameProvider } from "../../context/GlobalGameProvider";
+import MediumButton from "../../components/MediumButton/MediumButton";
 
 export const JoinScreen = ({ navigation }: any) => {
   const [userInput, setUserInput] = useState<string>("");
@@ -17,7 +18,7 @@ export const JoinScreen = ({ navigation }: any) => {
   const { userId } = useUserProvider();
   const { displayErrorModal } = useInfoModalProvider();
   const { connect } = useHubConnectionProvider();
-  const { setGameId, setGameType } = useGlobalGameProvider();
+  const { setGameId, setUniversalGameId, setGameType } = useGlobalGameProvider();
 
   const handleJoinGame = async () => {
     const universalGameId = Number.parseInt(userInput);
@@ -28,30 +29,28 @@ export const JoinScreen = ({ navigation }: any) => {
 
     const result = await addPlayerToGame(userId, universalGameId);
     if (result.isErr()) {
-      displayErrorModal(result.error.message);
-      return;
-    }
-
-    const connectResult = await connect(result.value.gameType, result.value.gameId);
-    if (connectResult.isErr()) {
-      displayErrorModal(connectResult.error);
+      displayErrorModal(result.error);
       return;
     }
 
     setGameId(result.value.gameId);
+    setUniversalGameId(universalGameId);
     setGameType(result.value.gameType);
-    navigation.navigate(result.value.gameType);
+    navigation.navigate(result.value.gameType.toString());
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Bli med</Text>
 
-      <TextInput placeholder="Skriv inn id" value={userInput} onChangeText={(input) => setUserInput(input)} />
+      <TextInput
+        style={styles.input}
+        placeholder="Skriv inn id"
+        value={userInput}
+        onChangeText={(input) => setUserInput(input)}
+      />
 
-      <Pressable onPress={handleJoinGame}>
-        <Text>Bli med</Text>
-      </Pressable>
+      <MediumButton text="Bli med" color="black" onClick={handleJoinGame} />
 
       <AbsoluteNavButton label="Hjem" destination={Screen.Home} primary={Colors.Black} secondary={Colors.Red} />
     </View>

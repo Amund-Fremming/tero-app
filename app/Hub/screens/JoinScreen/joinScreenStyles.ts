@@ -1,16 +1,15 @@
 import { StyleSheet } from "react-native";
 import Colors from "../../constants/Color";
-import {
-  horizontalScale,
-  moderateScale,
-  verticalScale,
-} from "../../utils/dimensions";
+import { horizontalScale, moderateScale, verticalScale } from "../../utils/dimensions";
 
 export const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    height: "100%",
     backgroundColor: Colors.Red,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
   },
 
   header: {
@@ -20,6 +19,17 @@ export const styles = StyleSheet.create({
     color: Colors.Black,
     fontSize: moderateScale(40),
     fontWeight: 900,
+  },
+
+  paragraph: {
+    fontSize: moderateScale(16),
+  },
+
+  input: {
+    borderWidth: 2,
+    borderColor: "black",
+    height: 50,
+    width: 240,
   },
 });
 

@@ -71,7 +71,6 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
 
   async function connect(hubName: string, gameId: number): Promise<Result<signalR.HubConnection, string>> {
     try {
-      console.log("Trying to connect. Connection is: ", connectionRef.current);
       if (connectionRef.current) {
         return err("Det finnes allerede en tilkobling"); // TODO - remove
       }
@@ -105,7 +104,6 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
       await connection?.stop();
       await connectionRef.current.stop();
       clearValues();
-      console.log("Hub connection was stopped", connectionRef.current == undefined ? true : false); // TODO - remove log
 
       return ok();
     } catch (error) {
@@ -116,8 +114,6 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
 
   function setListener<T>(channel: string, fn: (item: T) => void): Result<void, string> {
     try {
-      console.log("Lisntener on connection: ", connectionRef.current?.connectionId);
-
       if (!connectionRef.current) {
         return err("Ingen tilkobling opprettet.");
       }

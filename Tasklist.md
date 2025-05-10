@@ -5,6 +5,7 @@
 ## Left off
 
 - SE OVER / REFACTORER HubConnectionProvider
+- ENDRE ISCREATOR til en enum som peker itl om man skal starte / opprette / bli med i spillet, altså en kontekst
 
 - Disconnect from connection does not work
 - Fix all hub channels ask game

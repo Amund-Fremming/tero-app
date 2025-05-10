@@ -18,10 +18,12 @@ import { AskGameState } from "../../constants/AskTypes";
 export const LobbyScreen = ({ navigation }: any) => {
   const [question, setQuestion] = useState<string>("");
 
-  const { isCreator, gameId, gameType } = useGlobalGameProvider();
+  const { isCreator, gameId, universalGameId, gameType } = useGlobalGameProvider();
   const { iterations, setIterations, setAskGame } = useAskGameProvider();
   const { connect, disconnect, setListener, invokeFunction } = useHubConnectionProvider();
   const { displayErrorModal } = useInfoModalProvider();
+
+  useEffect(() => {}, [universalGameId]);
 
   useEffect(() => {
     createHubConnection();
@@ -86,6 +88,7 @@ export const LobbyScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
+      <Text>Universal game id: {universalGameId}</Text>
       <Text style={styles.header}>Legg til spørsmål</Text>
       <Text style={styles.paragraph}>Antall spørsmål: {iterations}</Text>
       <TextInput style={styles.input} value={question} onChangeText={(input) => setQuestion(input)} />
