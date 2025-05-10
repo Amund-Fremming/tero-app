@@ -14,25 +14,25 @@ import { useGlobalGameProvider } from "../../context/GlobalGameProvider";
 export const JoinScreen = ({ navigation }: any) => {
   const [userInput, setUserInput] = useState<string>("");
 
-  const { guestUserId } = useUserProvider();
+  const { userId } = useUserProvider();
   const { displayErrorModal } = useInfoModalProvider();
   const { connect } = useHubConnectionProvider();
   const { setGameId, setGameType } = useGlobalGameProvider();
 
   const handleJoinGame = async () => {
-    var universalGameId = Number.parseInt(userInput);
+    const universalGameId = Number.parseInt(userInput);
     if (isNaN(universalGameId)) {
       displayErrorModal("Spill id må være ett tall");
       return;
     }
 
-    const result = await addPlayerToGame(guestUserId, universalGameId);
+    const result = await addPlayerToGame(userId, universalGameId);
     if (result.isErr()) {
       displayErrorModal(result.error.message);
       return;
     }
 
-    var connectResult = connect(result.value.gameType, result.value.gameId);
+    const connectResult = await connect(result.value.gameType, result.value.gameId);
     if (connectResult.isErr()) {
       displayErrorModal(connectResult.error);
       return;
@@ -47,22 +47,13 @@ export const JoinScreen = ({ navigation }: any) => {
     <View style={styles.container}>
       <Text style={styles.header}>Bli med</Text>
 
-      <TextInput
-        placeholder="Skriv inn id"
-        value={userInput}
-        onChangeText={(input) => setUserInput(input)}
-      />
+      <TextInput placeholder="Skriv inn id" value={userInput} onChangeText={(input) => setUserInput(input)} />
 
       <Pressable onPress={handleJoinGame}>
         <Text>Bli med</Text>
       </Pressable>
 
-      <AbsoluteNavButton
-        label="Hjem"
-        destination={Screen.Home}
-        primary={Colors.Black}
-        secondary={Colors.Red}
-      />
+      <AbsoluteNavButton label="Hjem" destination={Screen.Home} primary={Colors.Black} secondary={Colors.Red} />
     </View>
   );
 };

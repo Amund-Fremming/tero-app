@@ -1,22 +1,17 @@
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { createGuestUser, updateUserActivity } from "../services/userApi";
-import { useInfoModalProvider } from "./InfoModalProvider";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Platform } from "react-native";
 
 interface IUserContext {
-  guestUserId: number;
-  setGuesUserId: React.Dispatch<React.SetStateAction<number>>;
+  userId: number;
+  setUserId: React.Dispatch<React.SetStateAction<number>>;
   markUserAsActive: () => Promise<void>;
 }
 
 const defaultContextValue: IUserContext = {
-  guestUserId: -1,
-  setGuesUserId: () => {},
+  userId: -1,
+  setUserId: () => {},
   markUserAsActive: async () => {},
 };
 
@@ -29,39 +24,48 @@ interface UserProviderProps {
 }
 
 export const UserProvider = ({ children }: UserProviderProps) => {
-  const { displayErrorModal } = useInfoModalProvider();
-
-  const ensureGuestUserId = async () => {
-    // TODO: Get from localstorage if not exist create new
-    const result = await createGuestUser();
-    if (result.isErr()) {
-      console.error(result.error); // TODO - remove log
-      displayErrorModal("Noe har gått galt, lukk appen og forsøk igjen.");
-      return;
-    }
-
-    setGuestUserId(result.value.id);
-    console.log("Guest user created with id: ", result.value.id); // TODO - remove log
-  };
-
-  const markUserAsActive = async () => {
-    // TODO: more logic, update registered user or guest user logic
-    var result = await updateUserActivity(guestUserId);
-    if (result.isErr()) {
-      console.error(result.error);
-    }
-  };
+  const [userId, setUserId] = useState<number>(-1);
 
   useEffect(() => {
     ensureGuestUserId();
   }, []);
 
-  const [guestUserId, setGuestUserId] = useState<number>(-1);
+  const getFromLocalStorage = async (key: string) =>
+    Platform.OS === "web" ? localStorage.getItem(key) : await AsyncStorage.getItem(key);
+
+  const setToLocalStorage = async (key: string, value: string) =>
+    Platform.OS !== "web" ? localStorage.setItem(key, value) : await AsyncStorage.setItem(key, value);
+
+  const ensureGuestUserId = async () => {
+    const storedUserId = await getFromLocalStorage("userId");
+    if (storedUserId) {
+      setUserId(Number.parseInt(storedUserId));
+      console.log("User id retrieved from localstorage:", storedUserId); // TODO - remove log
+      return;
+    }
+
+    const result = await createGuestUser();
+    if (result.isErr()) {
+      console.error(result.error); // TODO - remove log
+      return;
+    }
+
+    setUserId(result.value.id);
+    setToLocalStorage("userId", result.value.id.toString());
+    console.log("Guest user created with id: ", result.value.id); // TODO - remove log
+  };
+
+  const markUserAsActive = async () => {
+    const result = await updateUserActivity(userId);
+    if (result.isErr()) {
+      console.error(result.error);
+    }
+  };
 
   const value = {
     markUserAsActive,
-    guestUserId,
-    setGuesUserId: setGuestUserId,
+    userId,
+    setUserId,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

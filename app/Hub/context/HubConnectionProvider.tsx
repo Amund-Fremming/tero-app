@@ -1,35 +1,34 @@
 import * as signalR from "@microsoft/signalr";
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { useInfoModalProvider } from "./InfoModalProvider";
 import { HubUrlBase } from "../constants/Endpoints";
 import { Result, ok, err } from "neverthrow";
+import { useNavigation } from "expo-router";
+import Screen from "../constants/Screen";
 
 interface IHubConnectionContext {
-  connect: (
-    hubName: string,
-    gameId: number
-  ) => Result<signalR.HubConnection, string>;
-  disconnect: () => void;
-  connection: signalR.HubConnection | undefined;
+  connect: (hubName: string, gameId: number) => Promise<Result<signalR.HubConnection, string>>;
+  disconnect: () => Promise<Result<void, string>>;
+  setListener: <T>(channel: string, fn: (item: T) => void) => Result<void, string>;
+  invokeFunction: (functionName: string, ...params: any[]) => Promise<Result<void, string>>;
 }
 
 const defaultContextValue: IHubConnectionContext = {
-  connect: () => {
+  connect: async (_hubName: string, _gameId: number) => {
     return err("");
   },
-  disconnect: () => {},
-  connection: undefined,
+  disconnect: async () => {
+    return err("");
+  },
+  setListener: (_channel: string, _fn: (item: any) => void) => {
+    return err("");
+  },
+  invokeFunction: async (functionName: string, ...params: any[]) => {
+    return err("");
+  },
 };
 
-const HubConnectionContext =
-  createContext<IHubConnectionContext>(defaultContextValue);
+const HubConnectionContext = createContext<IHubConnectionContext>(defaultContextValue);
 
 export const useHubConnectionProvider = () => useContext(HubConnectionContext);
 
@@ -37,92 +36,130 @@ interface HubConnectionProviderProps {
   children: ReactNode;
 }
 
-export const HubConnectionProvider = ({
-  children,
-}: HubConnectionProviderProps) => {
-  const [connection, setConnection] = useState<
-    signalR.HubConnection | undefined
-  >(undefined);
+export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) => {
+  const [connection, setConnection] = useState<signalR.HubConnection | undefined>(undefined);
   const [connectedState, setConnectedState] = useState<boolean>(false);
 
   const connectionRef = useRef(connection);
+  const connectedStateRef = useRef(connectedState);
 
   const { displayErrorModal } = useInfoModalProvider();
+  const navigation: any = useNavigation();
 
   useEffect(() => {
-    connectionRef.current = connection;
-  }, [connection]);
+    const interval = setInterval(() => {
+      if (!connectedStateRef.current) return;
+      if (!connectedStateRef.current && connectionRef.current) {
+        disconnect();
+        return;
+      }
 
-  setInterval(() => {
-    if (!connectedState) {
-      return;
-    }
+      if (!connectionRef.current) {
+        // TODO - For games with hub call invalidate user from the correct api.
+        clearValues();
+        displayErrorModal("Du mistet tilkoblingen, vennligst forsøk å koble til igjen.", () =>
+          navigation.navigate(Screen.Home)
+        );
+        return;
+      }
 
-    if (!connectionRef.current) {
-      // TODO - For games with hub call invalidate user from the correct api.
-      // TODO - kaste bruker så tilbake til hjemmesiden
-      displayErrorModal(
-        "Du mistet tilkoblingen, vennligst forsøk å koble til igjen."
-      );
-      return;
-    }
+      console.log("Connection still valid"); // TODO - remove log
+    }, 500);
 
-    // TODO - remove log
-    console.log("Connection still valid");
-  }, 500);
+    return () => clearInterval(interval);
+  }, []);
 
-  const connect = (
-    hubName: string,
-    gameId: number
-  ): Result<signalR.HubConnection, string> => {
+  async function connect(hubName: string, gameId: number): Promise<Result<signalR.HubConnection, string>> {
     try {
-      var endpoint = `${HubUrlBase}/${hubName}?GameId=${gameId}`;
+      console.log("Trying to connect. Connection is: ", connectionRef.current);
+      if (connectionRef.current) {
+        return err("Det finnes allerede en tilkobling"); // TODO - remove
+      }
 
-      var hubConnection = new signalR.HubConnectionBuilder()
+      const endpoint = `${HubUrlBase}/${hubName}?GameId=${gameId}`;
+      const hubConnection = new signalR.HubConnectionBuilder()
         .withUrl(endpoint)
         .configureLogging(signalR.LogLevel.Information)
         .build();
 
+      await hubConnection.start();
+      hubConnection.onclose(() => clearValues());
       setConnection(hubConnection);
-      hubConnection.start();
+      connectionRef.current = hubConnection;
       setConnectedState(true);
+      connectedStateRef.current = true;
+
       return ok(hubConnection);
     } catch (error) {
-      // TODO - remove log
-      setConnectedState(false);
-      console.error(error);
+      setConnectedState(false); // TODO - remove log
       return err("En feil skjedde ved tilkoblingen.");
     }
-  };
+  }
 
-  const disconnect = () => {
+  async function disconnect(): Promise<Result<void, string>> {
     try {
-      setConnectedState(false);
-      if (!connection) {
-        return err("Du er ikke tilkoblet noe spill!");
+      if (!connectionRef.current) {
+        return err("Du er ikke tilkoblet noe spill!"); // Could be removed?
       }
 
-      connection.stop;
+      await connection?.stop();
+      await connectionRef.current.stop();
+      clearValues();
+      console.log("Hub connection was stopped", connectionRef.current == undefined ? true : false); // TODO - remove log
+
       return ok();
     } catch (error) {
-      // TODO - remove log
-      setConnectedState(false);
-      console.error(error);
+      setConnectedState(false); // TODO - remove log
       return err("En feil skjedde når du skulle forlate spillet.");
     }
+  }
+
+  function setListener<T>(channel: string, fn: (item: T) => void): Result<void, string> {
+    try {
+      console.log("Lisntener on connection: ", connectionRef.current?.connectionId);
+
+      if (!connectionRef.current) {
+        return err("Ingen tilkobling opprettet.");
+      }
+
+      connectionRef.current.on(channel, fn);
+      console.log("Listener created");
+      return ok();
+    } catch (error) {
+      console.log("invokeFunction");
+      return err("Noe gikk galt.");
+    }
+  }
+
+  async function invokeFunction(functionName: string, ...params: any[]): Promise<Result<void, string>> {
+    try {
+      console.log("Invoked funciton on connection: ", connectionRef.current?.connectionId);
+      if (!connectionRef.current) {
+        return err("Ingen tilkobling opprettet.");
+      }
+      await connectionRef.current?.invoke(functionName, ...params);
+      return ok();
+    } catch (error) {
+      console.log("invokeFunction");
+      return err("Noe gikk galt.");
+    }
+  }
+
+  const clearValues = () => {
+    setConnection(undefined);
+    connectionRef.current = undefined;
+    setConnectedState(false);
+    connectedStateRef.current = false;
   };
 
   const value = {
-    connection,
+    invokeFunction,
+    setListener,
     connect,
     disconnect,
   };
 
-  return (
-    <HubConnectionContext.Provider value={value}>
-      {children}
-    </HubConnectionContext.Provider>
-  );
+  return <HubConnectionContext.Provider value={value}>{children}</HubConnectionContext.Provider>;
 };
 
 export default HubConnectionProvider;

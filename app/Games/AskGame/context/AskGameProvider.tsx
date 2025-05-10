@@ -1,16 +1,15 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { AskGame } from "../constants/AskTypes";
-import EmptyAskGame from "../constants/EmptyObjects";
 
 interface IAskGameContext {
-  askGame: AskGame;
-  setAskGame: React.Dispatch<React.SetStateAction<AskGame>>;
+  askGame: AskGame | undefined;
+  setAskGame: React.Dispatch<React.SetStateAction<AskGame | undefined>>;
   iterations: number;
   setIterations: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const defaultContextValue: IAskGameContext = {
-  askGame: EmptyAskGame,
+  askGame: undefined,
   setAskGame: () => {},
   iterations: 0,
   setIterations: () => {},
@@ -25,7 +24,7 @@ interface AskGameProviderProps {
 }
 
 export const AskGameProvider = ({ children }: AskGameProviderProps) => {
-  const [askGame, setAskGame] = useState<AskGame>(EmptyAskGame);
+  const [askGame, setAskGame] = useState<AskGame | undefined>(undefined);
   const [iterations, setIterations] = useState<number>(0);
 
   const value = {

@@ -2,9 +2,7 @@ import { UserUrlBase } from "@/app/Hub/constants/Endpoints";
 import { RegisteredUserRequest, UserBase } from "../constants/Types";
 import { Result, ok, err } from "neverthrow";
 
-export const updateUserActivity = async (
-  userId: number
-): Promise<Result<void, string>> => {
+export const updateUserActivity = async (userId: number): Promise<Result<void, string>> => {
   try {
     const response = await fetch(`${UserUrlBase}/${userId}`, {
       method: "PUT",
@@ -72,7 +70,7 @@ export const doesUserExist = async (userId: number) => {
       throw new Error("Status was not 200");
     }
 
-    var data: boolean = await response.json();
+    const data: boolean = await response.json();
     return data;
   } catch (error) {
     console.error(error);

@@ -1,13 +1,10 @@
-import {
-  createStackNavigator,
-  TransitionPresets,
-} from "@react-navigation/stack";
+import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
 import React from "react";
 import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
 import { SpinScreen } from "./constants/SpinScreen";
 import SpinGameProvider from "./context/SpinGameProvider";
 
-var Stack = createStackNavigator();
+const Stack = createStackNavigator();
 
 export const SpinGame = () => {
   return (

@@ -9,27 +9,16 @@ interface IInfoModal {
   onCloseFunc?: () => void;
 }
 
-export const InfoModal = ({
-  modalVisible,
-  setModalVisible,
-  isError,
-  message,
-  onCloseFunc: onClose = () => {},
-}: IInfoModal) => {
+export const InfoModal = ({ modalVisible, setModalVisible, isError, message, onCloseFunc = () => {} }: IInfoModal) => {
   const handleCloseModal = () => {
-    onClose();
     setModalVisible(!modalVisible);
+    onCloseFunc();
   };
 
   return (
     <Modal visible={modalVisible} animationType="fade" transparent={true}>
       <View style={styles.overlay}>
-        <View
-          style={[
-            styles.genericContainer,
-            isError ? styles.errorContainer : styles.messageContainer,
-          ]}
-        >
+        <View style={[styles.genericContainer, isError ? styles.errorContainer : styles.messageContainer]}>
           <Text style={styles.header}>{isError ? "Ooops" : "Hey"}</Text>
           <Text style={styles.message}>{message}</Text>
           <Pressable onPress={handleCloseModal} style={styles.button}>

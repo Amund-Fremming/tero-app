@@ -13,11 +13,14 @@ import { useInfoModalProvider } from "@/app/Hub/context/InfoModalProvider";
 import { useAskGameProvider } from "../../context/AskGameProvider";
 import AskScreen from "../../constants/AskScreen";
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
+import { useHubConnectionProvider } from "@/app/Hub/context/HubConnectionProvider";
 
 export const CreateScreen = ({ navigation }: any) => {
-  const { guestUserId } = useUserProvider();
+  const { userId: guestUserId } = useUserProvider();
   const { displayErrorModal } = useInfoModalProvider();
   const { setGameId } = useGlobalGameProvider();
+
+  const { connection } = useHubConnectionProvider();
 
   const [createRequest, setCreateRequest] = useState<CreateAskGameRequest>({
     userId: guestUserId,

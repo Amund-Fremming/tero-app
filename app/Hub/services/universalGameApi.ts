@@ -7,21 +7,18 @@ export const addPlayerToGame = async (
   universalGameId: number
 ): Promise<Result<AddedToGameResult, Error>> => {
   try {
-    const response = await fetch(
-      `${UniversalGameUrlBase}?userId=${userId}&universalGameId=${universalGameId}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`${UniversalGameUrlBase}?userId=${userId}&universalGameId=${universalGameId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     if (response.status !== 200) {
       throw new Error("Status was not 200");
     }
 
-    var data: AddedToGameResult = await response.json();
+    const data: AddedToGameResult = await response.json();
     return ok(data);
   } catch (error) {
     return err(new Error("En feil har skjedd."));

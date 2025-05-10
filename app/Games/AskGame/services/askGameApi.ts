@@ -2,26 +2,27 @@ import AskGame, { CreateAskGameRequest } from "../constants/AskTypes";
 import { AskGameUrlBase } from "../../../Hub/constants/Endpoints";
 import { Result, ok, err } from "neverthrow";
 
-export const startGame = async (gameId: number) => {
+export const startGame = async (gameId: number): Promise<Result<AskGame, string>> => {
   try {
     const response = await fetch(`${AskGameUrlBase}/${gameId}`, {
       method: "GET",
     });
 
     if (response.status !== 200) {
-      throw new Error("Status was not 200");
+      const message: string = await response.json();
+      return err(message);
     }
 
-    var data: AskGame = await response.json();
-    return data;
+    const data: AskGame = await response.json();
+    console.log("Game recieved: ", data);
+    return ok(data);
   } catch (error) {
-    console.error(error);
+    console.error("startGame");
+    return err("Noe gikk galt.");
   }
 };
 
-export const createGame = async (
-  createGameRequest: CreateAskGameRequest
-): Promise<Result<number, string>> => {
+export const createGame = async (createGameRequest: CreateAskGameRequest): Promise<Result<number, string>> => {
   try {
     const response = await fetch(AskGameUrlBase, {
       method: "POST",
@@ -32,14 +33,15 @@ export const createGame = async (
     });
 
     if (response.status !== 200) {
-      throw new Error("Status was not 200");
+      const message: string = await response.json();
+      return err(message);
     }
 
-    var data: number = await response.json();
+    const data: number = await response.json();
     return ok(data);
   } catch (error) {
-    console.error(error);
-    return err("Klarte ikke opprette spill.");
+    console.error("createGame");
+    return err("Noe gikk galt.");
   }
 };
 
