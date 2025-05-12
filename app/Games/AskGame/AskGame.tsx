@@ -8,18 +8,28 @@ import { CreateScreen } from "./screens/CreateScreen/CreateScreen";
 import StartedScreen from "./screens/StartedScreen/StartedScreen";
 import { GameScreen } from "./screens/GameScreen/GameScreen";
 import ChooseScreen from "./screens/ChooseScreen/ChooseScreen";
+import { GameEntryMode } from "@/app/Hub/constants/Types";
 
 const Stack = createStackNavigator();
 
 export const AskGame = () => {
-  const { isCreator } = useGlobalGameProvider();
+  const { gameEntryMode } = useGlobalGameProvider();
 
-  const initialScreen = isCreator ? AskScreen.Create : AskScreen.Choose;
+  const getInitialScreen = () => {
+    switch (gameEntryMode) {
+      case GameEntryMode.Creator:
+        return AskScreen.Create;
+      case GameEntryMode.Host:
+        return AskScreen.Choose;
+      case GameEntryMode.Participant:
+        return AskScreen.Lobby;
+    }
+  };
 
   return (
     <AskGameProvider>
       <Stack.Navigator
-        initialRouteName={initialScreen}
+        initialRouteName={getInitialScreen()}
         screenOptions={{
           ...TransitionPresets.FadeFromBottomAndroid,
           headerShown: false,

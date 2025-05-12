@@ -10,12 +10,7 @@ interface ISmallButton {
   onClick: () => void;
 }
 
-export const SmallButton = ({
-  text,
-  color,
-  onClick,
-  inverted = false,
-}: ISmallButton) => {
+export const SmallButton = ({ text, color, onClick, inverted = false }: ISmallButton) => {
   const getButtonStyles = () => {
     if (inverted) {
       return {

@@ -9,17 +9,9 @@ export const HubScreen = ({ navigation }: any) => {
     <View style={styles.container}>
       <Text style={styles.header}>Hub</Text>
 
-      <Button
-        title="Admin dashboard"
-        onPress={() => navigation.navigate(Screen.Admin)}
-      />
+      <Button title="Admin dashboard" onPress={() => navigation.navigate(Screen.Admin)} />
 
-      <AbsoluteNavButton
-        label="Back"
-        destination={Screen.Home}
-        primary={Colors.Purple}
-        secondary={Colors.Beige}
-      />
+      <AbsoluteNavButton label="Back" destination={Screen.Home} primary={Colors.Purple} secondary={Colors.Beige} />
     </View>
   );
 };

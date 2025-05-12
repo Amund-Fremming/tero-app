@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
-    backgroundColor: Colors.Purple,
+    backgroundColor: Colors.White,
     justifyContent: "space-between",
     alignItems: "center",
   },
@@ -25,9 +25,7 @@ export const styles = StyleSheet.create({
   },
 
   subHeader: {
-    fontSize: moderateScale(20),
     color: Colors.White,
-    fontWeight: 900,
   },
 
   buttonContainer: {
@@ -52,11 +50,11 @@ export const styles = StyleSheet.create({
   },
 
   bottomLeft: {
-    backgroundColor: Colors.Beige,
+    backgroundColor: Colors.White,
   },
 
   bottomRight: {
-    backgroundColor: Colors.Red,
+    backgroundColor: Colors.Black,
   },
 
   buttonTextWrapper: {
@@ -64,7 +62,7 @@ export const styles = StyleSheet.create({
   },
 
   textBase: {
-    fontSize: moderateScale(30),
+    fontSize: moderateScale(18),
     fontWeight: 900,
   },
 
@@ -73,15 +71,15 @@ export const styles = StyleSheet.create({
   },
 
   textTopRight: {
-    color: Colors.Red,
+    color: Colors.Black,
   },
 
   textBottomLeft: {
-    color: Colors.Purple,
+    color: Colors.Black,
   },
 
   textBottomRight: {
-    color: Colors.Black,
+    color: Colors.White,
   },
 });
 

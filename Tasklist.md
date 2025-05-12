@@ -4,14 +4,9 @@
 
 ## Left off
 
-- SE OVER / REFACTORER HubConnectionProvider
-- ENDRE ISCREATOR til en enum som peker itl om man skal starte / opprette / bli med i spillet, altså en kontekst
+- Fortsett ved uthenting av page, den feiler
 
-- Disconnect from connection does not work
-- Fix all hub channels ask game
-- Create ask gameflow with api connection
 - Create copy / start game, with api connection
-- Merge together providers
 - Hente spill med paginering på lsite visning
 - Modal som viser om du har utdatert app version
 - Varslinger

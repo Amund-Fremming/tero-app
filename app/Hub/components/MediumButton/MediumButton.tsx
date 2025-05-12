@@ -9,12 +9,7 @@ interface IMediumButton {
   inverted?: boolean;
 }
 
-export const MediumButton = ({
-  text,
-  color,
-  onClick,
-  inverted = false,
-}: IMediumButton) => {
+export const MediumButton = ({ text, color, onClick, inverted = false }: IMediumButton) => {
   const getButtonStyles = () => {
     if (inverted) {
       return {

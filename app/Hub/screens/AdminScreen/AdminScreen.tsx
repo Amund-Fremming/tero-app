@@ -11,12 +11,7 @@ export const AdminScreen = () => {
         <Text style={styles.header}>Admin</Text>
       </View>
 
-      <AbsoluteNavButton
-        label="Hjem"
-        destination={Screen.Home}
-        primary={Colors.Black}
-        secondary={Colors.White}
-      />
+      <AbsoluteNavButton label="Hjem" destination={Screen.Home} primary={Colors.Black} secondary={Colors.White} />
     </View>
   );
 };

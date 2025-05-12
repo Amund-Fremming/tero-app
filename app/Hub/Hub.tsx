@@ -22,6 +22,7 @@ export const Hub = () => {
         ...TransitionPresets.FadeFromBottomAndroid,
         headerShown: false,
         headerStatusBarHeight: 0,
+        cardStyle: { flex: 1 },
       }}
     >
       <Stack.Screen name={Screen.Home} component={HomeScreen} />

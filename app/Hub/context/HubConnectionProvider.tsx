@@ -14,18 +14,10 @@ interface IHubConnectionContext {
 }
 
 const defaultContextValue: IHubConnectionContext = {
-  connect: async (_hubName: string, _gameId: number) => {
-    return err("");
-  },
-  disconnect: async () => {
-    return err("");
-  },
-  setListener: (_channel: string, _fn: (item: any) => void) => {
-    return err("");
-  },
-  invokeFunction: async (functionName: string, ...params: any[]) => {
-    return err("");
-  },
+  connect: async (_hubName: string, _gameId: number) => err(""),
+  disconnect: async () => err(""),
+  setListener: (_channel: string, _fn: (item: any) => void) => err(""),
+  invokeFunction: async (_functionName: string, ..._params: any[]) => err(""),
 };
 
 const HubConnectionContext = createContext<IHubConnectionContext>(defaultContextValue);
@@ -62,9 +54,7 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
         );
         return;
       }
-
-      console.log("Connection still valid"); // TODO - remove log
-    }, 500);
+    }, 750);
 
     return () => clearInterval(interval);
   }, []);
@@ -72,7 +62,7 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
   async function connect(hubName: string, gameId: number): Promise<Result<signalR.HubConnection, string>> {
     try {
       if (connectionRef.current) {
-        return err("Det finnes allerede en tilkobling"); // TODO - remove
+        return err("Noe gikk galt. Forsøk å lukke og starte appen på nytt.");
       }
 
       const endpoint = `${HubUrlBase}/${hubName}?GameId=${gameId}`;
@@ -90,7 +80,7 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
 
       return ok(hubConnection);
     } catch (error) {
-      setConnectedState(false); // TODO - remove log
+      setConnectedState(false);
       return err("En feil skjedde ved tilkoblingen.");
     }
   }
@@ -98,7 +88,8 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
   async function disconnect(): Promise<Result<void, string>> {
     try {
       if (!connectionRef.current) {
-        return err("Du er ikke tilkoblet noe spill!"); // Could be removed?
+        clearValues();
+        return ok();
       }
 
       await connection?.stop();
@@ -119,24 +110,22 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
       }
 
       connectionRef.current.on(channel, fn);
-      console.log("Listener created");
       return ok();
     } catch (error) {
-      console.log("invokeFunction");
+      console.error("setListener");
       return err("Noe gikk galt.");
     }
   }
 
   async function invokeFunction(functionName: string, ...params: any[]): Promise<Result<void, string>> {
     try {
-      console.log("Invoked funciton on connection: ", connectionRef.current?.connectionId);
       if (!connectionRef.current) {
         return err("Ingen tilkobling opprettet.");
       }
       await connectionRef.current?.invoke(functionName, ...params);
       return ok();
     } catch (error) {
-      console.log("invokeFunction");
+      console.error("invokeFunction");
       return err("Noe gikk galt.");
     }
   }

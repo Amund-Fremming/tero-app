@@ -2,13 +2,14 @@ import { View, Text, Pressable } from "react-native";
 import Screen from "../../constants/Screen";
 import styles from "./homeScreenStyles";
 import { useGlobalGameProvider } from "../../context/GlobalGameProvider";
+import { GameEntryMode } from "../../constants/Types";
 
 export const HomeScreen = ({ navigation }: any) => {
-  const { setIsCreator } = useGlobalGameProvider();
+  const { setGameEntryMode } = useGlobalGameProvider();
 
-  const handleSelectGame = (creator: boolean) => {
-    setIsCreator(creator);
-    navigation.navigate(Screen.SelectGame);
+  const handlePress = (gameEntryMode: GameEntryMode, destination: Screen) => {
+    setGameEntryMode(gameEntryMode);
+    navigation.navigate(destination);
   };
 
   return (
@@ -20,15 +21,11 @@ export const HomeScreen = ({ navigation }: any) => {
       <View style={styles.buttonContainer}>
         <Pressable
           style={{ ...styles.buttonBase, ...styles.topLeft }}
-          onPress={() => handleSelectGame(true)}
+          onPress={() => handlePress(GameEntryMode.Creator, Screen.SelectGame)}
         >
           <View style={styles.buttonTextWrapper}>
-            <Text style={{ ...styles.textBase, ...styles.textTopLeft }}>
-              Lag
-            </Text>
-            <Text style={{ ...styles.textBase, ...styles.textTopLeft }}>
-              spill
-            </Text>
+            <Text style={{ ...styles.textBase, ...styles.textTopLeft }}>Lag</Text>
+            <Text style={{ ...styles.textBase, ...styles.textTopLeft }}>spill</Text>
           </View>
         </Pressable>
         <Pressable
@@ -36,38 +33,26 @@ export const HomeScreen = ({ navigation }: any) => {
           onPress={() => navigation.navigate(Screen.Hub)}
         >
           <View style={styles.buttonTextWrapper}>
-            <Text style={{ ...styles.textBase, ...styles.textBottomLeft }}>
-              Til
-            </Text>
-            <Text style={{ ...styles.textBase, ...styles.textBottomLeft }}>
-              hub
-            </Text>
+            <Text style={{ ...styles.textBase, ...styles.textBottomLeft }}>Til</Text>
+            <Text style={{ ...styles.textBase, ...styles.textBottomLeft }}>hub</Text>
           </View>
         </Pressable>
         <Pressable
           style={{ ...styles.buttonBase, ...styles.topRight }}
-          onPress={() => handleSelectGame(false)}
+          onPress={() => handlePress(GameEntryMode.Host, Screen.SelectGame)}
         >
           <View style={styles.buttonTextWrapper}>
-            <Text style={{ ...styles.textBase, ...styles.textTopRight }}>
-              Velg
-            </Text>
-            <Text style={{ ...styles.textBase, ...styles.textTopRight }}>
-              spill
-            </Text>
+            <Text style={{ ...styles.textBase, ...styles.textTopRight }}>Velg</Text>
+            <Text style={{ ...styles.textBase, ...styles.textTopRight }}>spill</Text>
           </View>
         </Pressable>
         <Pressable
           style={{ ...styles.buttonBase, ...styles.bottomRight }}
-          onPress={() => navigation.navigate(Screen.Join)}
+          onPress={() => handlePress(GameEntryMode.Participant, Screen.Join)}
         >
           <View style={styles.buttonTextWrapper}>
-            <Text style={{ ...styles.textBase, ...styles.textBottomRight }}>
-              Bli
-            </Text>
-            <Text style={{ ...styles.textBase, ...styles.textBottomRight }}>
-              med
-            </Text>
+            <Text style={{ ...styles.textBase, ...styles.textBottomRight }}>Bli</Text>
+            <Text style={{ ...styles.textBase, ...styles.textBottomRight }}>med</Text>
           </View>
         </Pressable>
       </View>

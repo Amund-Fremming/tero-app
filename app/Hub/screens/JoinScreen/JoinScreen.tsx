@@ -17,7 +17,6 @@ export const JoinScreen = ({ navigation }: any) => {
 
   const { userId } = useUserProvider();
   const { displayErrorModal } = useInfoModalProvider();
-  const { connect } = useHubConnectionProvider();
   const { setGameId, setUniversalGameId, setGameType } = useGlobalGameProvider();
 
   const handleJoinGame = async () => {

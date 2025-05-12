@@ -1,15 +1,12 @@
 import { StyleSheet } from "react-native";
 import Colors, { Color } from "../../constants/Color";
-import {
-  horizontalScale,
-  moderateScale,
-  verticalScale,
-} from "../../utils/dimensions";
+import { horizontalScale, moderateScale, verticalScale } from "../../utils/dimensions";
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: Color.Red,
+    backgroundColor: Color.Black,
     width: "100%",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },

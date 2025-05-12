@@ -1,8 +1,10 @@
 import { StyleSheet } from "react-native";
+import Color from "../../constants/Color";
 
 export const styles = StyleSheet.create({
   card: {
     borderWidth: 2,
+    borderColor: Color.White,
     padding: 10,
     gap: 8,
     height: 150,
@@ -12,9 +14,12 @@ export const styles = StyleSheet.create({
   header: {
     fontWeight: 600,
     fontSize: 20,
+    color: Color.White,
   },
 
-  paragraph: {},
+  paragraph: {
+    color: Color.White,
+  },
 });
 
 export default styles;

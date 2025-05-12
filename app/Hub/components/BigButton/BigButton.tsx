@@ -9,12 +9,7 @@ interface IBigButton {
   inverted?: boolean;
 }
 
-export const BigButton = ({
-  text,
-  color,
-  onClick,
-  inverted = false,
-}: IBigButton) => {
+export const BigButton = ({ text, color, onClick, inverted = false }: IBigButton) => {
   const getButtonStyles = () => {
     if (inverted) {
       return {

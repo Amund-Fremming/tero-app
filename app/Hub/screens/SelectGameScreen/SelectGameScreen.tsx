@@ -24,12 +24,7 @@ export const SelectGameScreen = () => {
             />
           ))}
       </VerticalScroll>
-      <AbsoluteNavButton
-        label="Hjem"
-        destination={Screen.Home}
-        primary={Colors.White}
-        secondary={Colors.Red}
-      />
+      <AbsoluteNavButton label="Hjem" destination={Screen.Home} primary={Colors.White} secondary={Colors.Red} />
     </View>
   );
 };
