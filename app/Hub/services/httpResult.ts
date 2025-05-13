@@ -1,9 +1,9 @@
-import { Result, ok, err } from "neverthrow";
+import { Result, ok, fail } from "../utils/result";
 
 class httpResultService {
   constructor() {}
 
-  async simpleGet<T>(url: string): Promise<Result<T, string>> {
+  async simpleGet<T>(url: string): Promise<Result<T>> {
     try {
       const response = await fetch(url, {
         method: "GET",
@@ -14,18 +14,18 @@ class httpResultService {
 
       if (response.status !== 200) {
         const message: string = await response.json();
-        return err(message);
+        return fail(message);
       }
 
       const data: T = await response.json();
       return ok(data);
     } catch (error) {
       console.error(`Get failed. Url: ${url}`);
-      return err("Noe gikk galt.");
+      return fail("Noe gikk galt.");
     }
   }
 
-  async get<Request, Response>(url: string, body: Request): Promise<Result<Response, string>> {
+  async get<Request, Response>(url: string, body: Request): Promise<Result<Response>> {
     try {
       const response = await fetch(url, {
         method: "GET",
@@ -37,18 +37,18 @@ class httpResultService {
 
       if (response.status !== 200) {
         const message: string = await response.json();
-        return err(message);
+        return fail(message);
       }
 
       const data: Response = await response.json();
       return ok(data);
     } catch (error) {
       console.error(`Get failed. Url: ${url}`);
-      return err("Noe gikk galt.");
+      return fail("Noe gikk galt.");
     }
   }
 
-  async simplePost<Response>(url: string): Promise<Result<Response, string>> {
+  async simplePost<Response>(url: string): Promise<Result<Response>> {
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -59,18 +59,18 @@ class httpResultService {
 
       if (response.status !== 200) {
         const message: string = await response.json();
-        return err(message);
+        return fail(message);
       }
 
       const data: Response = await response.json();
       return ok(data);
     } catch (error) {
       console.error(`Post failed. Url: ${url}`);
-      return err("Noe gikk galt.");
+      return fail("Noe gikk galt.");
     }
   }
 
-  async post<Request, Response>(url: string, body: Request): Promise<Result<Response, string>> {
+  async post<Request, Response>(url: string, body: Request): Promise<Result<Response>> {
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -82,18 +82,18 @@ class httpResultService {
 
       if (response.status !== 200) {
         const message: string = await response.json();
-        return err(message);
+        return fail(message);
       }
 
       const data: Response = await response.json();
       return ok(data);
     } catch (error) {
       console.error(`Post failed. Url: ${url}`);
-      return err("Noe gikk galt.");
+      return fail("Noe gikk galt.");
     }
   }
 
-  async simplePut(url: string): Promise<Result<void, string>> {
+  async simplePut(url: string): Promise<Result> {
     try {
       const response = await fetch(url, {
         method: "PUT",
@@ -104,17 +104,17 @@ class httpResultService {
 
       if (response.status !== 200) {
         const message: string = await response.json();
-        return err(message);
+        return fail(message);
       }
 
-      return ok(undefined);
+      return ok();
     } catch (error) {
       console.error(`Put failed. Url: ${url}`);
-      return err("Noe gikk galt.");
+      return fail("Noe gikk galt.");
     }
   }
 
-  async put<Request, Response>(url: string, body: Request): Promise<Result<Response, string>> {
+  async put<Request, Response>(url: string, body: Request): Promise<Result<Response>> {
     try {
       const response = await fetch(url, {
         method: "PUT",
@@ -126,14 +126,14 @@ class httpResultService {
 
       if (response.status !== 200) {
         const message: string = await response.json();
-        return err(message);
+        return fail(message);
       }
 
       const data: Response = await response.json();
       return ok(data);
     } catch (error) {
       console.error(`Put failed. Url: ${url}`);
-      return err("Noe gikk galt.");
+      return fail("Noe gikk galt.");
     }
   }
 }
