@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.Purple,
     position: "absolute",
     bottom: verticalScale(35),
+    zIndex: 1000,
   },
 
   label: {

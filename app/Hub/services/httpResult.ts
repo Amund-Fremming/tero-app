@@ -89,6 +89,7 @@ class httpResultService {
       return ok(data);
     } catch (error) {
       console.error(`Post failed. Url: ${url}`);
+      console.error(error);
       return fail("Noe gikk galt.");
     }
   }

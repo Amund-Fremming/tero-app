@@ -9,12 +9,7 @@ interface GameCardProps {
   screen: string;
 }
 
-export const GameCard = ({
-  header,
-  description,
-  icon,
-  screen,
-}: GameCardProps) => {
+export const GameCard = ({ header, description, icon, screen }: GameCardProps) => {
   const navigation: any = useNavigation();
 
   return (

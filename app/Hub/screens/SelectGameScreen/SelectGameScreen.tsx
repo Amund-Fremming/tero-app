@@ -1,17 +1,18 @@
 import styles from "./selectGameScreenStyles";
 import AbsoluteNavButton from "../../components/AbsoluteNavButton/AbsoluteNavButton";
 import Screen from "../../constants/Screen";
-import Colors from "../../constants/Color";
+import Color from "../../constants/Color";
 import items from "./GameData.json";
 import GameCard from "../../components/GameCard/GameCard";
 import { View, Text } from "react-native";
 import React from "react";
 import VerticalScroll from "../../wrappers/VerticalScroll";
+import { verticalScale } from "../../utils/dimensions";
 
 export const SelectGameScreen = () => {
   return (
     <View style={styles.container}>
-      <VerticalScroll>
+      <VerticalScroll key={items?.length ?? 0}>
         <Text style={styles.header}>Velg spill type</Text>
         {items &&
           items.map((item, index) => (
@@ -23,8 +24,9 @@ export const SelectGameScreen = () => {
               screen={item.screen}
             />
           ))}
+        <View style={{ marginTop: verticalScale(200) }} />
       </VerticalScroll>
-      <AbsoluteNavButton label="Hjem" destination={Screen.Home} primary={Colors.White} secondary={Colors.Red} />
+      <AbsoluteNavButton label="Hjem" destination={Screen.Home} primary={Color.White} secondary={Color.Red} />
     </View>
   );
 };

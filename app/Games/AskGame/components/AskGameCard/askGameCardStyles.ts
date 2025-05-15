@@ -9,19 +9,22 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
     borderWidth: 2,
-    borderColor: "gray",
+    borderColor: "white",
   },
 
   header: {
+    color: "white",
     fontSize: moderateScale(20),
     fontWeight: 600,
   },
 
   paragraph: {
+    color: "white",
     fontSize: moderateScale(16),
   },
 
   iterations: {
+    color: "white",
     fontSize: moderateScale(18),
     fontWeight: 500,
   },

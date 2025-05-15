@@ -10,7 +10,7 @@ export const GameScreen = ({ navigation }: any) => {
   const { askGame, setAskGame } = useAskGameProvider();
 
   const handlePrevPressed = () => {
-    if (!askGame || askGame.currentIteration === 1) {
+    if (!askGame || askGame.currentIteration === 0) {
       return;
     }
 
@@ -21,7 +21,7 @@ export const GameScreen = ({ navigation }: any) => {
   };
 
   const handleNextPressed = () => {
-    if (!askGame || askGame.currentIteration === askGame.iterations) {
+    if (!askGame || askGame.currentIteration + 1 === askGame.iterations) {
       return;
     }
 
@@ -35,9 +35,9 @@ export const GameScreen = ({ navigation }: any) => {
     <View style={styles.container}>
       <Text>
         Gjenstående spørsmål:
-        {askGame && askGame.questions.length - askGame.currentIteration}
+        {askGame && askGame.questions.length - askGame.currentIteration - 1}
       </Text>
-      <Text>{askGame && askGame.questions.length > 0 && askGame.questions[askGame.currentIteration - 1].text}</Text>
+      <Text>{askGame && askGame.questions.length > 0 && askGame.questions[askGame.currentIteration].text}</Text>
       <MediumButton text="Forrige" color={Color.Beige} onClick={handlePrevPressed} />
       <MediumButton text="Neste" color={Color.Beige} onClick={handleNextPressed} inverted />
       <AbsoluteNavButton label="Hjem" primary="black" secondary="white" destination={Screen.Home} />

@@ -53,8 +53,8 @@ export enum GameEntryMode {
 export interface PagedRequest {
   pageNumber: number;
   pageSize: number;
-  skip: number;
-  take: number;
+  skip?: number;
+  take?: number;
 }
 
 export interface PagedResponse<T> {

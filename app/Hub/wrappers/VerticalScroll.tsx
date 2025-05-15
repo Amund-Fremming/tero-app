@@ -1,10 +1,12 @@
 import { ReactNode } from "react";
-import { ScrollView } from "react-native";
+import { Dimensions, ScrollView, View } from "react-native";
 import { verticalScale } from "../utils/dimensions";
 
 interface HorizontalScrollProps {
   children: ReactNode;
 }
+
+const { height } = Dimensions.get("window");
 
 export const VerticalScroll = ({ children }: HorizontalScrollProps) => {
   return (
@@ -12,15 +14,14 @@ export const VerticalScroll = ({ children }: HorizontalScrollProps) => {
       showsVerticalScrollIndicator={false}
       scrollEnabled={true}
       style={{
-        height: "100%",
         width: "100%",
         backgroundColor: "transparent",
-        paddingBottom: verticalScale(100),
+        height: height,
       }}
       contentContainerStyle={{
-        minHeight: "100%",
         alignItems: "center",
         gap: verticalScale(15),
+        paddingBottom: verticalScale(200),
       }}
     >
       {children}

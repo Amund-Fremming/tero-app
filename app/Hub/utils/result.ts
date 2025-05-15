@@ -7,11 +7,11 @@ export class Result<T = void> {
     this.error = errorMessage;
   }
 
-  get isError(): boolean {
+  public isError(): boolean {
     return this.error !== "";
   }
 
-  get isSuccess() {
+  public isSuccess() {
     return this.error === null;
   }
 }

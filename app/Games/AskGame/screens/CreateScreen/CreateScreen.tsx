@@ -27,7 +27,7 @@ export const CreateScreen = ({ navigation }: any) => {
 
   const handleCreateGame = async () => {
     const result = await createGame(createRequest);
-    if (result.isErr()) {
+    if (result.isError()) {
       displayErrorModal(result.error);
       return;
     }

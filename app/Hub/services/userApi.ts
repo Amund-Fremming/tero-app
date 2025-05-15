@@ -1,14 +1,14 @@
 import { UserUrlBase } from "@/app/Hub/constants/Endpoints";
 import { RegisteredUserRequest, UserBase } from "../constants/Types";
-import { Result } from "neverthrow";
-import httpResult from "./HttpResult";
+import { Result } from "../utils/result";
+import httpResult from "./httpResult";
 
-export const updateUserActivity = async (userId: number): Promise<Result<void, string>> => {
+export const updateUserActivity = async (userId: number): Promise<Result> => {
   const url = `${UserUrlBase}/${userId}`;
   return httpResult.simplePut(url);
 };
 
-export const createGuestUser = async (): Promise<Result<UserBase, string>> => {
+export const createGuestUser = async (): Promise<Result<UserBase>> => {
   const url = `${UserUrlBase}/create/guest`;
   return httpResult.simplePost(url);
 };
