@@ -26,7 +26,7 @@ export const JoinScreen = ({ navigation }: any) => {
     }
 
     const result = await addPlayerToGame(userId, universalGameId);
-    if (result.isError) {
+    if (result.isError()) {
       displayErrorModal(result.error);
       return;
     }

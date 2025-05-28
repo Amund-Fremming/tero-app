@@ -1,5 +1,3 @@
-import AskGame from "@/app/Games/AskGame/constants/AskTypes";
-
 export interface GameBase {
   id: number;
   universalId: string;

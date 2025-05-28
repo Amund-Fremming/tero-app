@@ -1,5 +1,5 @@
 import Color from "@/app/Hub/constants/Color";
-import { moderateScale, verticalScale } from "@/app/Hub/utils/dimensions";
+import { horizontalScale, moderateScale, verticalScale } from "@/app/Hub/utils/dimensions";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -21,6 +21,27 @@ export const styles = StyleSheet.create({
   paragraph: {
     color: "white",
     fontSize: moderateScale(16),
+  },
+
+  navButtons: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    width: "90%",
+    gap: horizontalScale(15),
+  },
+
+  buttonLabel: {
+    color: Color.Black,
+    fontSize: moderateScale(16),
+  },
+
+  button: {
+    backgroundColor: Color.White,
+    width: horizontalScale(100),
+    height: verticalScale(35),
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
