@@ -1,5 +1,7 @@
 # Tasklist
 
+- NY MIGRATIONS , UPDAETE FE MODELLER, GAMEBASE
+
 - Modal som viser om du har utdatert app version
 - Varslinger
 - Wifi provider inn
