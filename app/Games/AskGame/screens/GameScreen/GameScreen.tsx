@@ -3,7 +3,7 @@ import MediumButton from "@/app/Hub/components/MediumButton/MediumButton";
 import { Button, Text, View } from "react-native";
 import { useAskGameProvider } from "../../context/AskGameProvider";
 import styles from "./gameScreenStyles";
-import AbsoluteNavButton from "@/app/Hub/components/AbsoluteNavButton/AbsoluteNavButton";
+import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import Screen from "@/app/Hub/constants/Screen";
 
 export const GameScreen = ({ navigation }: any) => {
@@ -40,7 +40,7 @@ export const GameScreen = ({ navigation }: any) => {
       <Text>{askGame && askGame.questions.length > 0 && askGame.questions[askGame.currentIteration].text}</Text>
       <MediumButton text="Forrige" color={Color.Beige} onClick={handlePrevPressed} />
       <MediumButton text="Neste" color={Color.Beige} onClick={handleNextPressed} inverted />
-      <AbsoluteNavButton label="Hjem" primary="black" secondary="white" destination={Screen.Home} />
+      <AbsoluteHomeButton />
     </View>
   );
 };

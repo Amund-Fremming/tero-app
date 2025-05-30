@@ -1,4 +1,4 @@
-import GameBase, { Category, UserBase } from "@/app/Hub/constants/Types";
+import { Category, UserBase, GameBase } from "@/app/Hub/constants/Types";
 
 export interface SpinGame extends GameBase {
   category: Category;
@@ -25,6 +25,12 @@ export interface Challenge {
   participants: number;
   text: string;
   readBeforeSpin: boolean;
+}
+
+export interface CreateSpinGameRequest {
+  userId: number;
+  name: string;
+  category?: Category;
 }
 
 export enum SpinGameState {

@@ -6,12 +6,6 @@
         "screen": "SpinGame"
     },
     {
-        "name": "Spin (utslag)",
-        "description": "Denne versjonen av Spin vil maksimalt ha to personer i hver oppgave som vil være en \"challenge\". Den som taper, vil bli slått ut av spillet, vinneren er siste som gjenstår.",
-        "icon": "",
-        "screen": "Home"
-    },
-    {
         "name": "100 Spm",
         "description": "Dette spillet kan spillet litt som en vil selv. Man kan svare på spørsmålene på rundtur i rommet, eller spille med en snusboks. Da vil personen som har boksen måtte svare, og får dermed lov til å kaste den til neste person.",
         "icon": "",

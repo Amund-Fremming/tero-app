@@ -45,7 +45,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     }
 
     const result = await createGuestUser();
-    if (result.isErr()) {
+    if (result.isError()) {
       console.error(result.error); // TODO - remove log
       return;
     }
@@ -57,7 +57,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const markUserAsActive = async () => {
     const result = await updateUserActivity(userId);
-    if (result.isErr()) {
+    if (result.isError()) {
       console.error(result.error);
     }
   };

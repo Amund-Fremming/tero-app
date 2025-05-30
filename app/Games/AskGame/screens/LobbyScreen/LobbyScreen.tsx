@@ -7,7 +7,7 @@ import { TextInput } from "react-native-gesture-handler";
 import styles from "./lobbyScreenStyles";
 import { useHubConnectionProvider } from "@/app/Hub/context/HubConnectionProvider";
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
-import AbsoluteNavButton from "@/app/Hub/components/AbsoluteNavButton/AbsoluteNavButton";
+import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import Screen from "@/app/Hub/constants/Screen";
 import { useAskGameProvider } from "../../context/AskGameProvider";
 import { HubChannel } from "@/app/Hub/constants/HubChannel";
@@ -91,7 +91,7 @@ export const LobbyScreen = ({ navigation }: any) => {
       {gameEntryMode === GameEntryMode.Creator && (
         <MediumButton text="Start" color={Color.Beige} onClick={handleStartGame} inverted />
       )}
-      <AbsoluteNavButton label="Hjem" primary="black" secondary="white" destination={Screen.Home} />
+      <AbsoluteHomeButton />
     </View>
   );
 };

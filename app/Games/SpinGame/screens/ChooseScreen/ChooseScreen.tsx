@@ -4,17 +4,17 @@ import VerticalScroll from "@/app/Hub/wrappers/VerticalScroll";
 import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import Color from "@/app/Hub/constants/Color";
 import Screen from "@/app/Hub/constants/Screen";
-import AskGame from "../../constants/AskTypes";
 import { PagedRequest, PagedResponse } from "@/app/Hub/constants/Types";
-import { AskGameCard } from "../../components/AskGameCard/AskGameCard";
+import { SpinGameCard } from "../../components/SpinGameCard/SpinGameCard";
 import { useEffect, useState } from "react";
-import { getGamesPage } from "../../services/askGameApi";
+import { getGamesPage } from "../../services/spinGameApi";
 import { useInfoModalProvider } from "@/app/Hub/context/InfoModalProvider";
+import SpinGame from "../../constants/SpinTypes";
 
 const pageSize = 20;
 
 export const ChooseScreen = () => {
-  const [pagedResponse, setPagedResponse] = useState<PagedResponse<AskGame> | undefined>(undefined);
+  const [pagedResponse, setPagedResponse] = useState<PagedResponse<SpinGame> | undefined>(undefined);
   const [pagedRequest, setPagedRequest] = useState<PagedRequest>({
     pageNumber: 1,
     pageSize,
@@ -41,7 +41,7 @@ export const ChooseScreen = () => {
       displayErrorModal(result.error);
       return;
     }
-    console.log(result.value);
+
     setPagedResponse(result.value);
   };
 
@@ -50,7 +50,7 @@ export const ChooseScreen = () => {
       <VerticalScroll key={pagedResponse?.data.length}>
         <Text style={styles.header}>Velg ett spill</Text>
         {pagedResponse?.data.map((item, index) => (
-          <AskGameCard {...item} key={index} />
+          <SpinGameCard {...item} key={index} />
         ))}
         <View style={styles.navButtons}>
           {pagedResponse?.hasPrevPage && (

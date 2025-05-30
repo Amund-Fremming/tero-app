@@ -1,5 +1,5 @@
 import styles from "./selectGameScreenStyles";
-import AbsoluteNavButton from "../../components/AbsoluteNavButton/AbsoluteNavButton";
+import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
 import Screen from "../../constants/Screen";
 import Color from "../../constants/Color";
 import items from "./GameData.json";
@@ -26,7 +26,7 @@ export const SelectGameScreen = () => {
           ))}
         <View style={{ marginTop: verticalScale(200) }} />
       </VerticalScroll>
-      <AbsoluteNavButton label="Hjem" destination={Screen.Home} primary={Color.White} secondary={Color.Red} />
+      <AbsoluteHomeButton />
     </View>
   );
 };

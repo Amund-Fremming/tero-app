@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import styles from "./joinScreenStyles";
-import AbsoluteNavButton from "../../components/AbsoluteNavButton/AbsoluteNavButton";
+import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
 import Screen from "../../constants/Screen";
 import Colors from "../../constants/Color";
 import { TextInput } from "react-native-gesture-handler";
@@ -47,7 +47,7 @@ export const JoinScreen = ({ navigation }: any) => {
         onChangeText={(input) => setUserInput(input)}
       />
       <MediumButton text="Bli med" color="black" onClick={handleJoinGame} />
-      <AbsoluteNavButton label="Hjem" destination={Screen.Home} primary={Colors.Black} secondary={Colors.Red} />
+      <AbsoluteHomeButton />
     </View>
   );
 };

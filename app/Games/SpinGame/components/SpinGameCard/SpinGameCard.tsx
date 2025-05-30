@@ -1,21 +1,20 @@
 import { Text, Pressable } from "react-native";
-import styles from "./askGameCardStyles";
+import styles from "./spinGameStyles";
 import { useNavigation } from "@react-navigation/native";
-import AskScreen from "../../constants/AskScreen";
+import SpinScreen from "../../constants/SpinScreen";
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
 import { GameEntryMode } from "@/app/Hub/constants/Types";
-import { getGame } from "../../services/askGameApi";
+import { getGame } from "@/app/Games/AskGame/services/askGameApi";
 import { useInfoModalProvider } from "@/app/Hub/context/InfoModalProvider";
-import { useAskGameProvider } from "../../context/AskGameProvider";
+import { useAskGameProvider } from "@/app/Games/AskGame/context/AskGameProvider";
 
 interface AskGameCardProps {
   id: number;
   name: string;
-  description: string;
   iterations: number;
 }
 
-export const AskGameCard = (props: AskGameCardProps) => {
+export const SpinGameCard = (props: AskGameCardProps) => {
   const navigation: any = useNavigation();
 
   const { setGameEntryMode } = useGlobalGameProvider();
@@ -31,13 +30,12 @@ export const AskGameCard = (props: AskGameCardProps) => {
 
     setAskGame(result.value);
     setGameEntryMode(GameEntryMode.Host);
-    navigation.navigate(AskScreen.Game);
+    navigation.navigate(SpinScreen.Game);
   };
 
   return (
     <Pressable style={styles.card} onPress={handlePress}>
       <Text style={styles.header}>{props.name}</Text>
-      <Text style={styles.paragraph}>{props.description}</Text>
       <Text style={styles.iterations}>{props.iterations}</Text>
     </Pressable>
   );
