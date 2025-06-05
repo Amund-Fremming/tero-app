@@ -4,7 +4,6 @@ import { Button, Text, View } from "react-native";
 import { useAskGameProvider } from "../../context/AskGameProvider";
 import styles from "./gameScreenStyles";
 import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
-import Screen from "@/app/Hub/constants/Screen";
 
 export const GameScreen = ({ navigation }: any) => {
   const { askGame, setAskGame } = useAskGameProvider();
