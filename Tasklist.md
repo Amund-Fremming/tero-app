@@ -1,5 +1,7 @@
 # Tasklist
 
+- FIRST: Fix add challenge flow
+
 - Modal som viser om du har utdatert app version
 - Varslinger
 - Wifi provider inn
