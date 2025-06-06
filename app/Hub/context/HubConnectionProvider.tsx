@@ -125,7 +125,7 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
       await connectionRef.current?.invoke(functionName, ...params);
       return ok();
     } catch (error) {
-      console.error("invokeFunction");
+      console.error("invokeFunction", error);
       return err("Noe gikk galt.");
     }
   }

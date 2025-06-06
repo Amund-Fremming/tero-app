@@ -5,7 +5,7 @@ import { SpinScreen } from "./constants/SpinScreen";
 import SpinGameProvider from "./context/SpinGameProvider";
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
 import { GameEntryMode } from "@/app/Hub/constants/Types";
-import { GameScreen } from "../AskGame/screens/GameScreen/GameScreen";
+import { GameScreen } from "./screens/GameScreen/GameScreen";
 import CreateScreen from "./screens/CreateScreen/CreateScreen";
 import ChooseScreen from "./screens/ChooseScreen/ChooseScreen";
 

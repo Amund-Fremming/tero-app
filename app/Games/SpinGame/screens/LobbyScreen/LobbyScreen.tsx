@@ -1,4 +1,4 @@
-import { View, Text, Button } from "react-native";
+import { View, Text } from "react-native";
 import styles from "./lobbyScreenStyles";
 import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
@@ -9,7 +9,10 @@ import { HubChannel } from "@/app/Hub/constants/HubChannel";
 import { useInfoModalProvider } from "@/app/Hub/context/InfoModalProvider";
 import Screen from "@/app/Hub/constants/Screen";
 import CheckBox from "../../components/CheckBox/CheckBox";
-import { Challenge } from "../../constants/SpinTypes";
+import { GameEntryMode } from "@/app/Hub/constants/Types";
+import { useUserProvider } from "@/app/Hub/context/UserProvider";
+import { SpinGameState } from "../../constants/SpinTypes";
+import SpinScreen from "../../constants/SpinScreen";
 
 export const LobbyScreen = ({ navigation }: any) => {
   const [participants, setParticipants] = useState<number>(1);
@@ -17,19 +20,22 @@ export const LobbyScreen = ({ navigation }: any) => {
   const [readBeforeSpin, setReadBeforeSpin] = useState<boolean>(true);
   const [challenge, setChallenge] = useState<string>("");
 
-  const { gameId, universalGameId, gameType } = useGlobalGameProvider();
-  const { connect, disconnect, setListener } = useHubConnectionProvider();
+  const { userId } = useUserProvider();
+  const { gameId, universalGameId, gameType, gameEntryMode } = useGlobalGameProvider();
+  const { connect, disconnect, setListener, invokeFunction } = useHubConnectionProvider();
   const { displayErrorModal } = useInfoModalProvider();
 
   useEffect(() => {
     createHubConnection();
-    () => {
+    return () => {
       disconnect();
     };
   }, [gameId]);
 
   const createHubConnection = async () => {
-    if (!gameId) return;
+    if (!gameId) {
+      return;
+    }
 
     const result = await connect(gameType, gameId);
     if (result.isErr()) {
@@ -41,6 +47,48 @@ export const LobbyScreen = ({ navigation }: any) => {
       console.log(`Received: ${iterations}`); // TODO - remove log
       setIterations(iterations);
     });
+
+    setListener(HubChannel.State, (state: SpinGameState) => {
+      console.log(`Received: ${state}`); // TODO - remove log
+      if (state === SpinGameState.ChallengesClosed) {
+        navigation.navigate(SpinScreen.Game);
+      }
+    });
+
+    setListener(HubChannel.Error, (message: string) => {
+      console.log(`Received: ${message}`); // TODO - remove log
+      disconnect();
+      displayErrorModal(message, () => navigation.navigate(Screen.Home));
+    });
+  };
+
+  const handleAddChallenge = async () => {
+    if (!gameId) {
+      displayErrorModal("Noe gikk galt, prøv å gå inn og ut av spillet.");
+      return;
+    }
+
+    const result = await invokeFunction("AddChallenge", gameId, participants, challenge, readBeforeSpin);
+    if (result.isErr()) {
+      displayErrorModal(result.error);
+    }
+  };
+
+  const handleStartGame = async () => {
+    if (!userId) {
+      displayErrorModal("Noe gikk galt. Forsøk å drepe appen og åpne den på nytt.");
+      return;
+    }
+
+    if (!gameId) {
+      displayErrorModal("Noe gikk galt. Gå ut og inn i spillet.");
+      return;
+    }
+
+    const result = await invokeFunction("CloseChallenges", userId, gameId);
+    if (result.isErr()) {
+      displayErrorModal(result.error);
+    }
   };
 
   return (
@@ -48,8 +96,7 @@ export const LobbyScreen = ({ navigation }: any) => {
       <Text>Spill id: {universalGameId}</Text>
       <Text>Antall challenges: {iterations}</Text>
       <Text>LobbyScreen</Text>
-      <Button title="Start" />
-      <TextInput placeholder="Challenge" />
+      <TextInput onChangeText={(input) => setChallenge(input)} placeholder="Challenge ..." />
       <Text>Participants:</Text>
       <View style={styles.participantsWrapper}>
         <Pressable onPress={() => setParticipants(participants - 1 == 0 ? 1 : participants - 1)}>
@@ -64,6 +111,14 @@ export const LobbyScreen = ({ navigation }: any) => {
         <Text>Les challenge før spin?</Text>
         <CheckBox checked={readBeforeSpin} onCheck={setReadBeforeSpin} />
       </View>
+      <Pressable onPress={handleAddChallenge}>
+        <Text>Legg til</Text>
+      </Pressable>
+      {gameEntryMode === GameEntryMode.Creator && (
+        <Pressable>
+          <Text onPress={handleStartGame}>Start</Text>
+        </Pressable>
+      )}
       <AbsoluteHomeButton />
     </View>
   );

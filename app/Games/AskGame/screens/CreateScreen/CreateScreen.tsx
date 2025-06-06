@@ -3,7 +3,7 @@ import styles from "./createScreenStyles";
 import Color from "@/app/Hub/constants/Color";
 import { CreateAskGameRequest } from "../../constants/AskTypes";
 import { useState } from "react";
-import { Category } from "@/app/Hub/constants/Types";
+import { Category, GameType } from "@/app/Hub/constants/Types";
 import { Pressable, TextInput } from "react-native-gesture-handler";
 import { useUserProvider } from "@/app/Hub/context/UserProvider";
 import { createGame } from "../../services/askGameApi";
@@ -15,7 +15,7 @@ import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/Absolute
 export const CreateScreen = ({ navigation }: any) => {
   const { userId } = useUserProvider();
   const { displayErrorModal } = useInfoModalProvider();
-  const { setGameId, setUniversalGameId } = useGlobalGameProvider();
+  const { setGameType, setGameId, setUniversalGameId } = useGlobalGameProvider();
 
   const [createRequest, setCreateRequest] = useState<CreateAskGameRequest>({
     userId,
@@ -31,6 +31,7 @@ export const CreateScreen = ({ navigation }: any) => {
       return;
     }
 
+    setGameType(GameType.AskGame);
     setGameId(result.value.gameId);
     setUniversalGameId(result.value.universalGameId);
     navigation.navigate(AskScreen.Lobby);

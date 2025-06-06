@@ -2,8 +2,6 @@ import { Pressable, Text, View } from "react-native";
 import styles from "./chooseScreenStyles";
 import VerticalScroll from "@/app/Hub/wrappers/VerticalScroll";
 import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
-import Color from "@/app/Hub/constants/Color";
-import Screen from "@/app/Hub/constants/Screen";
 import AskGame from "../../constants/AskTypes";
 import { PagedRequest, PagedResponse } from "@/app/Hub/constants/Types";
 import { AskGameCard } from "../../components/AskGameCard/AskGameCard";

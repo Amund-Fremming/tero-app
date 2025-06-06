@@ -1,7 +1,5 @@
 import styles from "./selectGameScreenStyles";
 import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
-import Screen from "../../constants/Screen";
-import Color from "../../constants/Color";
 import items from "./GameData.json";
 import GameCard from "../../components/GameCard/GameCard";
 import { View, Text } from "react-native";
