@@ -1,4 +1,4 @@
-import { Result, ok, fail } from "../utils/result";
+import { Result, ok, err } from "../utils/result";
 
 class httpResultService {
   constructor() {}
@@ -14,14 +14,14 @@ class httpResultService {
 
       if (response.status !== 200) {
         const message: string = await response.json();
-        return fail(message);
+        return err(message);
       }
 
       const data: T = await response.json();
       return ok(data);
     } catch (error) {
       console.error(`Get failed. Url: ${url}`);
-      return fail("Noe gikk galt.");
+      return err("Noe gikk galt.");
     }
   }
 
@@ -37,14 +37,14 @@ class httpResultService {
 
       if (response.status !== 200) {
         const message: string = await response.json();
-        return fail(message);
+        return err(message);
       }
 
       const data: Response = await response.json();
       return ok(data);
     } catch (error) {
       console.error(`Get failed. Url: ${url}`);
-      return fail("Noe gikk galt.");
+      return err("Noe gikk galt.");
     }
   }
 
@@ -59,14 +59,14 @@ class httpResultService {
 
       if (response.status !== 200) {
         const message: string = await response.json();
-        return fail(message);
+        return err(message);
       }
 
       const data: Response = await response.json();
       return ok(data);
     } catch (error) {
       console.error(`Post failed. Url: ${url}`);
-      return fail("Noe gikk galt.");
+      return err("Noe gikk galt.");
     }
   }
 
@@ -82,7 +82,7 @@ class httpResultService {
 
       if (response.status !== 200) {
         const message: string = await response.json();
-        return fail(message);
+        return err(message);
       }
 
       const data: Response = await response.json();
@@ -90,7 +90,7 @@ class httpResultService {
     } catch (error) {
       console.error(`Post failed. Url: ${url}`);
       console.error(error);
-      return fail("Noe gikk galt.");
+      return err("Noe gikk galt.");
     }
   }
 
@@ -105,13 +105,13 @@ class httpResultService {
 
       if (response.status !== 200) {
         const message: string = await response.json();
-        return fail(message);
+        return err(message);
       }
 
       return ok();
     } catch (error) {
       console.error(`Put failed. Url: ${url}`);
-      return fail("Noe gikk galt.");
+      return err("Noe gikk galt.");
     }
   }
 
@@ -127,14 +127,14 @@ class httpResultService {
 
       if (response.status !== 200) {
         const message: string = await response.json();
-        return fail(message);
+        return err(message);
       }
 
       const data: Response = await response.json();
       return ok(data);
     } catch (error) {
       console.error(`Put failed. Url: ${url}`);
-      return fail("Noe gikk galt.");
+      return err("Noe gikk galt.");
     }
   }
 }

@@ -1,17 +1,15 @@
 # Tasklist
 
-- FIRST: Fix add challenge flow
-
 - Modal som viser om du har utdatert app version
 - Varslinger
 - Wifi provider inn
-- Må gjøre spiller inactive om man faller ut
-- gjøre select game generisk med paginering (Da må potensielt alle spill card se like ut, evt bar eha noen optional properties til card?)
+- Inaktivate spiller om conneciton ryker, kanskje modal + forsøk å koble seg på igjen
+- Hente sider foran og bak for raskere paginering
 
-- todos backend
 - admin dash
+- lagre funksjonalitet
+- caching
 
 - Ytelse
-- caching
-- Ef core optimalisering: max varchar, split query, indekser
+- Ef core indexer
 - Firebase analytics

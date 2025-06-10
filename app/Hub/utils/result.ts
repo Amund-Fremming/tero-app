@@ -20,6 +20,6 @@ export function ok<T = void>(value: T = null!): Result<T> {
   return new Result<T>(value, "");
 }
 
-export function fail<T = void>(error: string) {
+export function err<T = void>(error: string) {
   return new Result<T>(null!, error);
 }

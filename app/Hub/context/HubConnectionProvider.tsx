@@ -2,15 +2,15 @@ import * as signalR from "@microsoft/signalr";
 import React, { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { useInfoModalProvider } from "./InfoModalProvider";
 import { HubUrlBase } from "../constants/Endpoints";
-import { Result, ok, err } from "neverthrow";
 import { useNavigation } from "expo-router";
 import Screen from "../constants/Screen";
+import { err, ok, Result } from "../utils/result";
 
 interface IHubConnectionContext {
-  connect: (hubName: string, gameId: number) => Promise<Result<signalR.HubConnection, string>>;
-  disconnect: () => Promise<Result<void, string>>;
-  setListener: <T>(channel: string, fn: (item: T) => void) => Result<void, string>;
-  invokeFunction: (functionName: string, ...params: any[]) => Promise<Result<void, string>>;
+  connect: (hubName: string, gameId: number) => Promise<Result<signalR.HubConnection>>;
+  disconnect: () => Promise<Result>;
+  setListener: <T>(channel: string, fn: (item: T) => void) => Result;
+  invokeFunction: (functionName: string, ...params: any[]) => Promise<Result>;
 }
 
 const defaultContextValue: IHubConnectionContext = {
@@ -59,7 +59,7 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
     return () => clearInterval(interval);
   }, []);
 
-  async function connect(hubName: string, gameId: number): Promise<Result<signalR.HubConnection, string>> {
+  async function connect(hubName: string, gameId: number): Promise<Result<signalR.HubConnection>> {
     try {
       if (connectionRef.current) {
         return err("Noe gikk galt. Forsøk å lukke og starte appen på nytt.");
@@ -85,7 +85,7 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
     }
   }
 
-  async function disconnect(): Promise<Result<void, string>> {
+  async function disconnect(): Promise<Result> {
     try {
       if (!connectionRef.current) {
         clearValues();
@@ -103,7 +103,7 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
     }
   }
 
-  function setListener<T>(channel: string, fn: (item: T) => void): Result<void, string> {
+  function setListener<T>(channel: string, fn: (item: T) => void): Result {
     try {
       if (!connectionRef.current) {
         return err("Ingen tilkobling opprettet.");
@@ -117,7 +117,7 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
     }
   }
 
-  async function invokeFunction(functionName: string, ...params: any[]): Promise<Result<void, string>> {
+  async function invokeFunction(functionName: string, ...params: any[]): Promise<Result> {
     try {
       if (!connectionRef.current) {
         return err("Ingen tilkobling opprettet.");

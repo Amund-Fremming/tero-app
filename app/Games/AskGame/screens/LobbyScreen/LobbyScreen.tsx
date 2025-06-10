@@ -34,7 +34,7 @@ export const LobbyScreen = ({ navigation }: any) => {
     if (!gameId) return;
 
     const result = await connect(gameType, gameId);
-    if (result.isErr()) {
+    if (result.isError()) {
       displayErrorModal(result.error);
       return;
     }
@@ -67,7 +67,7 @@ export const LobbyScreen = ({ navigation }: any) => {
   const handleAddQuestion = async () => {
     setQuestion("");
     const result = await invokeFunction("AddQuestion", gameId, question);
-    if (result.isErr()) {
+    if (result.isError()) {
       displayErrorModal(result.error);
     }
   };
