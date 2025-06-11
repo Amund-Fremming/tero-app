@@ -1,5 +1,10 @@
 # Tasklist
 
+- Find a better slution for joining games and creating, creator gets the object, joining gets universal ids
+
+  - Maybe just make gamebase global object
+  - Maye just make an object for holding all universal game states, simpler to do updates with useEffect then
+
 - Modal som viser om du har utdatert app version
 - Varslinger
 - Wifi provider inn

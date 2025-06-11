@@ -22,14 +22,9 @@ export const LobbyScreen = ({ navigation }: any) => {
   const { gameId, universalGameId, gameType, gameEntryMode } = useGlobalGameProvider();
   const { connect, disconnect, setListener, invokeFunction } = useHubConnectionProvider();
   const { displayErrorModal } = useInfoModalProvider();
-  const { spinGame } = useSpinGameProvider();
 
   useEffect(() => {
     createHubConnection();
-    if (spinGame) {
-      setIterations(spinGame.iterations);
-    }
-
     return () => {
       disconnect();
     };
