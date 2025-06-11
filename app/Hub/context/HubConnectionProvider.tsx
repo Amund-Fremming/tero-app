@@ -119,14 +119,15 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
 
   async function invokeFunction(functionName: string, ...params: any[]): Promise<Result> {
     try {
-      if (!connectionRef.current) {
+      if (!connectionRef?.current) {
         return err("Ingen tilkobling opprettet.");
       }
+
       await connectionRef.current?.invoke(functionName, ...params);
       return ok();
     } catch (error) {
       console.error("invokeFunction", error);
-      return err("Noe gikk galt.");
+      return err("Tilkoblingen ble butt");
     }
   }
 

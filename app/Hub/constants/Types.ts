@@ -1,9 +1,10 @@
 export interface GameBase {
   id: number;
-  universalId: string;
+  universalId: number;
   name: string;
   iterations: number;
   currentIteration: number;
+  isCopy: boolean;
 }
 
 export interface UserBase {
@@ -20,7 +21,7 @@ export interface RegisteredUserRequest {
 
 export interface AddedToGameResult {
   gameType: GameType;
-  gameId: number;
+  gameBase: GameBase;
 }
 
 export enum Category {
@@ -37,15 +38,11 @@ export enum GameType {
   SpinGame = "SpinGame",
 }
 
-export interface CreateGameResponse {
-  gameId: number;
-  universalGameId: number;
-}
-
 export enum GameEntryMode {
   Creator,
   Host,
   Participant,
+  Member,
 }
 
 export interface PagedRequest {

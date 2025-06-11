@@ -11,6 +11,7 @@ import { useInfoModalProvider } from "@/app/Hub/context/InfoModalProvider";
 import AskScreen from "../../constants/AskScreen";
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
 import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
+import { useAskGameProvider } from "../../context/AskGameProvider";
 
 export const CreateScreen = ({ navigation }: any) => {
   const { userId } = useUserProvider();
@@ -31,9 +32,9 @@ export const CreateScreen = ({ navigation }: any) => {
       return;
     }
 
+    setGameId(result.value.id);
+    setUniversalGameId(result.value.universalId);
     setGameType(GameType.AskGame);
-    setGameId(result.value.gameId);
-    setUniversalGameId(result.value.universalGameId);
     navigation.navigate(AskScreen.Lobby);
   };
 

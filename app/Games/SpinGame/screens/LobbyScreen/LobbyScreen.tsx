@@ -2,31 +2,34 @@ import { View, Text } from "react-native";
 import styles from "./lobbyScreenStyles";
 import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
-import { Pressable, TextInput } from "react-native-gesture-handler";
+import { Pressable } from "react-native-gesture-handler";
 import { useEffect, useState } from "react";
 import { useHubConnectionProvider } from "@/app/Hub/context/HubConnectionProvider";
 import { HubChannel } from "@/app/Hub/constants/HubChannel";
 import { useInfoModalProvider } from "@/app/Hub/context/InfoModalProvider";
 import Screen from "@/app/Hub/constants/Screen";
-import CheckBox from "../../components/CheckBox/CheckBox";
 import { GameEntryMode } from "@/app/Hub/constants/Types";
 import { useUserProvider } from "@/app/Hub/context/UserProvider";
 import { SpinGameState } from "../../constants/SpinTypes";
 import SpinScreen from "../../constants/SpinScreen";
+import AddChallenge from "../../components/AddChallenge/AddChallenge";
+import { useSpinGameProvider } from "../../context/SpinGameProvider";
 
 export const LobbyScreen = ({ navigation }: any) => {
-  const [participants, setParticipants] = useState<number>(1);
   const [iterations, setIterations] = useState<number>(0);
-  const [readBeforeSpin, setReadBeforeSpin] = useState<boolean>(true);
-  const [challenge, setChallenge] = useState<string>("");
 
   const { userId } = useUserProvider();
   const { gameId, universalGameId, gameType, gameEntryMode } = useGlobalGameProvider();
   const { connect, disconnect, setListener, invokeFunction } = useHubConnectionProvider();
   const { displayErrorModal } = useInfoModalProvider();
+  const { spinGame } = useSpinGameProvider();
 
   useEffect(() => {
     createHubConnection();
+    if (spinGame) {
+      setIterations(spinGame.iterations);
+    }
+
     return () => {
       disconnect();
     };
@@ -38,7 +41,7 @@ export const LobbyScreen = ({ navigation }: any) => {
     }
 
     const result = await connect(gameType, gameId);
-    if (result.isErr()) {
+    if (result.isError()) {
       displayErrorModal(result.error, () => navigation.navigate(Screen.Home));
       return;
     }
@@ -56,22 +59,10 @@ export const LobbyScreen = ({ navigation }: any) => {
     });
 
     setListener(HubChannel.Error, (message: string) => {
-      console.log(`Received: ${message}`); // TODO - remove log
+      console.log(`Received error. ${message}`); // TODO - remove log
       disconnect();
       displayErrorModal(message, () => navigation.navigate(Screen.Home));
     });
-  };
-
-  const handleAddChallenge = async () => {
-    if (!gameId) {
-      displayErrorModal("Noe gikk galt, prøv å gå inn og ut av spillet.");
-      return;
-    }
-
-    const result = await invokeFunction("AddChallenge", gameId, participants, challenge, readBeforeSpin);
-    if (result.isErr()) {
-      displayErrorModal(result.error);
-    }
   };
 
   const handleStartGame = async () => {
@@ -86,7 +77,7 @@ export const LobbyScreen = ({ navigation }: any) => {
     }
 
     const result = await invokeFunction("CloseChallenges", userId, gameId);
-    if (result.isErr()) {
+    if (result.isError()) {
       displayErrorModal(result.error);
     }
   };
@@ -96,25 +87,8 @@ export const LobbyScreen = ({ navigation }: any) => {
       <Text>Spill id: {universalGameId}</Text>
       <Text>Antall challenges: {iterations}</Text>
       <Text>LobbyScreen</Text>
-      <TextInput onChangeText={(input) => setChallenge(input)} placeholder="Challenge ..." />
-      <Text>Participants:</Text>
-      <View style={styles.participantsWrapper}>
-        <Pressable onPress={() => setParticipants(participants - 1 == 0 ? 1 : participants - 1)}>
-          <Text style={styles.participantsButton}>-</Text>
-        </Pressable>
-        <Text>{participants}</Text>
-        <Pressable onPress={() => setParticipants(participants + 1 == 4 ? 3 : participants + 1)}>
-          <Text style={styles.participantsButton}>+</Text>
-        </Pressable>
-      </View>
-      <View style={styles.selectedWrapper}>
-        <Text>Les challenge før spin?</Text>
-        <CheckBox checked={readBeforeSpin} onCheck={setReadBeforeSpin} />
-      </View>
-      <Pressable onPress={handleAddChallenge}>
-        <Text>Legg til</Text>
-      </Pressable>
-      {gameEntryMode === GameEntryMode.Creator && (
+      {(gameEntryMode === GameEntryMode.Creator || gameEntryMode === GameEntryMode.Participant) && <AddChallenge />}
+      {(gameEntryMode === GameEntryMode.Creator || gameEntryMode === GameEntryMode.Host) && (
         <Pressable>
           <Text onPress={handleStartGame}>Start</Text>
         </Pressable>

@@ -18,8 +18,8 @@ import { GameEntryMode } from "@/app/Hub/constants/Types";
 export const LobbyScreen = ({ navigation }: any) => {
   const [question, setQuestion] = useState<string>("");
 
-  const { gameEntryMode, gameId, universalGameId, gameType, clearValues } = useGlobalGameProvider();
-  const { iterations, setIterations, setAskGame, clearAskValues } = useAskGameProvider();
+  const { gameEntryMode, gameType, gameId, universalGameId } = useGlobalGameProvider();
+  const { iterations, setIterations, setAskGame } = useAskGameProvider();
   const { connect, disconnect, setListener, invokeFunction } = useHubConnectionProvider();
   const { displayErrorModal } = useInfoModalProvider();
 

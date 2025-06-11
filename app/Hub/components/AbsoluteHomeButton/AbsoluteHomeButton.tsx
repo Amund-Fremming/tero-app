@@ -16,8 +16,8 @@ export const AbsoluteHomeButton = ({ primary = Color.Black, secondary = Color.Wh
   const navigation: any = useNavigation();
 
   const { disconnect } = useHubConnectionProvider();
-  const { clearValues } = useGlobalGameProvider();
   const { clearAskValues } = useAskGameProvider();
+  const { clearValues } = useGlobalGameProvider();
 
   const handlePress = async () => {
     clearValues();

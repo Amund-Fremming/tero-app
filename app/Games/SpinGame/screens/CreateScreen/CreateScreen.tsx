@@ -12,7 +12,7 @@ import SpinScreen from "../../constants/SpinScreen";
 import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
 
 export const CreateScreen = ({ navigation }: any) => {
-  const { setGameType, setGameId, setUniversalGameId, gameEntryMode } = useGlobalGameProvider();
+  const { setGameType, setGameId, setUniversalGameId } = useGlobalGameProvider();
   const { displayErrorModal } = useInfoModalProvider();
   const { userId } = useUserProvider();
 
@@ -29,9 +29,10 @@ export const CreateScreen = ({ navigation }: any) => {
       return;
     }
 
+    console.log("UNIVERSAL GAME ID: ", result.value.universalId);
     setGameType(GameType.SpinGame);
-    setGameId(result.value.gameId);
-    setUniversalGameId(result.value.universalGameId);
+    setGameId(result.value.id);
+    setUniversalGameId(result.value.universalId);
     navigation.navigate(SpinScreen.Lobby);
   };
 

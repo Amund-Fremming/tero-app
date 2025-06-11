@@ -20,6 +20,7 @@ export const AskGameCard = (props: AskGameCardProps) => {
 
   const { setGameEntryMode } = useGlobalGameProvider();
   const { displayErrorModal } = useInfoModalProvider();
+  const { setUniversalGameId, setGameId } = useGlobalGameProvider();
   const { setAskGame } = useAskGameProvider();
 
   const handlePress = async () => {
@@ -30,6 +31,8 @@ export const AskGameCard = (props: AskGameCardProps) => {
     }
 
     setAskGame(result.value);
+    setGameId(result.value.id);
+    setUniversalGameId(result.value.universalId);
     setGameEntryMode(GameEntryMode.Host);
     navigation.navigate(AskScreen.Game);
   };

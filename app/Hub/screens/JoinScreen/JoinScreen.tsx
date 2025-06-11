@@ -1,8 +1,6 @@
 import { View, Text } from "react-native";
 import styles from "./joinScreenStyles";
 import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
-import Screen from "../../constants/Screen";
-import Colors from "../../constants/Color";
 import { TextInput } from "react-native-gesture-handler";
 import { useState } from "react";
 import { useInfoModalProvider } from "../../context/InfoModalProvider";
@@ -10,13 +8,14 @@ import { addPlayerToGame } from "../../services/universalGameApi";
 import { useUserProvider } from "../../context/UserProvider";
 import { useGlobalGameProvider } from "../../context/GlobalGameProvider";
 import MediumButton from "../../components/MediumButton/MediumButton";
+import { GameEntryMode } from "../../constants/Types";
 
 export const JoinScreen = ({ navigation }: any) => {
   const [userInput, setUserInput] = useState<string>("");
 
   const { userId } = useUserProvider();
   const { displayErrorModal } = useInfoModalProvider();
-  const { setGameId, setUniversalGameId, setGameType } = useGlobalGameProvider();
+  const { setGameId, setUniversalGameId, setGameType, setGameEntryMode } = useGlobalGameProvider();
 
   const handleJoinGame = async () => {
     const universalGameId = Number.parseInt(userInput);
@@ -31,9 +30,11 @@ export const JoinScreen = ({ navigation }: any) => {
       return;
     }
 
-    setGameId(result.value.gameId);
-    setUniversalGameId(universalGameId);
+    var game = result.value.gameBase;
+    setUniversalGameId(game.universalId);
+    setGameId(game.id);
     setGameType(result.value.gameType);
+    setGameEntryMode(game.isCopy ? GameEntryMode.Member : GameEntryMode.Participant);
     navigation.navigate(result.value.gameType.toString());
   };
 

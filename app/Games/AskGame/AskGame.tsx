@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { TransitionPresets } from "@react-navigation/stack";
 import { AskScreen } from "./constants/AskScreen";
-import AskGameProvider, { useAskGameProvider } from "./context/AskGameProvider";
+import AskGameProvider from "./context/AskGameProvider";
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
 import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
 import { CreateScreen } from "./screens/CreateScreen/CreateScreen";
