@@ -5,7 +5,7 @@ import AskScreen from "../../constants/AskScreen";
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
 import { GameEntryMode } from "@/app/Hub/constants/Types";
 import { getGame } from "../../services/askGameApi";
-import { useInfoModalProvider } from "@/app/Hub/context/InfoModalProvider";
+import { useModalProvider } from "@/app/Hub/context/ModalProvider";
 import { useAskGameProvider } from "../../context/AskGameProvider";
 
 interface AskGameCardProps {
@@ -19,7 +19,7 @@ export const AskGameCard = (props: AskGameCardProps) => {
   const navigation: any = useNavigation();
 
   const { setGameEntryMode } = useGlobalGameProvider();
-  const { displayErrorModal } = useInfoModalProvider();
+  const { displayErrorModal } = useModalProvider();
   const { setUniversalGameId, setGameId } = useGlobalGameProvider();
   const { setAskGame } = useAskGameProvider();
 

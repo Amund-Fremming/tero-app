@@ -6,7 +6,7 @@ import { Pressable } from "react-native-gesture-handler";
 import { useEffect, useState } from "react";
 import { useHubConnectionProvider } from "@/app/Hub/context/HubConnectionProvider";
 import { HubChannel } from "@/app/Hub/constants/HubChannel";
-import { useInfoModalProvider } from "@/app/Hub/context/InfoModalProvider";
+import { useModalProvider } from "@/app/Hub/context/ModalProvider";
 import Screen from "@/app/Hub/constants/Screen";
 import { GameEntryMode } from "@/app/Hub/constants/Types";
 import { useUserProvider } from "@/app/Hub/context/UserProvider";
@@ -21,7 +21,7 @@ export const LobbyScreen = ({ navigation }: any) => {
   const { userId } = useUserProvider();
   const { gameId, universalGameId, gameType, gameEntryMode } = useGlobalGameProvider();
   const { connect, disconnect, setListener, invokeFunction } = useHubConnectionProvider();
-  const { displayErrorModal } = useInfoModalProvider();
+  const { displayErrorModal } = useModalProvider();
 
   useEffect(() => {
     createHubConnection();

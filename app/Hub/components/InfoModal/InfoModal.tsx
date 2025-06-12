@@ -1,32 +1,23 @@
-import { Modal, Pressable, Text, View } from "react-native";
+import { Button, Pressable, Text, View } from "react-native";
 import { styles } from "./infoModalStyles";
 
 interface IInfoModal {
   message: string;
   isError: boolean;
-  modalVisible: boolean;
-  setModalVisible: (condition: boolean) => void;
-  onCloseFunc?: () => void;
+  onCloseFunc: () => void;
 }
 
-export const InfoModal = ({ modalVisible, setModalVisible, isError, message, onCloseFunc = () => {} }: IInfoModal) => {
-  const handleCloseModal = () => {
-    setModalVisible(!modalVisible);
-    onCloseFunc();
-  };
-
+export const InfoModal = ({ isError, message, onCloseFunc }: IInfoModal) => {
   return (
-    <Modal visible={modalVisible} animationType="fade" transparent={true}>
-      <View style={styles.overlay}>
-        <View style={[styles.genericContainer, isError ? styles.errorContainer : styles.messageContainer]}>
-          <Text style={styles.header}>{isError ? "Ooops" : "Hey"}</Text>
-          <Text style={styles.message}>{message}</Text>
-          <Pressable onPress={handleCloseModal} style={styles.button}>
-            <Text style={styles.buttonText}>Close</Text>
-          </Pressable>
-        </View>
+    <View style={styles.overlay}>
+      <View style={[styles.genericContainer, isError ? styles.errorContainer : styles.messageContainer]}>
+        <Text style={styles.header}>{isError ? "Ooops" : "Hey"}</Text>
+        <Text style={styles.message}>{message}</Text>
+        <Pressable onPress={onCloseFunc} style={styles.button}>
+          <Text style={styles.buttonText}>Lukk</Text>
+        </Pressable>
       </View>
-    </Modal>
+    </View>
   );
 };
 

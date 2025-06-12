@@ -1,6 +1,6 @@
 import Color from "@/app/Hub/constants/Color";
 import MediumButton from "@/app/Hub/components/MediumButton/MediumButton";
-import { useInfoModalProvider } from "@/app/Hub/context/InfoModalProvider";
+import { useModalProvider } from "@/app/Hub/context/ModalProvider";
 import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
@@ -21,7 +21,7 @@ export const LobbyScreen = ({ navigation }: any) => {
   const { gameEntryMode, gameType, gameId, universalGameId } = useGlobalGameProvider();
   const { iterations, setIterations, setAskGame } = useAskGameProvider();
   const { connect, disconnect, setListener, invokeFunction } = useHubConnectionProvider();
-  const { displayErrorModal } = useInfoModalProvider();
+  const { displayErrorModal } = useModalProvider();
 
   useEffect(() => {
     createHubConnection();

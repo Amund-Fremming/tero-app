@@ -61,3 +61,11 @@ export interface PagedResponse<T> {
   hasNextPage: number;
   hasPrevPage: number;
 }
+
+export interface UniversalGameProps {
+  gameId: number;
+  universalGameId: number;
+  gameType: GameType;
+  gameEntryMode: GameEntryMode;
+  iterations: number;
+}

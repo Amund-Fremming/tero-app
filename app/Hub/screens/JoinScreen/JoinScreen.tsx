@@ -3,7 +3,7 @@ import styles from "./joinScreenStyles";
 import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
 import { TextInput } from "react-native-gesture-handler";
 import { useState } from "react";
-import { useInfoModalProvider } from "../../context/InfoModalProvider";
+import { useModalProvider } from "../../context/ModalProvider";
 import { addPlayerToGame } from "../../services/universalGameApi";
 import { useUserProvider } from "../../context/UserProvider";
 import { useGlobalGameProvider } from "../../context/GlobalGameProvider";
@@ -14,7 +14,7 @@ export const JoinScreen = ({ navigation }: any) => {
   const [userInput, setUserInput] = useState<string>("");
 
   const { userId } = useUserProvider();
-  const { displayErrorModal } = useInfoModalProvider();
+  const { displayErrorModal } = useModalProvider();
   const { setGameId, setUniversalGameId, setGameType, setGameEntryMode } = useGlobalGameProvider();
 
   const handleJoinGame = async () => {

@@ -3,7 +3,7 @@ import styles from "./createScreenStyles";
 import { createGame } from "../../services/spinGameApi";
 import { useState } from "react";
 import { CreateSpinGameRequest } from "../../constants/SpinTypes";
-import { useInfoModalProvider } from "@/app/Hub/context/InfoModalProvider";
+import { useModalProvider } from "@/app/Hub/context/ModalProvider";
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
 import { useUserProvider } from "@/app/Hub/context/UserProvider";
 import { Category, GameType } from "@/app/Hub/constants/Types";
@@ -13,7 +13,7 @@ import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/Absolute
 
 export const CreateScreen = ({ navigation }: any) => {
   const { setGameType, setGameId, setUniversalGameId } = useGlobalGameProvider();
-  const { displayErrorModal } = useInfoModalProvider();
+  const { displayErrorModal } = useModalProvider();
   const { userId } = useUserProvider();
 
   const [createRequest, setCreateRequest] = useState<CreateSpinGameRequest>({

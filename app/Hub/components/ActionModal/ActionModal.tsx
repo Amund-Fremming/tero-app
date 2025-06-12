@@ -1,42 +1,36 @@
-import { Modal, Pressable, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { styles } from "./actionModalStyles";
 
 interface IActionModal {
   message: string;
-  modalVisible: boolean;
-  setModalVisible: (condition: boolean) => void;
-  onNoClick: () => void;
-  onYesClick: () => void;
+  onLeftClick: () => void;
+  onRightClick: () => void;
 }
 
-export const ActionModal = (props: IActionModal) => {
-  const handleYesPressed = () => {
-    props.setModalVisible(false);
-    props.onYesClick();
+export const ActionModal = ({ message, onLeftClick, onRightClick }: IActionModal) => {
+  const handleLeftPressed = () => {
+    onLeftClick();
   };
 
-  const handleNoPressed = () => {
-    props.setModalVisible(false);
-    props.onNoClick();
+  const handleRightPressed = () => {
+    onRightClick();
   };
 
   return (
-    <Modal visible={props.modalVisible} animationType="fade" transparent={true}>
-      <View style={styles.overlay}>
-        <View style={styles.container}>
-          <Text style={styles.header}>Hey</Text>
-          <Text style={styles.message}>{props.message}</Text>
-          <View style={styles.buttonsWrapper}>
-            <Pressable onPress={handleNoPressed} style={styles.button}>
-              <Text style={styles.buttonText}>no</Text>
-            </Pressable>
-            <Pressable onPress={handleYesPressed} style={styles.button}>
-              <Text style={styles.buttonText}>yes</Text>
-            </Pressable>
-          </View>
+    <View style={styles.overlay}>
+      <View style={styles.container}>
+        <Text style={styles.header}>Hey</Text>
+        <Text style={styles.message}>{message}</Text>
+        <View style={styles.buttonsWrapper}>
+          <Pressable onPress={handleLeftPressed} style={styles.button}>
+            <Text style={styles.buttonText}>Nei</Text>
+          </Pressable>
+          <Pressable onPress={handleRightPressed} style={styles.button}>
+            <Text style={styles.buttonText}>Ja</Text>
+          </Pressable>
         </View>
       </View>
-    </Modal>
+    </View>
   );
 };
 

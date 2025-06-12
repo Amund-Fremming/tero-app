@@ -6,7 +6,7 @@ import { GameEntryMode, PagedRequest, PagedResponse } from "@/app/Hub/constants/
 import { SpinGameCard } from "../../components/SpinGameCard/SpinGameCard";
 import { useEffect, useState } from "react";
 import { getGame, getGamesPage } from "../../services/spinGameApi";
-import { useInfoModalProvider } from "@/app/Hub/context/InfoModalProvider";
+import { useModalProvider } from "@/app/Hub/context/ModalProvider";
 import SpinGame from "../../constants/SpinTypes";
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
 import { useUserProvider } from "@/app/Hub/context/UserProvider";
@@ -17,7 +17,6 @@ const pageSize = 20;
 
 export const ChooseScreen = ({ navigation }: any) => {
   const { userId } = useUserProvider();
-  const { setSpinGame } = useSpinGameProvider();
   const { setGameId, setUniversalGameId, setGameEntryMode } = useGlobalGameProvider();
 
   const [pagedResponse, setPagedResponse] = useState<PagedResponse<SpinGame> | undefined>(undefined);
@@ -26,7 +25,7 @@ export const ChooseScreen = ({ navigation }: any) => {
     pageSize,
   });
 
-  const { displayErrorModal } = useInfoModalProvider();
+  const { displayErrorModal } = useModalProvider();
 
   const handlePress = async (gameId: number) => {
     if (!gameId) {
@@ -43,7 +42,6 @@ export const ChooseScreen = ({ navigation }: any) => {
     console.log(result.value);
     setUniversalGameId(result.value.universalId);
     setGameId(result.value.id);
-    setSpinGame(result.value);
     setGameEntryMode(GameEntryMode.Host);
     navigation.navigate(SpinScreen.Lobby);
   };

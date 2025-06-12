@@ -1,6 +1,6 @@
 import * as signalR from "@microsoft/signalr";
 import React, { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react";
-import { useInfoModalProvider } from "./InfoModalProvider";
+import { useModalProvider } from "./ModalProvider";
 import { HubUrlBase } from "../constants/Endpoints";
 import { useNavigation } from "expo-router";
 import Screen from "../constants/Screen";
@@ -35,7 +35,7 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
   const connectionRef = useRef(connection);
   const connectedStateRef = useRef(connectedState);
 
-  const { displayErrorModal } = useInfoModalProvider();
+  const { displayErrorModal } = useModalProvider();
   const navigation: any = useNavigation();
 
   useEffect(() => {

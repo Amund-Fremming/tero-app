@@ -2,7 +2,7 @@ import { View, TextInput, Text, Pressable } from "react-native";
 import CheckBox from "../CheckBox/CheckBox";
 import styles from "./addChallengeStyles";
 import { useState } from "react";
-import { useInfoModalProvider } from "@/app/Hub/context/InfoModalProvider";
+import { useModalProvider } from "@/app/Hub/context/ModalProvider";
 import { useHubConnectionProvider } from "@/app/Hub/context/HubConnectionProvider";
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
 
@@ -11,7 +11,7 @@ export const AddChallenge = () => {
   const [challenge, setChallenge] = useState<string>("");
   const [participants, setParticipants] = useState<number>(1);
 
-  const { displayErrorModal } = useInfoModalProvider();
+  const { displayErrorModal } = useModalProvider();
   const { invokeFunction } = useHubConnectionProvider();
   const { gameId } = useGlobalGameProvider();
 

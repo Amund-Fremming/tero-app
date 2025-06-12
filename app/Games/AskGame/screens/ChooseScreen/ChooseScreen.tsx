@@ -7,7 +7,7 @@ import { PagedRequest, PagedResponse } from "@/app/Hub/constants/Types";
 import { AskGameCard } from "../../components/AskGameCard/AskGameCard";
 import { useEffect, useState } from "react";
 import { getGamesPage } from "../../services/askGameApi";
-import { useInfoModalProvider } from "@/app/Hub/context/InfoModalProvider";
+import { useModalProvider } from "@/app/Hub/context/ModalProvider";
 
 const pageSize = 20;
 
@@ -18,7 +18,7 @@ export const ChooseScreen = () => {
     pageSize,
   });
 
-  const { displayErrorModal } = useInfoModalProvider();
+  const { displayErrorModal } = useModalProvider();
 
   const handlePaginate = (paginate: -1 | 1) => {
     const request = {
