@@ -62,7 +62,7 @@ export interface PagedResponse<T> {
   hasPrevPage: number;
 }
 
-export interface UniversalGameProps {
+export interface UniversalGameValues {
   gameId: number;
   universalGameId: number;
   gameType: GameType;

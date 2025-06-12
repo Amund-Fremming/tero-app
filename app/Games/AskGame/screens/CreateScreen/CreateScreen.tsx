@@ -3,7 +3,7 @@ import styles from "./createScreenStyles";
 import Color from "@/app/Hub/constants/Color";
 import { CreateAskGameRequest } from "../../constants/AskTypes";
 import { useState } from "react";
-import { Category, GameType } from "@/app/Hub/constants/Types";
+import { Category, GameEntryMode, GameType } from "@/app/Hub/constants/Types";
 import { Pressable, TextInput } from "react-native-gesture-handler";
 import { useUserProvider } from "@/app/Hub/context/UserProvider";
 import { createGame } from "../../services/askGameApi";
@@ -11,12 +11,11 @@ import { useModalProvider } from "@/app/Hub/context/ModalProvider";
 import AskScreen from "../../constants/AskScreen";
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
 import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
-import { useAskGameProvider } from "../../context/AskGameProvider";
 
 export const CreateScreen = ({ navigation }: any) => {
   const { userId } = useUserProvider();
   const { displayErrorModal } = useModalProvider();
-  const { setGameType, setGameId, setUniversalGameId } = useGlobalGameProvider();
+  const { setUniversalGameValues } = useGlobalGameProvider();
 
   const [createRequest, setCreateRequest] = useState<CreateAskGameRequest>({
     userId,
@@ -32,9 +31,8 @@ export const CreateScreen = ({ navigation }: any) => {
       return;
     }
 
-    setGameId(result.value.id);
-    setUniversalGameId(result.value.universalId);
-    setGameType(GameType.AskGame);
+    var game = result.value;
+    setUniversalGameValues(game.id, game.universalId, GameType.AskGame, GameEntryMode.Creator);
     navigation.navigate(AskScreen.Lobby);
   };
 

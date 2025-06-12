@@ -1,28 +1,28 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { GameEntryMode, GameType } from "../constants/Types";
+import { GameEntryMode, GameType, UniversalGameValues } from "../constants/Types";
 
 interface IGlobalGameContext {
   clearValues: () => void;
-  gameId: number | undefined;
-  setGameId: React.Dispatch<React.SetStateAction<number | undefined>>;
-  universalGameId: number | undefined;
-  setUniversalGameId: React.Dispatch<React.SetStateAction<number | undefined>>;
-  gameType: GameType;
-  setGameType: React.Dispatch<React.SetStateAction<GameType>>;
-  gameEntryMode: GameEntryMode;
-  setGameEntryMode: React.Dispatch<React.SetStateAction<GameEntryMode>>;
+  universalGameValues: UniversalGameValues | undefined;
+  setUniversalGameValues: (
+    gameId?: number,
+    universalGameId?: number,
+    gameType?: GameType,
+    gameEntryMode?: GameEntryMode,
+    iterations?: number
+  ) => void;
 }
 
 const defaultContextValue: IGlobalGameContext = {
   clearValues: () => {},
-  gameId: undefined,
-  setGameId: () => {},
-  universalGameId: undefined,
-  setUniversalGameId: () => {},
-  gameType: GameType.AskGame,
-  setGameType: () => {},
-  gameEntryMode: GameEntryMode.Participant,
-  setGameEntryMode: () => {},
+  universalGameValues: undefined,
+  setUniversalGameValues: (
+    _gameId?: number,
+    _universalGameId?: number,
+    _gameType?: GameType,
+    _gameEntryMode?: GameEntryMode,
+    _iterations?: number
+  ) => {},
 };
 
 const GlobalGameContext = createContext<IGlobalGameContext>(defaultContextValue);
@@ -34,28 +34,40 @@ interface GlobalGameProviderProps {
 }
 
 export const GlobalGameProvider = ({ children }: GlobalGameProviderProps) => {
-  const [gameId, setGameId] = useState<number | undefined>(undefined);
-  const [universalGameId, setUniversalGameId] = useState<number | undefined>(undefined);
-  const [gameType, setGameType] = useState<GameType>(GameType.AskGame);
-  const [gameEntryMode, setGameEntryMode] = useState<GameEntryMode>(GameEntryMode.Participant);
+  const [universalGameValues, setUniversalGameValuesInternal] = useState<UniversalGameValues | undefined>(undefined);
 
   const clearValues = () => {
-    setGameId(undefined);
-    setUniversalGameId(undefined);
-    setGameType(GameType.AskGame);
-    setGameEntryMode(GameEntryMode.Participant);
+    setUniversalGameValuesInternal(undefined);
+  };
+
+  const setUniversalGameValues = (
+    gameId?: number,
+    universalGameId?: number,
+    gameType?: GameType,
+    gameEntryMode?: GameEntryMode,
+    iterations?: number
+  ) => {
+    if (!universalGameValues) {
+      return;
+    }
+
+    setUniversalGameValuesInternal((prev) =>
+      prev === undefined
+        ? undefined
+        : {
+            gameId: gameId ?? prev.gameId,
+            universalGameId: universalGameId ?? prev.universalGameId,
+            gameType: gameType ?? prev.gameType,
+            gameEntryMode: gameEntryMode ?? prev.gameEntryMode,
+            iterations: iterations ?? prev.iterations,
+          }
+    );
   };
 
   const value = {
     clearValues,
-    gameId,
-    setGameId,
-    universalGameId,
-    setUniversalGameId,
-    gameType,
-    setGameType,
-    gameEntryMode,
-    setGameEntryMode,
+    universalGameValues,
+    setUniversalGameValues,
   };
 
   return <GlobalGameContext.Provider value={value}>{children}</GlobalGameContext.Provider>;

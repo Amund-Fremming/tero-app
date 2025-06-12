@@ -8,14 +8,14 @@ import { addPlayerToGame } from "../../services/universalGameApi";
 import { useUserProvider } from "../../context/UserProvider";
 import { useGlobalGameProvider } from "../../context/GlobalGameProvider";
 import MediumButton from "../../components/MediumButton/MediumButton";
-import { GameEntryMode } from "../../constants/Types";
+import { GameEntryMode, GameType } from "../../constants/Types";
 
 export const JoinScreen = ({ navigation }: any) => {
   const [userInput, setUserInput] = useState<string>("");
 
   const { userId } = useUserProvider();
   const { displayErrorModal } = useModalProvider();
-  const { setGameId, setUniversalGameId, setGameType, setGameEntryMode } = useGlobalGameProvider();
+  const { setUniversalGameValues } = useGlobalGameProvider();
 
   const handleJoinGame = async () => {
     const universalGameId = Number.parseInt(userInput);
@@ -31,10 +31,8 @@ export const JoinScreen = ({ navigation }: any) => {
     }
 
     var game = result.value.gameBase;
-    setUniversalGameId(game.universalId);
-    setGameId(game.id);
-    setGameType(result.value.gameType);
-    setGameEntryMode(game.isCopy ? GameEntryMode.Member : GameEntryMode.Participant);
+    var entryMode = game.isCopy ? GameEntryMode.Member : GameEntryMode.Participant;
+    setUniversalGameValues(game.id, game.universalId, result.value.gameType, entryMode);
     navigation.navigate(result.value.gameType.toString());
   };
 

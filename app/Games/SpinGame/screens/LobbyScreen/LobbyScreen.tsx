@@ -13,13 +13,12 @@ import { useUserProvider } from "@/app/Hub/context/UserProvider";
 import { SpinGameState } from "../../constants/SpinTypes";
 import SpinScreen from "../../constants/SpinScreen";
 import AddChallenge from "../../components/AddChallenge/AddChallenge";
-import { useSpinGameProvider } from "../../context/SpinGameProvider";
 
 export const LobbyScreen = ({ navigation }: any) => {
   const [iterations, setIterations] = useState<number>(0);
 
   const { userId } = useUserProvider();
-  const { gameId, universalGameId, gameType, gameEntryMode } = useGlobalGameProvider();
+  const { universalGameValues } = useGlobalGameProvider();
   const { connect, disconnect, setListener, invokeFunction } = useHubConnectionProvider();
   const { displayErrorModal } = useModalProvider();
 
@@ -28,14 +27,14 @@ export const LobbyScreen = ({ navigation }: any) => {
     return () => {
       disconnect();
     };
-  }, [gameId]);
+  }, [universalGameValues]);
 
   const createHubConnection = async () => {
-    if (!gameId) {
+    if (!universalGameValues) {
       return;
     }
 
-    const result = await connect(gameType, gameId);
+    const result = await connect(universalGameValues.gameType, universalGameValues.gameId);
     if (result.isError()) {
       displayErrorModal(result.error, () => navigation.navigate(Screen.Home));
       return;
@@ -66,12 +65,12 @@ export const LobbyScreen = ({ navigation }: any) => {
       return;
     }
 
-    if (!gameId) {
+    if (!universalGameValues) {
       displayErrorModal("Noe gikk galt. Gå ut og inn i spillet.");
       return;
     }
 
-    const result = await invokeFunction("CloseChallenges", userId, gameId);
+    const result = await invokeFunction("CloseChallenges", userId, universalGameValues.gameId);
     if (result.isError()) {
       displayErrorModal(result.error);
     }
@@ -79,11 +78,14 @@ export const LobbyScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <Text>Spill id: {universalGameId}</Text>
+      <Text>Spill id: {universalGameValues?.universalGameId}</Text>
       <Text>Antall challenges: {iterations}</Text>
       <Text>LobbyScreen</Text>
-      {(gameEntryMode === GameEntryMode.Creator || gameEntryMode === GameEntryMode.Participant) && <AddChallenge />}
-      {(gameEntryMode === GameEntryMode.Creator || gameEntryMode === GameEntryMode.Host) && (
+      {(universalGameValues?.gameEntryMode === GameEntryMode.Creator ||
+        universalGameValues?.gameEntryMode === GameEntryMode.Participant) && <AddChallenge />}
+
+      {(universalGameValues?.gameEntryMode === GameEntryMode.Creator ||
+        universalGameValues?.gameEntryMode === GameEntryMode.Host) && (
         <Pressable>
           <Text onPress={handleStartGame}>Start</Text>
         </Pressable>

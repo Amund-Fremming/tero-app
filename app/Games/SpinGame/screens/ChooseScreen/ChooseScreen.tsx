@@ -2,7 +2,7 @@ import { Pressable, Text, View } from "react-native";
 import styles from "./chooseScreenStyles";
 import VerticalScroll from "@/app/Hub/wrappers/VerticalScroll";
 import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
-import { GameEntryMode, PagedRequest, PagedResponse } from "@/app/Hub/constants/Types";
+import { GameEntryMode, GameType, PagedRequest, PagedResponse } from "@/app/Hub/constants/Types";
 import { SpinGameCard } from "../../components/SpinGameCard/SpinGameCard";
 import { useEffect, useState } from "react";
 import { getGame, getGamesPage } from "../../services/spinGameApi";
@@ -17,7 +17,7 @@ const pageSize = 20;
 
 export const ChooseScreen = ({ navigation }: any) => {
   const { userId } = useUserProvider();
-  const { setGameId, setUniversalGameId, setGameEntryMode } = useGlobalGameProvider();
+  const { setUniversalGameValues } = useGlobalGameProvider();
 
   const [pagedResponse, setPagedResponse] = useState<PagedResponse<SpinGame> | undefined>(undefined);
   const [pagedRequest, setPagedRequest] = useState<PagedRequest>({
@@ -39,10 +39,8 @@ export const ChooseScreen = ({ navigation }: any) => {
       return;
     }
 
-    console.log(result.value);
-    setUniversalGameId(result.value.universalId);
-    setGameId(result.value.id);
-    setGameEntryMode(GameEntryMode.Host);
+    const game = result.value;
+    setUniversalGameValues(game.id, game.universalId, GameType.SpinGame, GameEntryMode.Host);
     navigation.navigate(SpinScreen.Lobby);
   };
 
