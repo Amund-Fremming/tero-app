@@ -3,7 +3,7 @@ import styles from "./askGameCardStyles";
 import { useNavigation } from "@react-navigation/native";
 import AskScreen from "../../constants/AskScreen";
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
-import { GameEntryMode } from "@/app/Hub/constants/Types";
+import { GameEntryMode, GameType } from "@/app/Hub/constants/Types";
 import { getGame } from "../../services/askGameApi";
 import { useModalProvider } from "@/app/Hub/context/ModalProvider";
 import { useAskGameProvider } from "../../context/AskGameProvider";
@@ -18,9 +18,8 @@ interface AskGameCardProps {
 export const AskGameCard = (props: AskGameCardProps) => {
   const navigation: any = useNavigation();
 
-  const { setGameEntryMode } = useGlobalGameProvider();
   const { displayErrorModal } = useModalProvider();
-  const { setUniversalGameId, setGameId } = useGlobalGameProvider();
+  const { setUniversalGameValues, universalGameValues } = useGlobalGameProvider();
   const { setAskGame } = useAskGameProvider();
 
   const handlePress = async () => {
@@ -30,10 +29,9 @@ export const AskGameCard = (props: AskGameCardProps) => {
       return;
     }
 
-    setAskGame(result.value);
-    setGameId(result.value.id);
-    setUniversalGameId(result.value.universalId);
-    setGameEntryMode(GameEntryMode.Host);
+    const game = result.value;
+    setAskGame(game);
+    setUniversalGameValues(game.id, game.universalId, GameType.AskGame, GameEntryMode.Host);
     navigation.navigate(AskScreen.Game);
   };
 

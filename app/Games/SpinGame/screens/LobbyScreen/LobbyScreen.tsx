@@ -15,10 +15,8 @@ import SpinScreen from "../../constants/SpinScreen";
 import AddChallenge from "../../components/AddChallenge/AddChallenge";
 
 export const LobbyScreen = ({ navigation }: any) => {
-  const [iterations, setIterations] = useState<number>(0);
-
   const { userId } = useUserProvider();
-  const { universalGameValues } = useGlobalGameProvider();
+  const { universalGameValues, setUniversalGameValues, gameEntryMode } = useGlobalGameProvider();
   const { connect, disconnect, setListener, invokeFunction } = useHubConnectionProvider();
   const { displayErrorModal } = useModalProvider();
 
@@ -42,7 +40,7 @@ export const LobbyScreen = ({ navigation }: any) => {
 
     setListener(HubChannel.Iterations, (iterations: number) => {
       console.log(`Received: ${iterations}`); // TODO - remove log
-      setIterations(iterations);
+      setUniversalGameValues((iterations = iterations));
     });
 
     setListener(HubChannel.State, (state: SpinGameState) => {
@@ -79,13 +77,11 @@ export const LobbyScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <Text>Spill id: {universalGameValues?.universalGameId}</Text>
-      <Text>Antall challenges: {iterations}</Text>
+      <Text>Antall challenges: {universalGameValues?.iterations}</Text>
       <Text>LobbyScreen</Text>
-      {(universalGameValues?.gameEntryMode === GameEntryMode.Creator ||
-        universalGameValues?.gameEntryMode === GameEntryMode.Participant) && <AddChallenge />}
+      {(gameEntryMode === GameEntryMode.Creator || gameEntryMode === GameEntryMode.Participant) && <AddChallenge />}
 
-      {(universalGameValues?.gameEntryMode === GameEntryMode.Creator ||
-        universalGameValues?.gameEntryMode === GameEntryMode.Host) && (
+      {(gameEntryMode === GameEntryMode.Creator || gameEntryMode === GameEntryMode.Host) && (
         <Pressable>
           <Text onPress={handleStartGame}>Start</Text>
         </Pressable>

@@ -3,7 +3,7 @@ import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHome
 import items from "./GameData.json";
 import GameCard from "../../components/GameCard/GameCard";
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import VerticalScroll from "../../wrappers/VerticalScroll";
 import { verticalScale } from "../../utils/dimensions";
 

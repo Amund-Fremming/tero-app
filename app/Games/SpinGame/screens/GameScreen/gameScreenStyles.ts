@@ -8,9 +8,11 @@ export const styles = StyleSheet.create({
     height: "100%",
   },
 
-  header: {},
-
   text: {},
+
+  button: {},
+
+  buttonText: {},
 });
 
 export default styles;

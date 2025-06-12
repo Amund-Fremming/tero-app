@@ -1,8 +1,8 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, Button } from "react-native";
 import Screen from "../../constants/Screen";
 import styles from "./homeScreenStyles";
+import { GameEntryMode, GameType } from "../../constants/Types";
 import { useGlobalGameProvider } from "../../context/GlobalGameProvider";
-import { GameEntryMode } from "../../constants/Types";
 
 export const HomeScreen = ({ navigation }: any) => {
   const { setGameEntryMode } = useGlobalGameProvider();

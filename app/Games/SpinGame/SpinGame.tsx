@@ -1,5 +1,5 @@
 import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
-import React from "react";
+import React, { useEffect } from "react";
 import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
 import { SpinScreen } from "./constants/SpinScreen";
 import SpinGameProvider from "./context/SpinGameProvider";
@@ -7,20 +7,24 @@ import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
 import { GameEntryMode } from "@/app/Hub/constants/Types";
 import { GameScreen } from "./screens/GameScreen/GameScreen";
 import CreateScreen from "./screens/CreateScreen/CreateScreen";
-import ChooseScreen from "./screens/ChooseScreen/ChooseScreen";
+import GameListScreen from "./screens/GameListScreen/GameListScreen";
 
 const Stack = createStackNavigator();
 
 export const SpinGame = () => {
-  const { gameEntryMode } = useGlobalGameProvider();
+  const { universalGameValues, gameEntryMode } = useGlobalGameProvider();
+
+  useEffect(() => {}, [universalGameValues]);
 
   const getInitialScreen = () => {
+    console.log("OB", universalGameValues);
+
     switch (gameEntryMode) {
       case GameEntryMode.Creator:
         return SpinScreen.Create;
       case GameEntryMode.Host:
         return SpinScreen.Choose;
-      case GameEntryMode.Participant:
+      case GameEntryMode.Participant || GameEntryMode.Member:
         return SpinScreen.Lobby;
     }
   };
@@ -37,8 +41,8 @@ export const SpinGame = () => {
       >
         <Stack.Screen name={SpinScreen.Lobby} component={LobbyScreen} />
         <Stack.Screen name={SpinScreen.Create} component={CreateScreen} />
-        <Stack.Screen name={SpinScreen.Choose} component={ChooseScreen} />
         <Stack.Screen name={SpinScreen.Game} component={GameScreen} />
+        <Stack.Screen name={SpinScreen.Choose} component={GameListScreen} />
       </Stack.Navigator>
     </SpinGameProvider>
   );

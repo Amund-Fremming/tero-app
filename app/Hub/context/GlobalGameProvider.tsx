@@ -3,6 +3,8 @@ import { GameEntryMode, GameType, UniversalGameValues } from "../constants/Types
 
 interface IGlobalGameContext {
   clearValues: () => void;
+  gameEntryMode: GameEntryMode;
+  setGameEntryMode: React.Dispatch<React.SetStateAction<GameEntryMode>>;
   universalGameValues: UniversalGameValues | undefined;
   setUniversalGameValues: (
     gameId?: number,
@@ -15,6 +17,8 @@ interface IGlobalGameContext {
 
 const defaultContextValue: IGlobalGameContext = {
   clearValues: () => {},
+  gameEntryMode: GameEntryMode.Host,
+  setGameEntryMode: () => {},
   universalGameValues: undefined,
   setUniversalGameValues: (
     _gameId?: number,
@@ -35,6 +39,7 @@ interface GlobalGameProviderProps {
 
 export const GlobalGameProvider = ({ children }: GlobalGameProviderProps) => {
   const [universalGameValues, setUniversalGameValuesInternal] = useState<UniversalGameValues | undefined>(undefined);
+  const [gameEntryMode, setGameEntryMode] = useState<GameEntryMode>(GameEntryMode.Host);
 
   const clearValues = () => {
     setUniversalGameValuesInternal(undefined);
@@ -58,7 +63,6 @@ export const GlobalGameProvider = ({ children }: GlobalGameProviderProps) => {
             gameId: gameId ?? prev.gameId,
             universalGameId: universalGameId ?? prev.universalGameId,
             gameType: gameType ?? prev.gameType,
-            gameEntryMode: gameEntryMode ?? prev.gameEntryMode,
             iterations: iterations ?? prev.iterations,
           }
     );
@@ -66,6 +70,8 @@ export const GlobalGameProvider = ({ children }: GlobalGameProviderProps) => {
 
   const value = {
     clearValues,
+    gameEntryMode,
+    setGameEntryMode,
     universalGameValues,
     setUniversalGameValues,
   };

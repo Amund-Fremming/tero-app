@@ -1,6 +1,6 @@
 import Color from "@/app/Hub/constants/Color";
 import MediumButton from "@/app/Hub/components/MediumButton/MediumButton";
-import { Button, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { useAskGameProvider } from "../../context/AskGameProvider";
 import styles from "./gameScreenStyles";
 import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";

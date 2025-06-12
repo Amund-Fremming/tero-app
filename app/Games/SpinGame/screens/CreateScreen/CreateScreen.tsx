@@ -6,13 +6,13 @@ import { CreateSpinGameRequest } from "../../constants/SpinTypes";
 import { useModalProvider } from "@/app/Hub/context/ModalProvider";
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
 import { useUserProvider } from "@/app/Hub/context/UserProvider";
-import { Category, GameType } from "@/app/Hub/constants/Types";
+import { Category, GameEntryMode, GameType } from "@/app/Hub/constants/Types";
 import { Pressable, TextInput } from "react-native-gesture-handler";
 import SpinScreen from "../../constants/SpinScreen";
 import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
 
 export const CreateScreen = ({ navigation }: any) => {
-  const { setGameType, setGameId, setUniversalGameId } = useGlobalGameProvider();
+  const { setUniversalGameValues } = useGlobalGameProvider();
   const { displayErrorModal } = useModalProvider();
   const { userId } = useUserProvider();
 
@@ -29,10 +29,8 @@ export const CreateScreen = ({ navigation }: any) => {
       return;
     }
 
-    console.log("UNIVERSAL GAME ID: ", result.value.universalId);
-    setGameType(GameType.SpinGame);
-    setGameId(result.value.id);
-    setUniversalGameId(result.value.universalId);
+    const game = result.value;
+    setUniversalGameValues(game.id, game.universalId, GameType.SpinGame, GameEntryMode.Creator);
     navigation.navigate(SpinScreen.Lobby);
   };
 

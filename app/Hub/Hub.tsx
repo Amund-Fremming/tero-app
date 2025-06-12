@@ -7,7 +7,6 @@ import SpinGame from "../Games/SpinGame/SpinGame";
 import AskGame from "../Games/AskGame/AskGame";
 import HubScreen from "./screens/HubScreen/HubScreen";
 import JoinScreen from "./screens/JoinScreen/JoinScreen";
-import GameListScreen from "./screens/GameListScreen/GameListScreen";
 import Screen from "./constants/Screen";
 import AdminScreen from "./screens/AdminScreen/AdminScreen";
 import SelectGameScreen from "./screens/SelectGameScreen/SelectGameScreen";
@@ -28,7 +27,6 @@ export const Hub = () => {
       <Stack.Screen name={Screen.Home} component={HomeScreen} />
       <Stack.Screen name={Screen.Hub} component={HubScreen} />
       <Stack.Screen name={Screen.Join} component={JoinScreen} />
-      <Stack.Screen name={Screen.Games} component={GameListScreen} />
       <Stack.Screen name={Screen.SpinGame} component={SpinGame} />
       <Stack.Screen name={Screen.AskGame} component={AskGame} />
       <Stack.Screen name={Screen.SelectGame} component={SelectGameScreen} />

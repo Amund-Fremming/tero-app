@@ -1,48 +1,24 @@
 import { Pressable, Text, View } from "react-native";
-import styles from "./chooseScreenStyles";
 import VerticalScroll from "@/app/Hub/wrappers/VerticalScroll";
 import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
-import { GameEntryMode, GameType, PagedRequest, PagedResponse } from "@/app/Hub/constants/Types";
-import { SpinGameCard } from "../../components/SpinGameCard/SpinGameCard";
+import AskGame from "../../constants/AskTypes";
+import { PagedRequest, PagedResponse } from "@/app/Hub/constants/Types";
+import { AskGameCard } from "../../components/AskGameCard/AskGameCard";
 import { useEffect, useState } from "react";
-import { getGame, getGamesPage } from "../../services/spinGameApi";
+import { getGamesPage } from "../../services/askGameApi";
 import { useModalProvider } from "@/app/Hub/context/ModalProvider";
-import SpinGame from "../../constants/SpinTypes";
-import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
-import { useUserProvider } from "@/app/Hub/context/UserProvider";
-import { useSpinGameProvider } from "../../context/SpinGameProvider";
-import SpinScreen from "../../constants/SpinScreen";
+import styles from "./gameListScreenStyles";
 
 const pageSize = 20;
 
-export const ChooseScreen = ({ navigation }: any) => {
-  const { userId } = useUserProvider();
-  const { setUniversalGameValues } = useGlobalGameProvider();
-
-  const [pagedResponse, setPagedResponse] = useState<PagedResponse<SpinGame> | undefined>(undefined);
+export const GameListScreen = () => {
+  const [pagedResponse, setPagedResponse] = useState<PagedResponse<AskGame> | undefined>(undefined);
   const [pagedRequest, setPagedRequest] = useState<PagedRequest>({
     pageNumber: 1,
     pageSize,
   });
 
   const { displayErrorModal } = useModalProvider();
-
-  const handlePress = async (gameId: number) => {
-    if (!gameId) {
-      displayErrorModal("Missing game id");
-      return;
-    }
-
-    var result = await getGame(userId, gameId);
-    if (result.isError()) {
-      displayErrorModal(result.error);
-      return;
-    }
-
-    const game = result.value;
-    setUniversalGameValues(game.id, game.universalId, GameType.SpinGame, GameEntryMode.Host);
-    navigation.navigate(SpinScreen.Lobby);
-  };
 
   const handlePaginate = (paginate: -1 | 1) => {
     const request = {
@@ -63,7 +39,7 @@ export const ChooseScreen = ({ navigation }: any) => {
       displayErrorModal(result.error);
       return;
     }
-
+    console.log(result.value);
     setPagedResponse(result.value);
   };
 
@@ -72,12 +48,7 @@ export const ChooseScreen = ({ navigation }: any) => {
       <VerticalScroll key={pagedResponse?.data.length}>
         <Text style={styles.header}>Velg ett spill</Text>
         {pagedResponse?.data.map((item, index) => (
-          <SpinGameCard
-            name={item.name}
-            iterations={item.iterations}
-            handlePress={() => handlePress(item.id)}
-            key={index}
-          />
+          <AskGameCard {...item} key={index} />
         ))}
         <View style={styles.navButtons}>
           {pagedResponse?.hasPrevPage && (
@@ -105,4 +76,4 @@ export const ChooseScreen = ({ navigation }: any) => {
   );
 };
 
-export default ChooseScreen;
+export default GameListScreen;

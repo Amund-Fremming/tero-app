@@ -7,13 +7,16 @@ import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
 import { CreateScreen } from "./screens/CreateScreen/CreateScreen";
 import StartedScreen from "./screens/StartedScreen/StartedScreen";
 import { GameScreen } from "./screens/GameScreen/GameScreen";
-import ChooseScreen from "./screens/ChooseScreen/ChooseScreen";
+import GameListScreen from "./screens/GameListScreen/GameListScreen";
 import { GameEntryMode } from "@/app/Hub/constants/Types";
+import { useModalProvider } from "@/app/Hub/context/ModalProvider";
+import { useEffect, useState } from "react";
 
 const Stack = createStackNavigator();
 
 export const AskGame = () => {
   const { gameEntryMode } = useGlobalGameProvider();
+  const { displayErrorModal } = useModalProvider();
 
   const getInitialScreen = () => {
     switch (gameEntryMode) {
@@ -40,7 +43,7 @@ export const AskGame = () => {
         <Stack.Screen name={AskScreen.Create} component={CreateScreen} />
         <Stack.Screen name={AskScreen.Started} component={StartedScreen} />
         <Stack.Screen name={AskScreen.Game} component={GameScreen} />
-        <Stack.Screen name={AskScreen.Choose} component={ChooseScreen} />
+        <Stack.Screen name={AskScreen.Choose} component={GameListScreen} />
       </Stack.Navigator>
     </AskGameProvider>
   );

@@ -38,6 +38,7 @@ export enum SpinGameState {
   ChallengesClosed,
   RoundStarted,
   Spinning,
+  RoundFinished,
   Finished,
 }
 

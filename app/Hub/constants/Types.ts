@@ -66,6 +66,5 @@ export interface UniversalGameValues {
   gameId: number;
   universalGameId: number;
   gameType: GameType;
-  gameEntryMode: GameEntryMode;
   iterations: number;
 }
