@@ -9,31 +9,30 @@ import { useHubConnectionProvider } from "@/app/Hub/context/HubConnectionProvide
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
 import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import Screen from "@/app/Hub/constants/Screen";
-import { useAskGameProvider } from "../../context/AskGameProvider";
 import { HubChannel } from "@/app/Hub/constants/HubChannel";
 import AskScreen from "../../constants/AskScreen";
 import AskGame, { AskGameState } from "../../constants/AskTypes";
 import { GameEntryMode } from "@/app/Hub/constants/Types";
+import { useAskGameProvider } from "../../context/AskGameProvider";
 
 export const LobbyScreen = ({ navigation }: any) => {
   const [question, setQuestion] = useState<string>("");
 
-  const { gameEntryMode, gameType, gameId, universalGameId } = useGlobalGameProvider();
-  const { iterations, setIterations, setAskGame } = useAskGameProvider();
+  const { gameEntryMode, universalGameValues, setIterations } = useGlobalGameProvider();
   const { connect, disconnect, setListener, invokeFunction } = useHubConnectionProvider();
   const { displayErrorModal } = useModalProvider();
+  const { setAskGame } = useAskGameProvider();
 
   useEffect(() => {
-    createHubConnection();
-    return () => {
-      disconnect();
-    };
-  }, [gameId]);
+    if (universalGameValues) {
+      createHubConnection();
+    }
+  }, [universalGameValues]);
 
   const createHubConnection = async () => {
-    if (!gameId) return;
+    if (!universalGameValues) return;
 
-    const result = await connect(gameType, gameId);
+    const result = await connect(universalGameValues.gameType, universalGameValues.gameId);
     if (result.isError()) {
       displayErrorModal(result.error);
       return;
@@ -65,27 +64,31 @@ export const LobbyScreen = ({ navigation }: any) => {
   };
 
   const handleAddQuestion = async () => {
+    if (!universalGameValues) {
+      displayErrorModal("Finner ikke spill verdier, noe har gått galt 1.");
+      return;
+    }
+
     setQuestion("");
-    const result = await invokeFunction("AddQuestion", gameId, question);
+    const result = await invokeFunction("AddQuestion", universalGameValues.gameId, question);
     if (result.isError()) {
       displayErrorModal(result.error);
     }
   };
 
   const handleStartGame = async () => {
-    try {
-      if (!gameId) return;
-      invokeFunction("StartGame", gameId);
-    } catch (error) {
-      displayErrorModal("En feil skjedde når spillet skulle starte.");
+    if (!universalGameValues) {
+      displayErrorModal("Finner ikke spill verdier, noe har gått galt 2.");
+      return;
     }
+    const result = invokeFunction("StartGame", universalGameValues.gameId);
   };
 
   return (
     <View style={styles.container}>
-      <Text>Universal game id: {universalGameId}</Text>
+      <Text>Universal game id: {universalGameValues?.universalGameId}</Text>
       <Text style={styles.header}>Legg til spørsmål</Text>
-      <Text style={styles.paragraph}>Antall spørsmål: {iterations}</Text>
+      <Text style={styles.paragraph}>Antall spørsmål: {universalGameValues?.iterations}</Text>
       <TextInput style={styles.input} value={question} onChangeText={(input) => setQuestion(input)} />
       <MediumButton text="Legg til" color={Color.Beige} onClick={handleAddQuestion} />
       {gameEntryMode === GameEntryMode.Creator && (

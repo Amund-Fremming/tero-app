@@ -4,7 +4,7 @@ import { useModalProvider } from "./ModalProvider";
 import { HubUrlBase } from "../constants/Endpoints";
 import { useNavigation } from "expo-router";
 import Screen from "../constants/Screen";
-import { ok, Result } from "../utils/result";
+import { ok, err, Result } from "../utils/result";
 
 interface IHubConnectionContext {
   connect: (hubName: string, gameId: number) => Promise<Result<signalR.HubConnection>>;
@@ -14,10 +14,10 @@ interface IHubConnectionContext {
 }
 
 const defaultContextValue: IHubConnectionContext = {
-  connect: async (_hubName: string, _gameId: number) => fail(""),
-  disconnect: async () => fail(""),
-  setListener: (_channel: string, _fn: (item: any) => void) => fail(""),
-  invokeFunction: async (_functionName: string, ..._params: any[]) => fail(""),
+  connect: async (_hubName: string, _gameId: number) => err(""),
+  disconnect: async () => err(""),
+  setListener: (_channel: string, _fn: (item: any) => void) => err(""),
+  invokeFunction: async (_functionName: string, ..._params: any[]) => err(""),
 };
 
 const HubConnectionContext = createContext<IHubConnectionContext>(defaultContextValue);
@@ -62,30 +62,48 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
   async function connect(hubName: string, gameId: number): Promise<Result<signalR.HubConnection>> {
     try {
       if (connectionRef.current) {
-        return fail("Noe gikk galt. Forsøk å lukke og starte appen på nytt.");
+        const curHubName = (connectionRef.current as any)._hubName;
+        const curHubId = (connectionRef.current as any)._hubId;
+
+        if (curHubName !== hubName || curHubId !== gameId) {
+          return err("Finnes allerede en åpen socket til feil hub. (HubConnectionProvider)");
+        }
+
+        console.info(`Returning established connection: ${curHubName}:${curHubId}`);
+        return ok(connectionRef.current);
       }
 
       const endpoint = `${HubUrlBase}/${hubName}?GameId=${gameId}`;
+      console.warn("Endpoint: ", endpoint);
       const hubConnection = new signalR.HubConnectionBuilder()
         .withUrl(endpoint)
         .configureLogging(signalR.LogLevel.Information)
         .build();
 
+      (hubConnection as any)._hubName = hubName;
+      (hubConnection as any)._hubId = gameId;
+
       await hubConnection.start();
-      hubConnection.onclose(() => clearValues());
+      hubConnection.onclose(async () => {
+        clearValues();
+        await hubConnection.stop();
+      });
+
       setConnection(hubConnection);
       connectionRef.current = hubConnection;
       setConnectedState(true);
       connectedStateRef.current = true;
 
+      console.info(`Established connection: ${hubName}:${gameId}`);
       return ok(hubConnection);
     } catch (error) {
       setConnectedState(false);
-      return fail("En feil skjedde ved tilkoblingen.");
+      return err("En feil skjedde ved tilkoblingen. (HubConnectionProvider)");
     }
   }
 
   async function disconnect(): Promise<Result> {
+    console.info("Manual disconnect triggered.");
     try {
       if (!connectionRef.current) {
         clearValues();
@@ -98,36 +116,36 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
 
       return ok();
     } catch (error) {
-      setConnectedState(false); // TODO - remove log
-      return fail("En feil skjedde når du skulle forlate spillet.");
+      setConnectedState(false);
+      return err("En feil skjedde når du skulle forlate spillet.");
     }
   }
 
   function setListener<T>(channel: string, fn: (item: T) => void): Result {
     try {
       if (!connectionRef.current) {
-        return fail("Ingen tilkobling opprettet.");
+        return err("Ingen tilkobling opprettet. (HubConnectionProvider)");
       }
 
       connectionRef.current.on(channel, fn);
       return ok();
     } catch (error) {
       console.error("setListener");
-      return fail("Noe gikk galt.");
+      return err("Noe gikk galt.");
     }
   }
 
   async function invokeFunction(functionName: string, ...params: any[]): Promise<Result> {
     try {
       if (!connectionRef?.current) {
-        return fail("Ingen tilkobling opprettet.");
+        return err("Ingen tilkobling opprettet.");
       }
 
       await connectionRef.current?.invoke(functionName, ...params);
       return ok();
     } catch (error) {
       console.error("invokeFunction", error);
-      return fail("Tilkoblingen ble butt");
+      return err("Tilkoblingen ble butt");
     }
   }
 

@@ -13,15 +13,21 @@ export const AddChallenge = () => {
 
   const { displayErrorModal } = useModalProvider();
   const { invokeFunction } = useHubConnectionProvider();
-  const { gameId } = useGlobalGameProvider();
+  const { universalGameValues } = useGlobalGameProvider();
 
   const handleAddChallenge = async () => {
-    if (!gameId) {
+    if (!universalGameValues) {
       displayErrorModal("Noe gikk galt, prøv å gå inn og ut av spillet.");
       return;
     }
 
-    const result = await invokeFunction("AddChallenge", gameId, participants, challenge, readBeforeSpin);
+    const result = await invokeFunction(
+      "AddChallenge",
+      universalGameValues.gameId,
+      participants,
+      challenge,
+      readBeforeSpin
+    );
     if (result.isError()) {
       displayErrorModal(result.error);
     }

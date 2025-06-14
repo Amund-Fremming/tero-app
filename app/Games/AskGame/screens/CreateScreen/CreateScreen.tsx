@@ -17,6 +17,7 @@ export const CreateScreen = ({ navigation }: any) => {
   const { displayErrorModal } = useModalProvider();
   const { setUniversalGameValues } = useGlobalGameProvider();
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [createRequest, setCreateRequest] = useState<CreateAskGameRequest>({
     userId,
     gameName: "",
@@ -25,15 +26,27 @@ export const CreateScreen = ({ navigation }: any) => {
   });
 
   const handleCreateGame = async () => {
+    if (loading) {
+      return;
+    }
+
+    setLoading(true);
     const result = await createGame(createRequest);
     if (result.isError()) {
       displayErrorModal(result.error);
+      setLoading(false);
       return;
     }
 
     var game = result.value;
-    setUniversalGameValues(game.id, game.universalId, GameType.AskGame, GameEntryMode.Creator);
+    setUniversalGameValues({
+      gameId: game.id,
+      universalGameId: game.universalId,
+      gameType: GameType.AskGame,
+      iterations: game.iterations,
+    });
     navigation.navigate(AskScreen.Lobby);
+    setLoading(false);
   };
 
   return (

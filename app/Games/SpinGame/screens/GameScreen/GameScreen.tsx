@@ -19,13 +19,11 @@ export const GameScreen = ({ navigation }: any) => {
   const [state, setState] = useState<SpinGameState>(SpinGameState.RoundStarted);
 
   const { disconnect, connect, setListener, invokeFunction } = useHubConnectionProvider();
-  const { universalGameValues } = useGlobalGameProvider();
+  const { universalGameValues, gameEntryMode } = useGlobalGameProvider();
   const { displayErrorModal } = useModalProvider();
   const { userId } = useUserProvider();
 
-  const isHost =
-    universalGameValues?.gameEntryMode === GameEntryMode.Creator ||
-    universalGameValues?.gameEntryMode === GameEntryMode.Host;
+  const isHost = gameEntryMode === GameEntryMode.Creator || gameEntryMode === GameEntryMode.Host;
 
   useEffect(() => {
     createHubConnection();

@@ -6,13 +6,8 @@ interface IGlobalGameContext {
   gameEntryMode: GameEntryMode;
   setGameEntryMode: React.Dispatch<React.SetStateAction<GameEntryMode>>;
   universalGameValues: UniversalGameValues | undefined;
-  setUniversalGameValues: (
-    gameId?: number,
-    universalGameId?: number,
-    gameType?: GameType,
-    gameEntryMode?: GameEntryMode,
-    iterations?: number
-  ) => void;
+  setUniversalGameValues: React.Dispatch<React.SetStateAction<UniversalGameValues | undefined>>;
+  setIterations: (iterations: number) => void;
 }
 
 const defaultContextValue: IGlobalGameContext = {
@@ -20,13 +15,8 @@ const defaultContextValue: IGlobalGameContext = {
   gameEntryMode: GameEntryMode.Host,
   setGameEntryMode: () => {},
   universalGameValues: undefined,
-  setUniversalGameValues: (
-    _gameId?: number,
-    _universalGameId?: number,
-    _gameType?: GameType,
-    _gameEntryMode?: GameEntryMode,
-    _iterations?: number
-  ) => {},
+  setUniversalGameValues: () => {},
+  setIterations: (_iterations: number) => {},
 };
 
 const GlobalGameContext = createContext<IGlobalGameContext>(defaultContextValue);
@@ -38,35 +28,19 @@ interface GlobalGameProviderProps {
 }
 
 export const GlobalGameProvider = ({ children }: GlobalGameProviderProps) => {
-  const [universalGameValues, setUniversalGameValuesInternal] = useState<UniversalGameValues | undefined>(undefined);
+  const [universalGameValues, setUniversalGameValues] = useState<UniversalGameValues | undefined>(undefined);
   const [gameEntryMode, setGameEntryMode] = useState<GameEntryMode>(GameEntryMode.Host);
 
-  const clearValues = () => {
-    setUniversalGameValuesInternal(undefined);
-  };
+  const clearValues = () => setUniversalGameValues(undefined);
 
-  const setUniversalGameValues = (
-    gameId?: number,
-    universalGameId?: number,
-    gameType?: GameType,
-    gameEntryMode?: GameEntryMode,
-    iterations?: number
-  ) => {
-    if (!universalGameValues) {
-      return;
-    }
+  const setIterations = (iterations: number) =>
+    setUniversalGameValues((prev) => {
+      if (!prev) {
+        return undefined;
+      }
 
-    setUniversalGameValuesInternal((prev) =>
-      prev === undefined
-        ? undefined
-        : {
-            gameId: gameId ?? prev.gameId,
-            universalGameId: universalGameId ?? prev.universalGameId,
-            gameType: gameType ?? prev.gameType,
-            iterations: iterations ?? prev.iterations,
-          }
-    );
-  };
+      return { ...prev, iterations };
+    });
 
   const value = {
     clearValues,
@@ -74,6 +48,7 @@ export const GlobalGameProvider = ({ children }: GlobalGameProviderProps) => {
     setGameEntryMode,
     universalGameValues,
     setUniversalGameValues,
+    setIterations,
   };
 
   return <GlobalGameContext.Provider value={value}>{children}</GlobalGameContext.Provider>;

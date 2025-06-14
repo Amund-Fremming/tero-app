@@ -31,7 +31,12 @@ export const AskGameCard = (props: AskGameCardProps) => {
 
     const game = result.value;
     setAskGame(game);
-    setUniversalGameValues(game.id, game.universalId, GameType.AskGame, GameEntryMode.Host);
+    setUniversalGameValues({
+      gameId: game.id,
+      universalGameId: Number.parseInt("1" + game),
+      gameType: GameType.AskGame,
+      iterations: game.iterations,
+    });
     navigation.navigate(AskScreen.Game);
   };
 

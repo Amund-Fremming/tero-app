@@ -3,7 +3,7 @@ import styles from "./lobbyScreenStyles";
 import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import { useGlobalGameProvider } from "@/app/Hub/context/GlobalGameProvider";
 import { Pressable } from "react-native-gesture-handler";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useHubConnectionProvider } from "@/app/Hub/context/HubConnectionProvider";
 import { HubChannel } from "@/app/Hub/constants/HubChannel";
 import { useModalProvider } from "@/app/Hub/context/ModalProvider";
@@ -16,7 +16,7 @@ import AddChallenge from "../../components/AddChallenge/AddChallenge";
 
 export const LobbyScreen = ({ navigation }: any) => {
   const { userId } = useUserProvider();
-  const { universalGameValues, setUniversalGameValues, gameEntryMode } = useGlobalGameProvider();
+  const { universalGameValues, setIterations, gameEntryMode } = useGlobalGameProvider();
   const { connect, disconnect, setListener, invokeFunction } = useHubConnectionProvider();
   const { displayErrorModal } = useModalProvider();
 
@@ -40,7 +40,7 @@ export const LobbyScreen = ({ navigation }: any) => {
 
     setListener(HubChannel.Iterations, (iterations: number) => {
       console.log(`Received: ${iterations}`); // TODO - remove log
-      setUniversalGameValues((iterations = iterations));
+      setIterations(iterations);
     });
 
     setListener(HubChannel.State, (state: SpinGameState) => {

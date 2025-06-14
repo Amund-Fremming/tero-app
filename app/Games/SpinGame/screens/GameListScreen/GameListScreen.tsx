@@ -2,7 +2,7 @@ import { Pressable, Text, View } from "react-native";
 import styles from "./gameListScreenStyles";
 import VerticalScroll from "@/app/Hub/wrappers/VerticalScroll";
 import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
-import { GameEntryMode, GameType, PagedRequest, PagedResponse } from "@/app/Hub/constants/Types";
+import { GameType, PagedRequest, PagedResponse } from "@/app/Hub/constants/Types";
 import { SpinGameCard } from "../../components/SpinGameCard/SpinGameCard";
 import { useEffect, useState } from "react";
 import { getGame, getGamesPage } from "../../services/spinGameApi";
@@ -39,7 +39,12 @@ export const GameListScreen = ({ navigation }: any) => {
     }
 
     const game = result.value;
-    setUniversalGameValues(game.id, game.universalId, GameType.SpinGame, GameEntryMode.Host);
+    setUniversalGameValues({
+      gameId: game.id,
+      universalGameId: game.universalId,
+      gameType: GameType.SpinGame,
+      iterations: game.iterations,
+    });
     navigation.navigate(SpinScreen.Lobby);
   };
 
