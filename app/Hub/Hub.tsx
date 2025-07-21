@@ -3,11 +3,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { TransitionPresets } from "@react-navigation/stack";
 
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
-import SpinGame from "../Games/SpinGame/SpinGame";
-import AskGame from "../Games/AskGame/AskGame";
+import SpinGame from "../SpinGame/SpinGame";
+import AskGame from "../AskGame/AskGame";
 import HubScreen from "./screens/HubScreen/HubScreen";
 import JoinScreen from "./screens/JoinScreen/JoinScreen";
-import Screen from "./constants/Screen";
+import Screen from "../Common/constants/Screen";
 import AdminScreen from "./screens/AdminScreen/AdminScreen";
 import SelectGameScreen from "./screens/SelectGameScreen/SelectGameScreen";
 

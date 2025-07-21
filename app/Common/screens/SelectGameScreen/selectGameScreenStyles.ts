@@ -1,19 +1,21 @@
 import { StyleSheet } from "react-native";
-import Colors from "../../../Common/constants/Color";
+import Colors, { Color } from "../../../Common/constants/Color";
 import { horizontalScale, moderateScale, verticalScale } from "../../../Common/utils/dimensions";
 
 export const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
+    backgroundColor: Color.Black,
+    width: "100%",
     height: "100%",
-    backgroundColor: Colors.Beige,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   header: {
     paddingTop: verticalScale(20),
     paddingLeft: horizontalScale(20),
     width: "100%",
-    color: Colors.Purple,
+    color: Colors.White,
     fontSize: moderateScale(40),
     fontWeight: 900,
   },

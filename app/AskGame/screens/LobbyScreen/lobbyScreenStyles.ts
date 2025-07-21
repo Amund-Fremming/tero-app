@@ -1,10 +1,8 @@
+import { moderateScale } from "@/app/Common/utils/dimensions";
 import { StyleSheet } from "react-native";
-import Colors from "../../../Common/constants/Color";
-import { horizontalScale, moderateScale, verticalScale } from "../../../Common/utils/dimensions";
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.Red,
     width: "100%",
     height: "100%",
     justifyContent: "center",
@@ -13,12 +11,8 @@ export const styles = StyleSheet.create({
   },
 
   header: {
-    paddingTop: verticalScale(20),
-    paddingLeft: horizontalScale(20),
-    width: "100%",
-    color: Colors.Black,
-    fontSize: moderateScale(40),
-    fontWeight: 900,
+    fontSize: moderateScale(20),
+    fontWeight: 600,
   },
 
   paragraph: {
@@ -27,7 +21,7 @@ export const styles = StyleSheet.create({
 
   input: {
     borderWidth: 2,
-    borderColor: "black",
+    borderColor: "gray",
     height: 50,
     width: 240,
   },

@@ -1,14 +1,14 @@
 import { View, Text } from "react-native";
 import styles from "./joinScreenStyles";
-import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
+import AbsoluteHomeButton from "@/app/Common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import { TextInput } from "react-native-gesture-handler";
 import { useState } from "react";
-import { useModalProvider } from "../../context/ModalProvider";
-import { addPlayerToGame } from "../../services/universalGameApi";
-import { useUserProvider } from "../../context/UserProvider";
-import { useGlobalGameProvider } from "../../context/GlobalGameProvider";
-import MediumButton from "../../components/MediumButton/MediumButton";
-import { GameEntryMode } from "../../constants/Types";
+import { useModalProvider } from "@/app/Common/context/ModalProvider";
+import { addPlayerToGame } from "@/app/Common/services/universalGameApi";
+import { useUserProvider } from "@/app/Common/context/UserProvider";
+import { useGlobalGameProvider } from "../../../Common/context/GlobalGameProvider";
+import MediumButton from "../../../Common/components/MediumButton/MediumButton";
+import { GameEntryMode } from "../../../Common/constants/Types";
 
 export const JoinScreen = ({ navigation }: any) => {
   const [userInput, setUserInput] = useState<string>("");

@@ -1,8 +1,8 @@
-import HubConnectionProvider from "./Hub/context/HubConnectionProvider";
-import GlobalGameProvider from "./Hub/context/GlobalGameProvider";
-import ModalProvider from "./Hub/context/ModalProvider";
+import HubConnectionProvider from "./Common/context/HubConnectionProvider";
+import GlobalGameProvider from "./Common/context/GlobalGameProvider";
+import ModalProvider from "./Common/context/ModalProvider";
 import Hub from "./Hub/Hub";
-import UserProvider from "./Hub/context/UserProvider";
+import UserProvider from "./Common/context/UserProvider";
 
 export default () => (
   <ModalProvider>
