@@ -1,16 +1,16 @@
 import { Pressable, Text, View } from "react-native";
 import styles from "./gameScreenStyles";
-import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
+import AbsoluteHomeButton from "@/app/Common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import { useEffect, useState } from "react";
 import { SpinGameState } from "../../constants/SpinTypes";
 import { useGlobalGameProvider } from "@/app/Common/context/GlobalGameProvider";
 import { GameEntryMode } from "@/app/Common/constants/Types";
 import Color from "@/app/Common/constants/Color";
 import { useHubConnectionProvider } from "@/app/Common/context/HubConnectionProvider";
-import { useModalProvider } from "@/app/Hub/context/ModalProvider";
+import { useModalProvider } from "@/app/Common/context/ModalProvider";
 import { HubChannel } from "@/app/Common/constants/HubChannel";
 import Screen from "@/app/Common/constants/Screen";
-import { useUserProvider } from "@/app/Hub/context/UserProvider";
+import { useUserProvider } from "@/app/Common/context/UserProvider";
 
 export const GameScreen = ({ navigation }: any) => {
   const [challenge, setChallenge] = useState<string>();

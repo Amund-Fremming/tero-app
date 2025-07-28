@@ -2,7 +2,7 @@ import { View, TextInput, Text, Pressable } from "react-native";
 import CheckBox from "../CheckBox/CheckBox";
 import styles from "./addChallengeStyles";
 import { useState } from "react";
-import { useModalProvider } from "@/app/Hub/context/ModalProvider";
+import { useModalProvider } from "@/app/Common/context/ModalProvider";
 import { useHubConnectionProvider } from "@/app/Common/context/HubConnectionProvider";
 import { useGlobalGameProvider } from "@/app/Common/context/GlobalGameProvider";
 

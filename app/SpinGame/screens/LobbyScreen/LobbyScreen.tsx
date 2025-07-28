@@ -1,15 +1,15 @@
 import { View, Text } from "react-native";
 import styles from "./lobbyScreenStyles";
-import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
+import AbsoluteHomeButton from "@/app/Common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import { useGlobalGameProvider } from "@/app/Common/context/GlobalGameProvider";
 import { Pressable } from "react-native-gesture-handler";
 import { useEffect } from "react";
 import { useHubConnectionProvider } from "@/app/Common/context/HubConnectionProvider";
 import { HubChannel } from "@/app/Common/constants/HubChannel";
-import { useModalProvider } from "@/app/Hub/context/ModalProvider";
+import { useModalProvider } from "@/app/Common/context/ModalProvider";
 import Screen from "@/app/Common/constants/Screen";
 import { GameEntryMode } from "@/app/Common/constants/Types";
-import { useUserProvider } from "@/app/Hub/context/UserProvider";
+import { useUserProvider } from "@/app/Common/context/UserProvider";
 import { SpinGameState } from "../../constants/SpinTypes";
 import SpinScreen from "../../constants/SpinScreen";
 import AddChallenge from "../../components/AddChallenge/AddChallenge";

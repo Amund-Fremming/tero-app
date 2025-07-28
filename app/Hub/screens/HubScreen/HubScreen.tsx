@@ -1,6 +1,6 @@
 import { View, Text, Button } from "react-native";
 import styles from "./hubScreenStyles";
-import { AbsoluteHomeButton } from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
+import AbsoluteHomeButton from "@/app/Common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import Screen from "../../../Common/constants/Screen";
 
 export const HubScreen = ({ navigation }: any) => {

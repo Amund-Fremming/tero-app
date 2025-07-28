@@ -3,13 +3,13 @@ import styles from "./createScreenStyles";
 import { createGame } from "../../services/spinGameApi";
 import { useState } from "react";
 import { CreateSpinGameRequest } from "../../constants/SpinTypes";
-import { useModalProvider } from "@/app/Hub/context/ModalProvider";
+import { useModalProvider } from "@/app/Common/context/ModalProvider";
 import { useGlobalGameProvider } from "@/app/Common/context/GlobalGameProvider";
-import { useUserProvider } from "@/app/Hub/context/UserProvider";
+import { useUserProvider } from "@/app/Common/context/UserProvider";
 import { Category, GameType } from "@/app/Common/constants/Types";
 import { Pressable, TextInput } from "react-native-gesture-handler";
 import SpinScreen from "../../constants/SpinScreen";
-import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
+import AbsoluteHomeButton from "@/app/Common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 
 export const CreateScreen = ({ navigation }: any) => {
   const { setUniversalGameValues } = useGlobalGameProvider();

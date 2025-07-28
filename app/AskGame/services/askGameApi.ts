@@ -6,9 +6,9 @@ import httpResult from "@/app/Common/services/httpResult";
 export const createGame = async (createGameRequest: CreateAskGameRequest): Promise<Result<AskGame>> =>
   await httpResult.post<CreateAskGameRequest, AskGame>(AskGameUrlBase, createGameRequest);
 
-export const getGame = async (id: number) => {
+export const getAskGame = async (id: number): Promise<Result<AskGame>> => {
   const url = `${AskGameUrlBase}/${id}`;
   return await httpResult.simpleGet<AskGame>(url);
 };
 
-export default { createGame };
+export default { createGame, getGame: getAskGame };

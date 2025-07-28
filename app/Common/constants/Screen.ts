@@ -5,7 +5,8 @@ export enum Screen {
   Games = "Games",
   SpinGame = "SpinGame",
   AskGame = "AskGame",
-  SelectGame = "SelectGameScreen",
+  GameTypeList = "GameTypeList",
+  GameList = "GameList",
   Admin = "Admin",
 }
 

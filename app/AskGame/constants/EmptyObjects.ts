@@ -2,7 +2,8 @@ import AskGame from "./AskTypes";
 
 export const EmptyAskGame: AskGame = {
   id: 0,
-  universalId: "",
+  isCopy: true,
+  universalId: 0,
   name: "",
   iterations: 0,
   currentIteration: 0,

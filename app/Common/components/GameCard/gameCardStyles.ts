@@ -1,24 +1,32 @@
+import { moderateScale, verticalScale } from "@/app/Common/utils/dimensions";
 import { StyleSheet } from "react-native";
-import Color from "../../../Common/constants/Color";
 
 export const styles = StyleSheet.create({
   card: {
-    borderWidth: 2,
-    borderColor: Color.White,
-    padding: 10,
-    gap: 8,
-    height: 150,
     width: "95%",
+    height: verticalScale(100),
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
+    borderWidth: 2,
+    borderColor: "white",
   },
 
   header: {
+    color: "white",
+    fontSize: moderateScale(20),
     fontWeight: 600,
-    fontSize: 20,
-    color: Color.White,
   },
 
   paragraph: {
-    color: Color.White,
+    color: "white",
+    fontSize: moderateScale(16),
+  },
+
+  iterations: {
+    color: "white",
+    fontSize: moderateScale(18),
+    fontWeight: 500,
   },
 });
 

@@ -7,16 +7,14 @@ import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
 import { CreateScreen } from "./screens/CreateScreen/CreateScreen";
 import StartedScreen from "./screens/StartedScreen/StartedScreen";
 import { GameScreen } from "./screens/GameScreen/GameScreen";
-import GameListScreen from "./screens/GameListScreen/GameListScreen";
+import GameListScreen from "../Common/screens/GameListScreen/GameListScreen";
 import { GameEntryMode } from "@/app/Common/constants/Types";
-import { useModalProvider } from "@/app/Hub/context/ModalProvider";
-import { useEffect, useState } from "react";
+import { useModalProvider } from "../Common/context/ModalProvider";
 
 const Stack = createStackNavigator();
 
 export const AskGame = () => {
   const { gameEntryMode } = useGlobalGameProvider();
-  const { displayErrorModal } = useModalProvider();
 
   const getInitialScreen = () => {
     switch (gameEntryMode) {

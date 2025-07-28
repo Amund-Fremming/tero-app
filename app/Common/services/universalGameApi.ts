@@ -10,5 +10,5 @@ export const addPlayerToGame = async (userId: number, universalGameId: number): 
 
 export const getGamesPage = async (gameType: GameType, pagedRequest: PagedRequest): Promise<Result<PagedResponse>> => {
   const url = `${UniversalGameUrlBase}/page?gameType=${gameType}`;
-  return await httpResult.get(url, pagedRequest);
+  return await httpResult.post(url, pagedRequest);
 };

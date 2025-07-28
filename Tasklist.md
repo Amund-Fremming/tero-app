@@ -1,8 +1,7 @@
 # Tasklist
 
-- GetGame må være støttet av type params els, eller velge funksjon på fe
+- Funker ikke å gå inn på laget spill nå, feil i navigation
 - Description på gamebase i fe og be, + opdpater db
-- Teste ny søk med type parameter
 
 - En feil som har kommet med ny modal, kollisjon mellom modal og resten av spingame og askgame
 

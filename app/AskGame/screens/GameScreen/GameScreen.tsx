@@ -3,7 +3,7 @@ import MediumButton from "@/app/Common/components/MediumButton/MediumButton";
 import { Text, View } from "react-native";
 import { useAskGameProvider } from "../../context/AskGameProvider";
 import styles from "./gameScreenStyles";
-import AbsoluteHomeButton from "@/app/Hub/components/AbsoluteHomeButton/AbsoluteHomeButton";
+import AbsoluteHomeButton from "@/app/Common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 
 export const GameScreen = ({ navigation }: any) => {
   const { askGame, setAskGame } = useAskGameProvider();

@@ -3,26 +3,29 @@ import styles from "./gameListScreenStyles";
 import VerticalScroll from "../../wrappers/VerticalScroll";
 import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
 import { GameType, PagedRequest, PagedResponse } from "@/app/Common/constants/Types";
-import GameBaseCard from "../../components/AskGameCard/GameBaseCard";
+import GameCard from "../../components/GameCard/GameCard";
 import { useEffect, useState } from "react";
 import { getGamesPage } from "../../services/universalGameApi";
-import { getGame } from "../../../SpinGame/services/spinGameApi";
+import { getSpinGame } from "../../../SpinGame/services/spinGameApi";
 import { useModalProvider } from "../../context/ModalProvider";
 import { useGlobalGameProvider } from "@/app/Common/context/GlobalGameProvider";
 import { useUserProvider } from "../../context/UserProvider";
 import SpinScreen from "../../../SpinGame/constants/SpinScreen";
 import { useNavigation } from "@react-navigation/native";
+import { getAskGame } from "@/app/AskGame/services/askGameApi";
+import Screen from "../../constants/Screen";
+import { useSpinGameProvider } from "@/app/SpinGame/context/SpinGameProvider";
+import { useAskGameProvider } from "@/app/AskGame/context/AskGameProvider";
+import AskScreen from "@/app/AskGame/constants/AskScreen";
 
 const pageSize = 20;
 
-interface GameListScreenProps {
-  gameType: GameType;
-}
-
-export const GameListScreen = ({ gameType }: GameListScreenProps) => {
+export const GameListScreen = () => {
   const navigation: any = useNavigation();
   const { userId } = useUserProvider();
-  const { setUniversalGameValues } = useGlobalGameProvider();
+  const { setUniversalGameValues, gameType } = useGlobalGameProvider();
+  const { setSpinGame } = useSpinGameProvider();
+  const { setAskGame } = useAskGameProvider();
 
   const [pagedResponse, setPagedResponse] = useState<PagedResponse | undefined>(undefined);
   const [pagedRequest, setPagedRequest] = useState<PagedRequest>({
@@ -38,10 +41,15 @@ export const GameListScreen = ({ gameType }: GameListScreenProps) => {
       return;
     }
 
-    var result = await getGame(userId, gameId);
+    if (gameType == GameType.SpinGame) await handleSpinGamePressed(gameId);
+    if (gameType == GameType.AskGame) await handleAskGamePressed(gameId);
+  };
+
+  const handleSpinGamePressed = async (gameId: number) => {
+    var result = await getSpinGame(userId, gameId);
     if (result.isError()) {
+      navigation.navigate(Screen.Home);
       displayErrorModal(result.error);
-      return;
     }
 
     const game = result.value;
@@ -51,7 +59,26 @@ export const GameListScreen = ({ gameType }: GameListScreenProps) => {
       gameType: GameType.SpinGame,
       iterations: game.iterations,
     });
+    setSpinGame(game);
     navigation.navigate(SpinScreen.Lobby);
+  };
+
+  const handleAskGamePressed = async (gameId: number) => {
+    var result = await getAskGame(gameId);
+    if (result.isError()) {
+      navigation.navigate(Screen.Home);
+      displayErrorModal(result.error);
+    }
+
+    const game = result.value;
+    setUniversalGameValues({
+      gameId: game.id,
+      universalGameId: game.universalId,
+      gameType: GameType.SpinGame,
+      iterations: game.iterations,
+    });
+    setAskGame(game);
+    navigation.navigate(AskScreen.Lobby);
   };
 
   const handlePaginate = (paginate: -1 | 1) => {
@@ -82,7 +109,7 @@ export const GameListScreen = ({ gameType }: GameListScreenProps) => {
       <VerticalScroll key={pagedResponse?.data.length}>
         <Text style={styles.header}>Velg ett spill</Text>
         {pagedResponse?.data.map((item, index) => (
-          <GameBaseCard gameBase={item} handlePress={() => handlePress(item.id)} key={index} />
+          <GameCard gameBase={item} handlePress={() => handlePress(item.id)} key={index} />
         ))}
         <View style={styles.navButtons}>
           {pagedResponse?.hasPrevPage && (

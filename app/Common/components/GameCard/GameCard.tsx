@@ -1,21 +1,20 @@
-import { Pressable, Text } from "react-native";
+import { Text, Pressable } from "react-native";
 import styles from "./gameCardStyles";
 import { useNavigation } from "@react-navigation/native";
+import { GameBase } from "@/app/Common/constants/Types";
 
-interface GameCardProps {
-  header: string;
-  description: string;
-  icon: string;
-  screen: string;
+interface GameBaseCardProps {
+  gameBase: GameBase;
+  handlePress: () => void;
 }
 
-export const GameCard = ({ header, description, icon, screen }: GameCardProps) => {
+export const GameCard = ({ gameBase, handlePress }: GameBaseCardProps) => {
   const navigation: any = useNavigation();
 
   return (
-    <Pressable style={styles.card} onPress={() => navigation.navigate(screen)}>
-      <Text style={styles.header}>{header}</Text>
-      <Text style={styles.paragraph}>{description}</Text>
+    <Pressable style={styles.card} onPress={handlePress}>
+      <Text style={styles.header}>{gameBase.name}</Text>
+      <Text style={styles.iterations}>{gameBase.iterations}</Text>
     </Pressable>
   );
 };
