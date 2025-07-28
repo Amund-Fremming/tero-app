@@ -1,8 +1,6 @@
 import { Text, View } from "react-native";
 import styles from "./AdminScreenStyles";
-import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
-import Screen from "../../constants/Screen";
-import Colors from "../../constants/Color";
+import AbsoluteHomeButton from "@/app/Common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 
 export const AdminScreen = () => {
   return (

@@ -1,8 +1,8 @@
-import { View, Text, Pressable } from "react-native";
-import Screen from "../../constants/Screen";
+import { View, Text, Pressable, Button } from "react-native";
+import Screen from "../../../Common/constants/Screen";
 import styles from "./homeScreenStyles";
-import { useGlobalGameProvider } from "../../context/GlobalGameProvider";
-import { GameEntryMode } from "../../constants/Types";
+import { GameEntryMode, GameType } from "../../../Common/constants/Types";
+import { useGlobalGameProvider } from "../../../Common/context/GlobalGameProvider";
 
 export const HomeScreen = ({ navigation }: any) => {
   const { setGameEntryMode } = useGlobalGameProvider();
@@ -21,7 +21,7 @@ export const HomeScreen = ({ navigation }: any) => {
       <View style={styles.buttonContainer}>
         <Pressable
           style={{ ...styles.buttonBase, ...styles.topLeft }}
-          onPress={() => handlePress(GameEntryMode.Creator, Screen.SelectGame)}
+          onPress={() => handlePress(GameEntryMode.Creator, Screen.GameTypeList)}
         >
           <View style={styles.buttonTextWrapper}>
             <Text style={{ ...styles.textBase, ...styles.textTopLeft }}>Lag</Text>
@@ -39,7 +39,7 @@ export const HomeScreen = ({ navigation }: any) => {
         </Pressable>
         <Pressable
           style={{ ...styles.buttonBase, ...styles.topRight }}
-          onPress={() => handlePress(GameEntryMode.Host, Screen.SelectGame)}
+          onPress={() => handlePress(GameEntryMode.Host, Screen.GameTypeList)}
         >
           <View style={styles.buttonTextWrapper}>
             <Text style={{ ...styles.textBase, ...styles.textTopRight }}>Velg</Text>

@@ -1,21 +1,21 @@
 import { View, Text } from "react-native";
 import styles from "./joinScreenStyles";
-import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
+import AbsoluteHomeButton from "@/app/Common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import { TextInput } from "react-native-gesture-handler";
 import { useState } from "react";
-import { useInfoModalProvider } from "../../context/InfoModalProvider";
-import { addPlayerToGame } from "../../services/universalGameApi";
-import { useUserProvider } from "../../context/UserProvider";
-import { useGlobalGameProvider } from "../../context/GlobalGameProvider";
-import MediumButton from "../../components/MediumButton/MediumButton";
-import { GameEntryMode } from "../../constants/Types";
+import { useModalProvider } from "@/app/Common/context/ModalProvider";
+import { addPlayerToGame } from "@/app/Common/services/universalGameApi";
+import { useUserProvider } from "@/app/Common/context/UserProvider";
+import { useGlobalGameProvider } from "../../../Common/context/GlobalGameProvider";
+import MediumButton from "../../../Common/components/MediumButton/MediumButton";
+import { GameEntryMode } from "../../../Common/constants/Types";
 
 export const JoinScreen = ({ navigation }: any) => {
   const [userInput, setUserInput] = useState<string>("");
 
   const { userId } = useUserProvider();
-  const { displayErrorModal } = useInfoModalProvider();
-  const { setGameId, setUniversalGameId, setGameType, setGameEntryMode } = useGlobalGameProvider();
+  const { displayErrorModal } = useModalProvider();
+  const { setUniversalGameValues, setGameEntryMode } = useGlobalGameProvider();
 
   const handleJoinGame = async () => {
     const universalGameId = Number.parseInt(userInput);
@@ -31,10 +31,14 @@ export const JoinScreen = ({ navigation }: any) => {
     }
 
     var game = result.value.gameBase;
-    setUniversalGameId(game.universalId);
-    setGameId(game.id);
-    setGameType(result.value.gameType);
-    setGameEntryMode(game.isCopy ? GameEntryMode.Member : GameEntryMode.Participant);
+    var entryMode = game.isCopy ? GameEntryMode.Member : GameEntryMode.Participant;
+    setGameEntryMode(entryMode);
+    setUniversalGameValues({
+      gameId: game.id,
+      universalGameId: game.universalId,
+      gameType: result.value.gameType,
+      iterations: game.iterations,
+    });
     navigation.navigate(result.value.gameType.toString());
   };
 
