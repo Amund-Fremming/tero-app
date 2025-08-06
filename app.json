@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "buzzify",
-    "slug": "buzzify",
+    "name": "tero",
+    "slug": "tero",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/Hub/assets/images/icon.png",

@@ -1,1 +1,1 @@
-# buzzify app
+# tero (app)
