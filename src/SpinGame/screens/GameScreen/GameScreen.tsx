@@ -10,7 +10,7 @@ import { useHubConnectionProvider } from "@/src/Common/context/HubConnectionProv
 import { useModalProvider } from "@/src/Common/context/ModalProvider";
 import { HubChannel } from "@/src/Common/constants/HubChannel";
 import Screen from "@/src/Common/constants/Screen";
-import { useUserProvider } from "@/src/Common/context/UserProvider";
+import { useAuthProvider } from "@/src/Common/context/AuthProvider";
 
 export const GameScreen = ({ navigation }: any) => {
   const [challenge, setChallenge] = useState<string>();
@@ -21,7 +21,7 @@ export const GameScreen = ({ navigation }: any) => {
   const { disconnect, connect, setListener, invokeFunction } = useHubConnectionProvider();
   const { universalGameValues, gameEntryMode } = useGlobalGameProvider();
   const { displayErrorModal } = useModalProvider();
-  const { userId } = useUserProvider();
+  const { guestId: userId } = useAuthProvider();
 
   const isHost = gameEntryMode === GameEntryMode.Creator || gameEntryMode === GameEntryMode.Host;
 

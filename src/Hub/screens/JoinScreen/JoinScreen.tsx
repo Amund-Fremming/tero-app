@@ -5,7 +5,7 @@ import { TextInput } from "react-native-gesture-handler";
 import { useState } from "react";
 import { useModalProvider } from "@/src/Common/context/ModalProvider";
 import { addPlayerToGame } from "@/src/Common/services/universalGameApi";
-import { useUserProvider } from "@/src/Common/context/UserProvider";
+import { useAuthProvider } from "@/src/Common/context/AuthProvider";
 import { useGlobalGameProvider } from "../../../Common/context/GlobalGameProvider";
 import MediumButton from "../../../Common/components/MediumButton/MediumButton";
 import { GameEntryMode } from "../../../Common/constants/Types";
@@ -13,7 +13,7 @@ import { GameEntryMode } from "../../../Common/constants/Types";
 export const JoinScreen = ({ navigation }: any) => {
   const [userInput, setUserInput] = useState<string>("");
 
-  const { userId } = useUserProvider();
+  const { guestId: userId } = useAuthProvider();
   const { displayErrorModal } = useModalProvider();
   const { setUniversalGameValues, setGameEntryMode } = useGlobalGameProvider();
 

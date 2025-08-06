@@ -9,7 +9,7 @@ import { getGamesPage } from "../../services/universalGameApi";
 import { getSpinGame } from "../../../SpinGame/services/spinGameApi";
 import { useModalProvider } from "../../context/ModalProvider";
 import { useGlobalGameProvider } from "@/src/Common/context/GlobalGameProvider";
-import { useUserProvider } from "../../context/UserProvider";
+import { useAuthProvider } from "../../context/AuthProvider";
 import SpinScreen from "../../../SpinGame/constants/SpinScreen";
 import { useNavigation } from "@react-navigation/native";
 import { getAskGame } from "@/src/AskGame/services/askGameApi";
@@ -22,7 +22,7 @@ const pageSize = 20;
 
 export const GameListScreen = () => {
   const navigation: any = useNavigation();
-  const { userId } = useUserProvider();
+  const { guestId: userId } = useAuthProvider();
   const { setUniversalGameValues, gameType } = useGlobalGameProvider();
   const { setSpinGame } = useSpinGameProvider();
   const { setAskGame } = useAskGameProvider();

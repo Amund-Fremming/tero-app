@@ -9,13 +9,13 @@ import { HubChannel } from "@/src/Common/constants/HubChannel";
 import { useModalProvider } from "@/src/Common/context/ModalProvider";
 import Screen from "@/src/Common/constants/Screen";
 import { GameEntryMode } from "@/src/Common/constants/Types";
-import { useUserProvider } from "@/src/Common/context/UserProvider";
+import { useAuthProvider } from "@/src/Common/context/AuthProvider";
 import { SpinGameState } from "../../constants/SpinTypes";
 import SpinScreen from "../../constants/SpinScreen";
 import AddChallenge from "../../components/AddChallenge/AddChallenge";
 
 export const LobbyScreen = ({ navigation }: any) => {
-  const { userId } = useUserProvider();
+  const { guestId: userId } = useAuthProvider();
   const { universalGameValues, setIterations, gameEntryMode } = useGlobalGameProvider();
   const { connect, disconnect, setListener, invokeFunction } = useHubConnectionProvider();
   const { displayErrorModal } = useModalProvider();

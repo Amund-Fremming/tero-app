@@ -1,5 +1,15 @@
 # Tasklist
 
+## Left off
+- Implementing Auth0 integration with AuthProvider
+- SilentLogin funciton is missing
+- Make some smart middleware or handler for when 401 or 403 with token attached, try getting a new token, then if the api fails again, display error, if not good
+- Cleanup
+    - move error handling out, return results?
+    - Need state for loggedIn?
+
+
+## Tasks
 - Funker ikke å gå inn på laget spill nå, feil i navigation
 - Description på gamebase i fe og be, + opdpater db
 

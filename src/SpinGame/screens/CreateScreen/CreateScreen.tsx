@@ -5,7 +5,7 @@ import { useState } from "react";
 import { CreateSpinGameRequest } from "../../constants/SpinTypes";
 import { useModalProvider } from "@/src/Common/context/ModalProvider";
 import { useGlobalGameProvider } from "@/src/Common/context/GlobalGameProvider";
-import { useUserProvider } from "@/src/Common/context/UserProvider";
+import { useAuthProvider } from "@/src/Common/context/AuthProvider";
 import { Category, GameType } from "@/src/Common/constants/Types";
 import { Pressable, TextInput } from "react-native-gesture-handler";
 import SpinScreen from "../../constants/SpinScreen";
@@ -14,7 +14,7 @@ import AbsoluteHomeButton from "@/src/Common/components/AbsoluteHomeButton/Absol
 export const CreateScreen = ({ navigation }: any) => {
   const { setUniversalGameValues } = useGlobalGameProvider();
   const { displayErrorModal } = useModalProvider();
-  const { userId } = useUserProvider();
+  const { guestId: userId } = useAuthProvider();
 
   const [createRequest, setCreateRequest] = useState<CreateSpinGameRequest>({
     userId,

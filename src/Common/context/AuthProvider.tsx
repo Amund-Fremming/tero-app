@@ -1,0 +1,227 @@
+import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { createGuestUser, updateUserActivity } from "../services/userApi";
+import * as SecureStore from "expo-secure-store";
+import { Auth0Config } from "../components/Auth0/config";
+import * as AuthSession from "expo-auth-session";
+import { useModalProvider } from "./ModalProvider";
+
+const REFRESH_TOKEN_KEY = "refresh_token";
+
+interface IAuthContext {
+  guestId: number;
+  setGuestId: React.Dispatch<React.SetStateAction<number>>;
+  accessToken: string | null;
+  markUserAsActive: () => Promise<void>;
+  triggerLogin: () => void;
+  triggerLogout: () => Promise<void>;
+  rotateTokens: () => Promise<void>;
+
+  // TODO - remove
+  logValues: () => void;
+}
+
+const defaultContextValue: IAuthContext = {
+  guestId: -1,
+  setGuestId: () => {},
+  accessToken: null,
+  markUserAsActive: async () => {},
+  triggerLogin: () => {},
+  triggerLogout: async () => {},
+  rotateTokens: async () => {},
+
+  // TODO - remove
+  logValues: () => {},
+};
+
+const AuthContext = createContext<IAuthContext>(defaultContextValue);
+
+export const useAuthProvider = () => useContext(AuthContext);
+
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const [guestId, setGuestId] = useState<number>(-1);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  const { displayErrorModal } = useModalProvider();
+
+  useEffect(() => {
+    ensureGuestUserId();
+  }, []);
+
+  const ensureGuestUserId = async () => {
+    const storedGuestId = await SecureStore.getItemAsync("guestId");
+    if (storedGuestId) {
+      setGuestId(Number.parseInt(storedGuestId));
+      console.log("User id retrieved from localstorage:", storedGuestId); // TODO - remove log
+      return;
+    }
+
+    const result = await createGuestUser();
+    if (result.isError()) {
+      console.error(result.error); // TODO - remove log
+      return;
+    }
+
+    setGuestId(result.value.id);
+    SecureStore.setItem("userId", result.value.id.toString());
+    console.log("Guest user created with id: ", result.value.id); // TODO - remove log
+  };
+
+  const markUserAsActive = async () => {
+    const result = await updateUserActivity(guestId);
+    if (result.isError()) {
+      console.error(result.error);
+    }
+  };
+
+  console.log("Redirect uri: ", Auth0Config.redirectUri); // TODO - remove log
+  const [request, response, promptAsync] = AuthSession.useAuthRequest(
+    {
+      clientId: Auth0Config.clientId,
+      scopes: ["openid", "profile", "name", "offline_access"],
+      redirectUri: Auth0Config.redirectUri,
+      responseType: "code",
+      usePKCE: true,
+    },
+    Auth0Config.discovery
+  );
+
+  // Exchange code for tokens when response is successful
+  useEffect(() => {
+    const getTokens = async () => {
+      if (response?.type === "success" && response.params.code) {
+        try {
+          const tokenResponse = await AuthSession.exchangeCodeAsync(
+            {
+              clientId: Auth0Config.clientId,
+              code: response.params.code,
+              redirectUri: Auth0Config.redirectUri,
+              extraParams: {
+                code_verifier: request?.codeVerifier || "",
+              },
+            },
+            Auth0Config.discovery
+          );
+
+          if (!tokenResponse.accessToken || !tokenResponse.refreshToken) {
+            displayErrorModal("Klarte ikke hente tokens fra auth0");
+            return;
+          }
+
+          setAccessToken(tokenResponse.accessToken);
+          await SecureStore.setItemAsync(REFRESH_TOKEN_KEY, tokenResponse.refreshToken);
+          console.info("User logged inn successfully");
+        } catch (error) {
+          console.error("Token exchange failed:", error);
+          displayErrorModal("Feil ved tokenutveksling");
+        }
+      } else if (response?.type === "error") {
+        displayErrorModal("Det skjedde en feil ved login");
+      }
+    };
+
+    getTokens();
+  }, [response]);
+
+  const triggerLogin = () => {
+    if (!request) {
+      displayErrorModal("Køen er full, vent litt med å forsøke igjen");
+      return;
+    }
+
+    promptAsync().catch((e) => {
+      console.error(e);
+      displayErrorModal("Det skjedde en feil ved login");
+    });
+  };
+
+  const triggerLogout = async () => {
+    try {
+      setAccessToken(null);
+      let refreshToken = await SecureStore.getItemAsync(REFRESH_TOKEN_KEY);
+      if (!refreshToken) {
+        return;
+      }
+
+      await fetch(`https://${Auth0Config.domain}/oauth/revoke`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          token: refreshToken,
+          client_id: Auth0Config.clientId,
+        }),
+      });
+
+      await SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY);
+      console.log("User was logged out");
+    } catch (e) {
+      console.error(e);
+      displayErrorModal("Noe feil skjedde ved utlogg");
+    }
+  };
+
+  const rotateTokens = async () => {
+    try {
+      const refreshToken = await SecureStore.getItemAsync(REFRESH_TOKEN_KEY);
+      if (!refreshToken) {
+        setAccessToken(null);
+        return;
+      }
+
+      const refreshResponse = await fetch(`https://${Auth0Config.domain}/oauth/token`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          grant_type: "refresh_token",
+          client_id: Auth0Config.clientId,
+          refresh_token: refreshToken,
+        }).toString(),
+      });
+
+      const tokens = await refreshResponse.json();
+      if (!refreshResponse.ok) {
+        displayErrorModal("Noe galt har skjedd med brukere din, ta kontakt.");
+        triggerLogout();
+        console.error(tokens);
+        return;
+      }
+
+      console.log(tokens); // TODO - remove
+      await SecureStore.setItemAsync(REFRESH_TOKEN_KEY, tokens.refresh_token);
+      setAccessToken(tokens.access_token);
+      console.log("Tokens refreshed successfully");
+    } catch (error) {
+      displayErrorModal("En uventet feil har skjedd, logger deg ut.");
+      console.error(error);
+    }
+  };
+
+  // TODO - remove
+  const logValues = () => {
+    console.log("Access token:", accessToken);
+    console.log("Refresh token:", SecureStore.getItem(REFRESH_TOKEN_KEY));
+    console.log("Guest id:", guestId);
+  };
+
+  const value = {
+    markUserAsActive,
+    guestId,
+    setGuestId,
+    accessToken,
+    triggerLogin,
+    triggerLogout,
+    rotateTokens,
+
+    // TODO - remove
+    logValues,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+
+export default AuthProvider;

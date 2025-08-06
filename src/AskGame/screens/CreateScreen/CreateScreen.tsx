@@ -5,7 +5,7 @@ import { CreateAskGameRequest } from "../../constants/AskTypes";
 import { useState } from "react";
 import { Category, GameType } from "@/src/Common/constants/Types";
 import { Pressable, TextInput } from "react-native-gesture-handler";
-import { useUserProvider } from "@/src/Common/context/UserProvider";
+import { useAuthProvider } from "@/src/Common/context/AuthProvider";
 import { createGame } from "../../services/askGameApi";
 import { useModalProvider } from "@/src/Common/context/ModalProvider";
 import AskScreen from "../../constants/AskScreen";
@@ -13,7 +13,7 @@ import { useGlobalGameProvider } from "@/src/Common/context/GlobalGameProvider";
 import AbsoluteHomeButton from "@/src/Common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 
 export const CreateScreen = ({ navigation }: any) => {
-  const { userId } = useUserProvider();
+  const { guestId: userId } = useAuthProvider();
   const { displayErrorModal } = useModalProvider();
   const { setUniversalGameValues } = useGlobalGameProvider();
 
