@@ -11,6 +11,7 @@ import Screen from "../Common/constants/Screen";
 import AdminScreen from "./screens/AdminScreen/AdminScreen";
 import GameTypeListScreen from "../Common/screens/GameTypeListScreen/GameTypeListScreen";
 import GameListScreen from "../Common/screens/GameListScreen/GameListScreen";
+import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ export const Hub = () => {
       }}
     >
       <Stack.Screen name={Screen.Home} component={HomeScreen} />
+      <Stack.Screen name={Screen.Profile} component={ProfileScreen} />
       <Stack.Screen name={Screen.Hub} component={HubScreen} />
       <Stack.Screen name={Screen.Join} component={JoinScreen} />
       <Stack.Screen name={Screen.SpinGame} component={SpinGame} />
