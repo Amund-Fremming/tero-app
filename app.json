@@ -4,8 +4,8 @@
     "slug": "tero",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./app/Hub/assets/images/icon.png",
-    "scheme": "myapp",
+    "icon": "./app/tero.webp",
+    "scheme": "com.tero",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -14,14 +14,14 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./app/Hub/assets/images/favicon.png"
+      "favicon": "./app/tero.webp"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./app/Hub/assets/images/splash-icon.png",
+          "image": "./app/tero.webp",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"

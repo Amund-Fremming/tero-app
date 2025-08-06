@@ -11,11 +11,7 @@
 - Wifi provider inn
 - Inaktivate spiller om conneciton ryker, kanskje modal + forsøk å koble seg på igjen
 - Hente sider foran og bak for raskere paginering
-
-- Ny admin func
-- admin dash
-- lagre mine spill funksjonalitet
-- caching
+- auth0 callback må peke til ekte uri i prod
 
 - Ytelse
 - Ef core indexer
