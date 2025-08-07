@@ -2,6 +2,8 @@
 
 ## Left off
 - Implementing Auth0 integration with AuthProvider
+- Implement a handler for if you try to logout but no refresh token, wtf to do then?
+- Rotate tokens also needs a return so when it fails if no refresh tokens, so we can logout or so
 - SilentLogin funciton is missing
 - Make some smart middleware or handler for when 401 or 403 with token attached, try getting a new token, then if the api fails again, display error, if not good
 - Cleanup

@@ -4,6 +4,7 @@ import * as SecureStore from "expo-secure-store";
 import { Auth0Config } from "../components/Auth0/config";
 import * as AuthSession from "expo-auth-session";
 import { useModalProvider } from "./ModalProvider";
+import * as WebBrowser from "expo-web-browser";
 
 const REFRESH_TOKEN_KEY = "refresh_token";
 
@@ -49,6 +50,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     ensureGuestUserId();
+    console.info("Redirect uri: ", Auth0Config.redirectUri);
   }, []);
 
   const ensureGuestUserId = async () => {
@@ -77,7 +79,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  console.log("Redirect uri: ", Auth0Config.redirectUri); // TODO - remove log
   const [request, response, promptAsync] = AuthSession.useAuthRequest(
     {
       clientId: Auth0Config.clientId,
@@ -140,25 +141,40 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const triggerLogout = async () => {
     try {
-      setAccessToken(null);
-      let refreshToken = await SecureStore.getItemAsync(REFRESH_TOKEN_KEY);
+      const refreshToken = await SecureStore.getItemAsync(REFRESH_TOKEN_KEY);
+
       if (!refreshToken) {
+        // HANDLE
+        displayErrorModal("THIS SHOULD NEVER HAPPEN");
         return;
       }
 
-      await fetch(`https://${Auth0Config.domain}/oauth/revoke`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          token: refreshToken,
-          client_id: Auth0Config.clientId,
-        }),
+      const revokeConfig = {
+        token: refreshToken,
+        clientId: Auth0Config.clientId,
+      };
+      const revokeDiscovery = {
+        revocationEndpoint: `https://${Auth0Config.domain}/oauth/revoke`,
+      };
+      await AuthSession.revokeAsync(revokeConfig, revokeDiscovery);
+
+      await SecureStore.deleteItemAsync("access_token");
+      await SecureStore.deleteItemAsync("refresh_token");
+      await SecureStore.deleteItemAsync("id_token");
+      setAccessToken(null);
+
+      const returnTo = Auth0Config.redirectUri;
+      const params = new URLSearchParams({
+        client_id: Auth0Config.clientId,
+        returnTo: returnTo,
       });
 
-      await SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY);
-      console.log("User was logged out");
+      const logoutUrl = `https://${Auth0Config.domain}/v2/logout?${params.toString()}`;
+      await WebBrowser.openAuthSessionAsync(logoutUrl, returnTo);
+
+      console.log("User has been successfully logged out.");
     } catch (e) {
-      console.error(e);
+      console.error("Error during logout:", e);
       displayErrorModal("Noe feil skjedde ved utlogg");
     }
   };
@@ -191,7 +207,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         return;
       }
 
-      console.log(tokens); // TODO - remove
       await SecureStore.setItemAsync(REFRESH_TOKEN_KEY, tokens.refresh_token);
       setAccessToken(tokens.access_token);
       console.log("Tokens refreshed successfully");
