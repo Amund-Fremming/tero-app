@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const { displayErrorModal } = useModalProvider();
 
   useEffect(() => {
-    ensureGuestUserId();
+    // ensureGuestUserId();
     console.info("Redirect uri: ", Auth0Config.redirectUri);
   }, []);
 
@@ -86,6 +86,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       redirectUri: Auth0Config.redirectUri,
       responseType: "code",
       usePKCE: true,
+      extraParams: {
+        audience: Auth0Config.audience,
+      },
     },
     Auth0Config.discovery
   );
@@ -128,6 +131,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, [response]);
 
   const triggerLogin = () => {
+    if (accessToken) {
+      console.info("User is already logged in, skipping..");
+      return;
+    }
+
     if (!request) {
       displayErrorModal("Køen er full, vent litt med å forsøke igjen");
       return;
