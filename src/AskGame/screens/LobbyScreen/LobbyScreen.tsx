@@ -1,18 +1,18 @@
-import Color from "@/src/Common/constants/Color";
-import MediumButton from "@/src/Common/components/MediumButton/MediumButton";
-import { useModalProvider } from "@/src/Common/context/ModalProvider";
+import Color from "@/src/common/constants/color";
+import MediumButton from "@/src/common/components/MediumButton/MediumButton";
+import { useModalProvider } from "@/src/common/context/ModalProvider";
 import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import styles from "./lobbyScreenStyles";
-import { useHubConnectionProvider } from "@/src/Common/context/HubConnectionProvider";
-import { useGlobalGameProvider } from "@/src/Common/context/GlobalGameProvider";
-import AbsoluteHomeButton from "@/src/Common/components/AbsoluteHomeButton/AbsoluteHomeButton";
-import Screen from "@/src/Common/constants/Screen";
-import { HubChannel } from "@/src/Common/constants/HubChannel";
-import AskScreen from "../../constants/AskScreen";
-import { AskGame, AskGameState } from "../../constants/AskTypes";
-import { GameEntryMode } from "@/src/Common/constants/Types";
+import { useHubConnectionProvider } from "@/src/common/context/HubConnectionProvider";
+import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
+import AbsoluteHomeButton from "@/src/common/components/AbsoluteHomeButton/AbsoluteHomeButton";
+import Screen from "@/src/common/constants/screen";
+import { HubChannel } from "@/src/common/constants/hubChannel";
+import AskScreen from "../../constants/askScreen";
+import { AskGame, AskGameState } from "../../constants/askTypes";
+import { GameEntryMode } from "@/src/common/constants/types";
 import { useAskGameProvider } from "../../context/AskGameProvider";
 
 export const LobbyScreen = ({ navigation }: any) => {

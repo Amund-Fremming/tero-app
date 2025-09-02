@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { AskGame } from "../constants/AskTypes";
+import { AskGame } from "../constants/askTypes";
 
 interface IAskGameContext {
   clearAskValues: () => void;
@@ -8,9 +8,9 @@ interface IAskGameContext {
 }
 
 const defaultContextValue: IAskGameContext = {
-  clearAskValues: () => {},
+  clearAskValues: () => { },
   askGame: undefined,
-  setAskGame: () => {},
+  setAskGame: () => { },
 };
 
 const AskGameContext = createContext<IAskGameContext>(defaultContextValue);

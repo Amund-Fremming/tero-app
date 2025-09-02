@@ -1,7 +1,7 @@
-import { Result, ok, err } from "../utils/result";
+import { ok, err, Result } from "../utils/result";
 
 class httpResultService {
-  constructor() {}
+  constructor() { }
 
   async simpleGet<T>(url: string): Promise<Result<T>> {
     try {

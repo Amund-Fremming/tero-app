@@ -2,9 +2,9 @@ import { View, TextInput, Text, Pressable } from "react-native";
 import CheckBox from "../CheckBox/CheckBox";
 import styles from "./addChallengeStyles";
 import { useState } from "react";
-import { useModalProvider } from "@/src/Common/context/ModalProvider";
-import { useHubConnectionProvider } from "@/src/Common/context/HubConnectionProvider";
-import { useGlobalGameProvider } from "@/src/Common/context/GlobalGameProvider";
+import { useModalProvider } from "@/src/common/context/ModalProvider";
+import { useHubConnectionProvider } from "@/src/common/context/HubConnectionProvider";
+import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
 
 export const AddChallenge = () => {
   const [readBeforeSpin, setReadBeforeSpin] = useState<boolean>(true);

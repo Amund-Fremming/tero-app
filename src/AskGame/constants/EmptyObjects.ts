@@ -1,4 +1,4 @@
-import AskGame from "./AskTypes";
+import { AskGame } from "./askTypes";
 
 export const EmptyAskGame: AskGame = {
   id: 0,

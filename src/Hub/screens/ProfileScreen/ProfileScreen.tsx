@@ -1,9 +1,9 @@
-import AbsoluteHomeButton from "@/src/Common/components/AbsoluteHomeButton/AbsoluteHomeButton";
-import LoginButton from "@/src/Common/components/Auth0/LoginButton";
-import LogoutButton from "@/src/Common/components/Auth0/LogoutButton";
+import AbsoluteHomeButton from "@/src/common/components/AbsoluteHomeButton/AbsoluteHomeButton";
+import LoginButton from "@/src/common/components/Auth0/LoginButton";
+import LogoutButton from "@/src/common/components/Auth0/LogoutButton";
 import { Button, Text, View } from "react-native";
 import { styles } from "./profileScreenStyles";
-import { useAuthProvider } from "@/src/Common/context/AuthProvider";
+import { useAuthProvider } from "@/src/common/context/AuthProvider";
 
 export const ProfileScreen = () => {
   const { logValues, rotateTokens } = useAuthProvider();

@@ -17,9 +17,9 @@ interface IModalContext {
 }
 
 const defaultContextValue: IModalContext = {
-  displayActionModal: () => {},
-  displayErrorModal: () => {},
-  displayInfoModal: () => {},
+  displayActionModal: () => { },
+  displayErrorModal: () => { },
+  displayInfoModal: () => { },
 };
 
 const ModalContext = createContext<IModalContext>(defaultContextValue);
@@ -31,9 +31,9 @@ interface ModalProviderProps {
 }
 
 export const ModalProvider = ({ children }: ModalProviderProps) => {
-  const [onCloseFunc, setOnCloseFunc] = useState<() => void>(() => {});
-  const [onLeftCloseFunc, setOnLeftCloseFunc] = useState<() => void>(() => {});
-  const [onRightCloseFunc, setOnRightCloseFunc] = useState<() => void>(() => {});
+  const [onCloseFunc, setOnCloseFunc] = useState<() => void>(() => { });
+  const [onLeftCloseFunc, setOnLeftCloseFunc] = useState<() => void>(() => { });
+  const [onRightCloseFunc, setOnRightCloseFunc] = useState<() => void>(() => { });
   const [displayOption, setDisplayOption] = useState<DisplayOption>(DisplayOption.None);
   const [message, setMessage] = useState<string>("");
 

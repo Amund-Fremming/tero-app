@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { GameEntryMode, GameType, UniversalGameValues } from "../constants/Types";
+import { GameEntryMode, GameType, UniversalGameValues } from "../constants/types";
 
 interface IGlobalGameContext {
   clearValues: () => void;
@@ -13,14 +13,14 @@ interface IGlobalGameContext {
 }
 
 const defaultContextValue: IGlobalGameContext = {
-  clearValues: () => {},
+  clearValues: () => { },
   gameEntryMode: GameEntryMode.Host,
-  setGameEntryMode: () => {},
+  setGameEntryMode: () => { },
   universalGameValues: undefined,
-  setUniversalGameValues: () => {},
-  setIterations: (_iterations: number) => {},
+  setUniversalGameValues: () => { },
+  setIterations: (_iterations: number) => { },
   gameType: GameType.SpinGame,
-  setGameType: () => {},
+  setGameType: () => { },
 };
 
 const GlobalGameContext = createContext<IGlobalGameContext>(defaultContextValue);

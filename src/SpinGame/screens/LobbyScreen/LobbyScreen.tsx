@@ -1,17 +1,17 @@
 import { View, Text } from "react-native";
 import styles from "./lobbyScreenStyles";
-import AbsoluteHomeButton from "@/src/Common/components/AbsoluteHomeButton/AbsoluteHomeButton";
-import { useGlobalGameProvider } from "@/src/Common/context/GlobalGameProvider";
+import AbsoluteHomeButton from "@/src/common/components/AbsoluteHomeButton/AbsoluteHomeButton";
+import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
 import { Pressable } from "react-native-gesture-handler";
 import { useEffect } from "react";
-import { useHubConnectionProvider } from "@/src/Common/context/HubConnectionProvider";
-import { HubChannel } from "@/src/Common/constants/HubChannel";
-import { useModalProvider } from "@/src/Common/context/ModalProvider";
-import Screen from "@/src/Common/constants/Screen";
-import { GameEntryMode } from "@/src/Common/constants/Types";
-import { useAuthProvider } from "@/src/Common/context/AuthProvider";
-import { SpinGameState } from "../../constants/SpinTypes";
-import SpinScreen from "../../constants/SpinScreen";
+import { useHubConnectionProvider } from "@/src/common/context/HubConnectionProvider";
+import { HubChannel } from "@/src/common/constants/hubChannel";
+import { useModalProvider } from "@/src/common/context/ModalProvider";
+import Screen from "@/src/common/constants/screen";
+import { GameEntryMode } from "@/src/common/constants/types";
+import { useAuthProvider } from "@/src/common/context/AuthProvider";
+import { SpinGameState } from "../../constants/spinTypes";
+import SpinScreen from "../../constants/spinScreen";
 import AddChallenge from "../../components/AddChallenge/AddChallenge";
 
 export const LobbyScreen = ({ navigation }: any) => {

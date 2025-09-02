@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
-import { moderateScale } from "../../../Common/utils/dimensions";
-import Colors from "../../../Common/constants/Color";
+import { moderateScale } from "../../../common/utils/dimensions";
+import Colors from "../../../common/constants/color";
 
 export const styles = StyleSheet.create({
   container: {

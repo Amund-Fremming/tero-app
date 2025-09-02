@@ -1,9 +1,9 @@
 import * as signalR from "@microsoft/signalr";
 import React, { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { useModalProvider } from "./ModalProvider";
-import { HubUrlBase } from "../constants/Endpoints";
+import { HubUrlBase } from "../constants/endpoints";
 import { useNavigation } from "expo-router";
-import Screen from "../constants/Screen";
+import Screen from "../constants/screen";
 import { ok, err, Result } from "../utils/result";
 
 interface IHubConnectionContext {

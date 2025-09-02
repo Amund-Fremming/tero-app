@@ -23,15 +23,15 @@ interface IAuthContext {
 
 const defaultContextValue: IAuthContext = {
   guestId: -1,
-  setGuestId: () => {},
+  setGuestId: () => { },
   accessToken: null,
-  markUserAsActive: async () => {},
-  triggerLogin: () => {},
-  triggerLogout: async () => {},
-  rotateTokens: async () => {},
+  markUserAsActive: async () => { },
+  triggerLogin: () => { },
+  triggerLogout: async () => { },
+  rotateTokens: async () => { },
 
   // TODO - remove
-  logValues: () => {},
+  logValues: () => { },
 };
 
 const AuthContext = createContext<IAuthContext>(defaultContextValue);

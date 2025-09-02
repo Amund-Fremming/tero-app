@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import SpinGame from "../constants/SpinTypes";
+import SpinGame from "../constants/spinTypes";
 
 interface ISpinGameContext {
   spinGame: SpinGame | undefined;
@@ -10,9 +10,9 @@ interface ISpinGameContext {
 
 const defaultContextValue: ISpinGameContext = {
   spinGame: undefined,
-  setSpinGame: () => {},
+  setSpinGame: () => { },
   iterations: 0,
-  setIterations: () => {},
+  setIterations: () => { },
 };
 
 const SpinGameContext = createContext<ISpinGameContext>(defaultContextValue);

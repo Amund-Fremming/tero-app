@@ -1,11 +1,11 @@
 import { Pressable, Text } from "react-native";
 import styles from "./absoluteHomeButtonStyles";
-import Screen from "@/src/Common/constants/Screen";
+import Screen from "@/src/common/constants/screen";
 import { useNavigation } from "@react-navigation/native";
-import { useHubConnectionProvider } from "@/src/Common/context/HubConnectionProvider";
+import { useHubConnectionProvider } from "@/src/common/context/HubConnectionProvider";
 import { useGlobalGameProvider } from "../../context/GlobalGameProvider";
-import { useAskGameProvider } from "@/src/AskGame/context/AskGameProvider";
-import Color from "../../constants/Color";
+import { useAskGameProvider } from "@/src/askGame/context/AskGameProvider";
+import Color from "../../constants/color";
 
 interface AbsoluteHomeButtonProps {
   primary?: string;

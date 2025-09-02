@@ -3,14 +3,14 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { TransitionPresets } from "@react-navigation/stack";
 
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
-import SpinGame from "../SpinGame/SpinGame";
-import AskGame from "../AskGame/AskGame";
+import SpinGame from "../spinGame/SpinGame";
+import AskGame from "../askGame/AskGame";
 import HubScreen from "./screens/HubScreen/HubScreen";
 import JoinScreen from "./screens/JoinScreen/JoinScreen";
-import Screen from "../Common/constants/Screen";
+import Screen from "../common/constants/screen";
 import AdminScreen from "./screens/AdminScreen/AdminScreen";
-import GameTypeListScreen from "../Common/screens/GameTypeListScreen/GameTypeListScreen";
-import GameListScreen from "../Common/screens/GameListScreen/GameListScreen";
+import GameTypeListScreen from "../common/screens/GameTypeListScreen/GameTypeListScreen";
+import GameListScreen from "../common/screens/GameListScreen/GameListScreen";
 import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
 
 const Stack = createStackNavigator();

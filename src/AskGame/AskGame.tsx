@@ -1,14 +1,14 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { TransitionPresets } from "@react-navigation/stack";
-import { AskScreen } from "./constants/AskScreen";
+import AskScreen from "./constants/askScreen";
 import AskGameProvider from "./context/AskGameProvider";
-import { useGlobalGameProvider } from "@/src/Common/context/GlobalGameProvider";
+import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
 import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
-import { CreateScreen } from "./screens/CreateScreen/CreateScreen";
+import CreateScreen from "../SpinGame/screens/CreateScreen/CreateScreen";
 import StartedScreen from "./screens/StartedScreen/StartedScreen";
 import { GameScreen } from "./screens/GameScreen/GameScreen";
-import GameListScreen from "../Common/screens/GameListScreen/GameListScreen";
-import { GameEntryMode } from "@/src/Common/constants/Types";
+import GameListScreen from "../common/screens/GameListScreen/GameListScreen";
+import { GameEntryMode } from "@/src/common/constants/types";
 
 const Stack = createStackNavigator();
 
