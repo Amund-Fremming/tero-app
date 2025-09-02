@@ -1,9 +1,9 @@
 import { Text, View } from "react-native";
 import styles from "./createScreenStyles";
-import Color from "@/src/common/constants/color";
+import Color from "@/src/common/constants/Color";
 import { CreateAskGameRequest } from "../../constants/askTypes";
 import { useState } from "react";
-import { Category, GameType } from "@/src/common/constants/types";
+import { Category, GameType } from "@/src/common/constants/Types";
 import { Pressable, TextInput } from "react-native-gesture-handler";
 import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { createGame } from "../../services/askGameApi";

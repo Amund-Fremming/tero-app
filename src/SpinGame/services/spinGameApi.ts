@@ -1,4 +1,4 @@
-import { SpinGameUrlBase } from "@/src/common/constants/endpoints";
+import { SpinGameUrlBase } from "@/src/common/constants/Endpoints";
 import httpResult from "@/src/common/services/httpResult";
 import SpinGame, { CreateSpinGameRequest } from "../constants/spinTypes";
 import { Result } from "@/src/common/utils/result";

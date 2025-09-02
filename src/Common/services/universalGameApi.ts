@@ -1,5 +1,5 @@
-import { UniversalGameUrlBase } from "../constants/endpoints";
-import { AddedToGameResult, GameType, PagedRequest, PagedResponse } from "../constants/types";
+import { UniversalGameUrlBase } from "../constants/Endpoints";
+import { AddedToGameResult, GameType, PagedRequest, PagedResponse } from "../constants/Types";
 import { Result } from "../utils/result";
 import httpResult from "./httpResult";
 

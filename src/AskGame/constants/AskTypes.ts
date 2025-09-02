@@ -1,4 +1,4 @@
-import { Category, GameBase } from "@/src/common/constants/types";
+import { Category, GameBase } from "@/src/common/constants/Types";
 
 export interface AskGame extends GameBase {
   creatorId: number;

@@ -4,12 +4,12 @@ import AbsoluteHomeButton from "@/src/common/components/AbsoluteHomeButton/Absol
 import { useEffect, useState } from "react";
 import { SpinGameState } from "../../constants/spinTypes";
 import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
-import { GameEntryMode } from "@/src/common/constants/types";
-import Color from "@/src/common/constants/color";
+import { GameEntryMode } from "@/src/common/constants/Types";
+import Color from "@/src/common/constants/Color";
 import { useHubConnectionProvider } from "@/src/common/context/HubConnectionProvider";
 import { useModalProvider } from "@/src/common/context/ModalProvider";
-import { HubChannel } from "@/src/common/constants/hubChannel";
-import Screen from "@/src/common/constants/screen";
+import { HubChannel } from "@/src/common/constants/HubChannel";
+import Screen from "@/src/common/constants/Screen";
 import { useAuthProvider } from "@/src/common/context/AuthProvider";
 
 export const GameScreen = ({ navigation }: any) => {

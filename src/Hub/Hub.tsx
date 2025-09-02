@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TransitionPresets } from "@react-navigation/stack";
 
-import HomeScreen from "./screens/HomeScreen/HomeScreen";
+import HomeScreen from "./screens/homeScreen/HomeScreen";
 import SpinGame from "../spinGame/SpinGame";
 import AskGame from "../askGame/AskGame";
-import HubScreen from "./screens/HubScreen/HubScreen";
-import JoinScreen from "./screens/JoinScreen/JoinScreen";
-import Screen from "../common/constants/screen";
-import AdminScreen from "./screens/AdminScreen/AdminScreen";
-import GameTypeListScreen from "../common/screens/GameTypeListScreen/GameTypeListScreen";
-import GameListScreen from "../common/screens/GameListScreen/GameListScreen";
-import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
+import HubScreen from "./screens/hubScreen/HubScreen";
+import JoinScreen from "./screens/joinScreen/JoinScreen";
+import Screen from "../common/constants/Screen";
+import AdminScreen from "./screens/adminScreen/AdminScreen";
+import GameTypeListScreen from "../common/screens/gameTypeListScreen/GameTypeListScreen";
+import GameListScreen from "../common/screens/gameListScreen/GameListScreen";
+import ProfileScreen from "./screens/profileScreen/ProfileScreen";
 
 const Stack = createStackNavigator();
 

@@ -1,5 +1,5 @@
-import { UserUrlBase } from "@/src/common/constants/endpoints";
-import { RegisteredUserRequest, UserBase } from "../constants/types";
+import { UserUrlBase } from "../constants/Endpoints";
+import { RegisteredUserRequest, UserBase } from "../constants/Types";
 import { Result } from "../utils/result";
 import httpResult from "./httpResult";
 

@@ -2,8 +2,8 @@ import { Pressable, Text } from "react-native";
 import styles from "./gameTypeCardStyles";
 import { useNavigation } from "@react-navigation/native";
 import { useGlobalGameProvider } from "../../context/GlobalGameProvider";
-import { GameEntryMode, GameType } from "../../constants/types";
-import Screen from "../../constants/screen";
+import { GameEntryMode, GameType } from "../../constants/Types";
+import Screen from "../../constants/Screen";
 import { useModalProvider } from "../../context/ModalProvider";
 
 interface GameCardProps {

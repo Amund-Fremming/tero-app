@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { GameEntryMode, GameType, UniversalGameValues } from "../constants/types";
+import { GameEntryMode, GameType, UniversalGameValues } from "../constants/Types";
 
 interface IGlobalGameContext {
   clearValues: () => void;

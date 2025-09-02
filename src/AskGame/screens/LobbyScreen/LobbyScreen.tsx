@@ -1,4 +1,4 @@
-import Color from "@/src/common/constants/color";
+import Color from "@/src/common/constants/Color";
 import MediumButton from "@/src/common/components/MediumButton/MediumButton";
 import { useModalProvider } from "@/src/common/context/ModalProvider";
 import { useEffect, useState } from "react";
@@ -8,11 +8,11 @@ import styles from "./lobbyScreenStyles";
 import { useHubConnectionProvider } from "@/src/common/context/HubConnectionProvider";
 import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
 import AbsoluteHomeButton from "@/src/common/components/AbsoluteHomeButton/AbsoluteHomeButton";
-import Screen from "@/src/common/constants/screen";
-import { HubChannel } from "@/src/common/constants/hubChannel";
+import Screen from "@/src/common/constants/Screen";
+import { HubChannel } from "@/src/common/constants/HubChannel";
 import AskScreen from "../../constants/askScreen";
 import { AskGame, AskGameState } from "../../constants/askTypes";
-import { GameEntryMode } from "@/src/common/constants/types";
+import { GameEntryMode } from "@/src/common/constants/Types";
 import { useAskGameProvider } from "../../context/AskGameProvider";
 
 export const LobbyScreen = ({ navigation }: any) => {

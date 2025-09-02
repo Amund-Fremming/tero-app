@@ -1,7 +1,7 @@
 import { Text, Pressable } from "react-native";
 import styles from "./gameCardStyles";
 import { useNavigation } from "@react-navigation/native";
-import { GameBase } from "@/src/common/constants/types";
+import { GameBase } from "@/src/common/constants/Types";
 
 interface GameBaseCardProps {
   gameBase: GameBase;
