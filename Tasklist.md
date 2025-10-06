@@ -1,5 +1,10 @@
 # Tasklist
 
+## NOTES
+
+- i recreated the auth0 tenatn, login might be broken, fix it.
+- Alo of rename issues here also, sorry
+
 ## Left off
 - Implementing Auth0 integration with AuthProvider
 - Implement a handler for if you try to logout but no refresh token, wtf to do then?
