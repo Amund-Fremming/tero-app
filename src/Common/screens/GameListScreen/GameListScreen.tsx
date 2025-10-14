@@ -9,13 +9,14 @@ import { getSpinGame } from "../../../spinGame/services/spinGameApi";
 import { useModalProvider } from "../../context/ModalProvider";
 import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
 import { useAuthProvider } from "../../context/AuthProvider";
-import SpinScreen from "@/src/spinGame/constants/SpinScreen";
+import SpinScreen from "@/src/spinGame/constants/spinScreen";
 import { useNavigation } from "@react-navigation/native";
 import { getAskGame } from "@/src/quizGame/services/askGameApi";
 import { useSpinGameProvider } from "@/src/spinGame/context/SpinGameProvider";
 import { useAskGameProvider } from "@/src/quizGame/context/AskGameProvider";
 import AskScreen from "@/src/quizGame/constants/askScreen";
 import Screen from "../../constants/screen";
+import styles from "./gameListScreenStyles";
 
 const pageSize = 20;
 

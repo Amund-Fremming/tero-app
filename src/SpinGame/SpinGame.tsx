@@ -1,7 +1,7 @@
 import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
 import React, { useEffect } from "react";
 import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
-import { SpinScreen } from "./constants/SpinScreen";
+import { SpinScreen } from "./constants/spinScreen";
 import SpinGameProvider from "./context/SpinGameProvider";
 import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
 import { GameEntryMode } from "@/src/common/constants/types";

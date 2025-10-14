@@ -4,10 +4,10 @@ import AskScreen from "./constants/askScreen";
 import AskGameProvider from "./context/AskGameProvider";
 import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
 import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
-import CreateScreen from "../spinGame/screens/createScreen/CreateScreen";
+import CreateScreen from "../spinGame/screens/CreateScreen/CreateScreen";
 import StartedScreen from "./screens/StartedScreen/StartedScreen";
 import { GameScreen } from "./screens/GameScreen/GameScreen";
-import GameListScreen from "../common/screens/gameListScreen/GameListScreen";
+import GameListScreen from "../common/screens/GameListScreen/GameListScreen";
 import { GameEntryMode } from "@/src/common/constants/types";
 
 const Stack = createStackNavigator();

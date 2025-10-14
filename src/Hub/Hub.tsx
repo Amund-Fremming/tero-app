@@ -10,7 +10,7 @@ import JoinScreen from "./screens/JoinScreen/JoinScreen";
 import Screen from "../common/constants/screen";
 import AdminScreen from "./screens/AdminScreen/AdminScreen";
 import GameTypeListScreen from "../common/screens/GameTypeListScreen/GameTypeListScreen";
-import GameListScreen from "../common/screens/gameListScreen/GameListScreen";
+import GameListScreen from "../common/screens/GameListScreen/GameListScreen";
 import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
 
 const Stack = createStackNavigator();

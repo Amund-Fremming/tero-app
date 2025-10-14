@@ -10,8 +10,8 @@ import { useModalProvider } from "@/src/common/context/ModalProvider";
 import Screen from "@/src/common/constants/screen";
 import { GameEntryMode } from "@/src/common/constants/types";
 import { useAuthProvider } from "@/src/common/context/AuthProvider";
-import { SpinGameState } from "../../constants/SpinTypes";
-import SpinScreen from "../../constants/SpinScreen";
+import { SpinGameState } from "../../constants/spinTypes";
+import SpinScreen from "../../constants/spinScreen";
 import AddChallenge from "../../components/AddChallenge/AddChallenge";
 
 export const LobbyScreen = ({ navigation }: any) => {

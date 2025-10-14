@@ -2,7 +2,7 @@ import { Pressable, Text, View } from "react-native";
 import styles from "./gameScreenStyles";
 import AbsoluteHomeButton from "@/src/common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import { useEffect, useState } from "react";
-import { SpinGameState } from "../../constants/SpinTypes";
+import { SpinGameState } from "../../constants/spinTypes";
 import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
 import { GameEntryMode } from "@/src/common/constants/types";
 import Color from "@/src/common/constants/color";
