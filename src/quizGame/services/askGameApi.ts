@@ -1,5 +1,5 @@
 import { AskGame, CreateAskGameRequest } from "../constants/askTypes";
-import { AskGameUrlBase } from "@/src/common/constants/Endpoints";
+import { AskGameUrlBase } from "@/src/common/constants/endpoints";
 import { Result } from "@/src/common/utils/result";
 import httpResult from "@/src/common/services/httpResult";
 

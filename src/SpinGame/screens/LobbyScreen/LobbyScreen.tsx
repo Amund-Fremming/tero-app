@@ -5,13 +5,13 @@ import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
 import { Pressable } from "react-native-gesture-handler";
 import { useEffect } from "react";
 import { useHubConnectionProvider } from "@/src/common/context/HubConnectionProvider";
-import { HubChannel } from "@/src/common/constants/HubChannel";
+import { HubChannel } from "@/src/common/constants/hubChannel";
 import { useModalProvider } from "@/src/common/context/ModalProvider";
-import Screen from "@/src/common/constants/Screen";
-import { GameEntryMode } from "@/src/common/constants/Types";
+import Screen from "@/src/common/constants/screen";
+import { GameEntryMode } from "@/src/common/constants/types";
 import { useAuthProvider } from "@/src/common/context/AuthProvider";
-import { SpinGameState } from "../../constants/spinTypes";
-import SpinScreen from "../../constants/spinScreen";
+import { SpinGameState } from "../../constants/SpinTypes";
+import SpinScreen from "../../constants/SpinScreen";
 import AddChallenge from "../../components/AddChallenge/AddChallenge";
 
 export const LobbyScreen = ({ navigation }: any) => {

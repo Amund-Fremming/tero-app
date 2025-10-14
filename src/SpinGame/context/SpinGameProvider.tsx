@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import SpinGame from "../constants/spinTypes";
+import SpinGame from "../constants/SpinTypes";
 
 interface ISpinGameContext {
   spinGame: SpinGame | undefined;

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import Color from "../../constants/Color";
+import Color from "../../constants/color";
 
 export const styles = StyleSheet.create({
   card: {

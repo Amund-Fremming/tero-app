@@ -9,7 +9,7 @@ import { addPlayerToGame } from "@/src/common/services/universalGameApi";
 import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { useGlobalGameProvider } from "../../../common/context/GlobalGameProvider";
 import MediumButton from "../../../common/components/MediumButton/MediumButton";
-import { GameEntryMode } from "../../../common/constants/Types";
+import { GameEntryMode } from "../../../common/constants/types";
 
 export const JoinScreen = ({ navigation }: any) => {
   const [userInput, setUserInput] = useState<string>("");

@@ -1,8 +1,7 @@
 import { Pressable, Text, View } from "react-native";
-import styles from "./gameListScreenStyles";
 import VerticalScroll from "../../wrappers/VerticalScroll";
 import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
-import { GameType, PagedRequest, PagedResponse } from "@/src/common/constants/Types";
+import { GameType, PagedRequest, PagedResponse } from "@/src/common/constants/types";
 import GameCard from "../../components/GameCard/GameCard";
 import { useEffect, useState } from "react";
 import { getGamesPage } from "../../services/universalGameApi";
@@ -10,13 +9,13 @@ import { getSpinGame } from "../../../spinGame/services/spinGameApi";
 import { useModalProvider } from "../../context/ModalProvider";
 import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
 import { useAuthProvider } from "../../context/AuthProvider";
-import SpinScreen from "@/src/spinGame/constants/spinScreen";
+import SpinScreen from "@/src/spinGame/constants/SpinScreen";
 import { useNavigation } from "@react-navigation/native";
-import { getAskGame } from "@/src/askGame/services/askGameApi";
+import { getAskGame } from "@/src/quizGame/services/askGameApi";
 import { useSpinGameProvider } from "@/src/spinGame/context/SpinGameProvider";
-import { useAskGameProvider } from "@/src/askGame/context/AskGameProvider";
-import AskScreen from "@/src/askGame/constants/askScreen";
-import Screen from "../../constants/Screen";
+import { useAskGameProvider } from "@/src/quizGame/context/AskGameProvider";
+import AskScreen from "@/src/quizGame/constants/askScreen";
+import Screen from "../../constants/screen";
 
 const pageSize = 20;
 

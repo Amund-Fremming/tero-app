@@ -1,4 +1,4 @@
-import Color from "@/src/common/constants/Color";
+import Color from "@/src/common/constants/color";
 import MediumButton from "@/src/common/components/MediumButton/MediumButton";
 import { Text, View } from "react-native";
 import { useAskGameProvider } from "../../context/AskGameProvider";
