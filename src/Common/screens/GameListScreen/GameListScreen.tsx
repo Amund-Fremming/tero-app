@@ -1,7 +1,7 @@
 import { Pressable, Text, View } from "react-native";
 import VerticalScroll from "../../wrappers/VerticalScroll";
 import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
-import { GameType, PagedRequest, PagedResponse } from "@/src/common/constants/types";
+import { GameBase, GameType, PagedRequest, PagedResponse } from "@/src/common/constants/types";
 import GameCard from "../../components/GameCard/GameCard";
 import { useEffect, useState } from "react";
 import { getGamesPage } from "../../services/universalGameApi";
@@ -18,8 +18,6 @@ import AskScreen from "@/src/quizGame/constants/askScreen";
 import Screen from "../../constants/screen";
 import styles from "./gameListScreenStyles";
 
-const pageSize = 20;
-
 export const GameListScreen = () => {
   const navigation: any = useNavigation();
   const { guestId: userId } = useAuthProvider();
@@ -28,10 +26,9 @@ export const GameListScreen = () => {
   const { setAskGame } = useAskGameProvider();
 
   const [pagedResponse, setPagedResponse] = useState<PagedResponse | undefined>(undefined);
-  const [pagedRequest, setPagedRequest] = useState<PagedRequest>({
-    pageNumber: 1,
-    pageSize,
-  });
+  const [games, setGames] = useState<GameBase | undefined>(undefined);
+  const [pageNumber, setPageNumber] = useState<number>(0);
+  const [isNextPage, setIsNextPage] = useState<PagedRequest>();
 
   const { displayErrorModal } = useModalProvider();
 

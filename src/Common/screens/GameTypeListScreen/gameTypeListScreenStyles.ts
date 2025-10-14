@@ -19,6 +19,25 @@ export const styles = StyleSheet.create({
     fontSize: moderateScale(40),
     fontWeight: 900,
   },
+
+  card: {
+    borderWidth: 2,
+    borderColor: Color.White,
+    padding: 10,
+    gap: 8,
+    height: 150,
+    width: "95%",
+  },
+
+  cardHeader: {
+    fontWeight: 600,
+    fontSize: 20,
+    color: Color.White,
+  },
+
+  paragraph: {
+    color: Color.White,
+  },
 });
 
 export default styles;
