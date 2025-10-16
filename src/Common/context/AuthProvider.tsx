@@ -1,11 +1,11 @@
 import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { createGuestUser, updateUserActivity } from "../services/userApi";
 import * as SecureStore from "expo-secure-store";
 import { Auth0Config } from "../components/Auth0/config";
 import * as AuthSession from "expo-auth-session";
 import { useModalProvider } from "./ModalProvider";
 import * as WebBrowser from "expo-web-browser";
-import { AuthService } from "../services/authService";
+import { UserService } from "../services/userService";
+import { PLATFORM_URL_BASE } from "../constants/endpoints";
 
 const REFRESH_TOKEN_KEY = "refresh_token";
 
@@ -43,6 +43,9 @@ const AuthContext = createContext<IAuthContext>(defaultContextValue);
 
 export const useAuthProvider = () => useContext(AuthContext);
 
+// TODO - implement service provider
+let service = new UserService(PLATFORM_URL_BASE);
+
 interface AuthProviderProps {
   children: ReactNode;
 }
@@ -67,8 +70,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       return;
     }
 
-    // TODO - implement service provider
-    let service = new AuthService();
     let result = await service.ensureGuestId();
     if (result.isError()) {
       console.error(result.error); // TODO - remove log
@@ -81,7 +82,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const callUpdateUserActivity = async () => {
-    const result = await updateUserActivity(guestId);
+    const result = await service.patchUserActivity(guestId);
     if (result.isError()) {
       console.error(result.error);
     }

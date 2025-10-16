@@ -3,7 +3,7 @@ import { Button, Pressable, Text, View } from "react-native";
 import { styles } from "./profileScreenStyles";
 import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { useEffect, useState } from "react";
-import { AuthService } from "@/src/common/services/authService";
+import { UserService } from "@/src/common/services/userService";
 import { useModalProvider } from "@/src/common/context/ModalProvider";
 import { User } from "@/src/common/constants/types";
 
@@ -16,15 +16,18 @@ export const ProfileScreen = () => {
 
   useEffect(() => {
     fetchUserData();
+    console.log("Callback url:", redirectUri)
   }, [accessToken])
 
   const fetchUserData = async () => {
-    let service = new AuthService();
+    let service = new UserService();
     let guestResult = await service.getUserData(guestId, accessToken);
     if (guestResult.isError()) {
       displayErrorModal("Klarte ikke hente brukerdata");
       return;
     }
+
+    console.info(userData);
     setUserData(guestResult.value);
     return;
   }
@@ -48,11 +51,12 @@ export const ProfileScreen = () => {
       <Text>ProfileScreen</Text>
 
       <Text>Userdata:</Text>
+      <Text>username: {userData?.username}</Text>
       <Text>name: {userData?.givenName} {userData?.familyName}</Text>
       <Text>Last active: {userData?.lastActive}</Text>
       <Text>gender: {userData?.gender}</Text>
       <Text>email: {userData?.email}</Text>
-      <Text>email verified: {userData?.emailVerified}</Text>
+      <Text>email verified: {userData?.emailVerified ? "yes" : "no"}</Text>
       <Text>updated at: {userData?.updated_at}</Text>
       <Text>created at: {userData?.createdAt}</Text>
       <Text>birth date: {userData?.birthDate}</Text>
