@@ -7,16 +7,30 @@ export interface GameBase {
   isCopy: boolean;
 }
 
-export interface UserBase {
-  id: number;
-  guid: string;
-  lastActive: string;
+export enum UserType {
+  Guest,
+  Registered
 }
 
-export interface RegisteredUserRequest {
-  name: string;
-  email: string;
-  password: string;
+export enum Gender {
+  Male,
+  Female,
+  Unknown
+}
+
+export interface User {
+  id: string,
+  auth0_id?: string,
+  userType: UserType,
+  lastActive?: string,
+  gender: Gender,
+  email?: string,
+  emailVerified?: boolean,
+  updated_at: string,
+  familyName?: string,
+  givenName?: string,
+  createdAt?: string,
+  birthDate?: string
 }
 
 export interface AddedToGameResult {

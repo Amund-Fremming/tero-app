@@ -1,8 +1,10 @@
 import { View, Text, Pressable, Button } from "react-native";
 import Screen from "../../../common/constants/screen";
 import styles from "./homeScreenStyles";
-import { GameEntryMode, GameType } from "../../../common/constants/types";
+import { GameEntryMode } from "../../../common/constants/types";
 import { useGlobalGameProvider } from "../../../common/context/GlobalGameProvider";
+import { useEffect } from "react";
+import { useAuthProvider } from "@/src/common/context/AuthProvider";
 
 export const HomeScreen = ({ navigation }: any) => {
   const { setGameEntryMode } = useGlobalGameProvider();
@@ -11,6 +13,7 @@ export const HomeScreen = ({ navigation }: any) => {
     setGameEntryMode(gameEntryMode);
     navigation.navigate(destination);
   };
+
 
   return (
     <View style={styles.container}>

@@ -1,7 +1,7 @@
 import * as signalR from "@microsoft/signalr";
 import React, { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { useModalProvider } from "./ModalProvider";
-import { HubUrlBase } from "../constants/endpoints";
+import { HUB_URL_BASE } from "../constants/endpoints";
 import { useNavigation } from "expo-router";
 import Screen from "../constants/screen";
 import { ok, err, Result } from "../utils/result";
@@ -73,7 +73,7 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
         return ok(connectionRef.current);
       }
 
-      const endpoint = `${HubUrlBase}/${hubName}?GameId=${gameId}`;
+      const endpoint = `${HUB_URL_BASE}/${hubName}?GameId=${gameId}`;
       console.warn("Endpoint: ", endpoint);
       const hubConnection = new signalR.HubConnectionBuilder()
         .withUrl(endpoint)

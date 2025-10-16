@@ -1,5 +1,8 @@
 import { ok, err, Result } from "../utils/result";
 
+
+// DELETE THIS
+
 class httpResultService {
   constructor() { }
 

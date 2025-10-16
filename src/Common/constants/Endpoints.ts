@@ -1,7 +1,2 @@
-export const AskGameUrlBase = "https://localhost:7204/api/v1/AskGame";
-export const SpinGameUrlBase = "https://localhost:7204/api/v1/SpinGame";
-export const UserUrlBase = "https://localhost:7204/api/v1/User";
-export const UniversalGameUrlBase =
-  "https://localhost:7204/api/v1/UniversalGame";
-
-export const HubUrlBase = "https://localhost:7204/hub/v1";
+export const HUB_URL_BASE = "https://localhost:7204/hub/v1";
+export const PLATFORM_URL_BASE = "http://127.0.0.1:3000";

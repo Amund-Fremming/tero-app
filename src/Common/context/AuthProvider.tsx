@@ -5,33 +5,38 @@ import { Auth0Config } from "../components/Auth0/config";
 import * as AuthSession from "expo-auth-session";
 import { useModalProvider } from "./ModalProvider";
 import * as WebBrowser from "expo-web-browser";
+import { AuthService } from "../services/authService";
 
 const REFRESH_TOKEN_KEY = "refresh_token";
 
 interface IAuthContext {
-  guestId: number;
-  setGuestId: React.Dispatch<React.SetStateAction<number>>;
+  redirectUri: string,
+  guestId: string;
+  setGuestId: React.Dispatch<React.SetStateAction<string>>;
   accessToken: string | null;
-  markUserAsActive: () => Promise<void>;
+  callUpdateUserActivity: () => Promise<void>;
   triggerLogin: () => void;
   triggerLogout: () => Promise<void>;
   rotateTokens: () => Promise<void>;
 
   // TODO - remove
   logValues: () => void;
+  resetGuestId: () => void;
 }
 
 const defaultContextValue: IAuthContext = {
-  guestId: -1,
+  redirectUri: "[NOT_SET]",
+  guestId: "[NOT_SET]",
   setGuestId: () => { },
   accessToken: null,
-  markUserAsActive: async () => { },
+  callUpdateUserActivity: async () => { },
   triggerLogin: () => { },
   triggerLogout: async () => { },
   rotateTokens: async () => { },
 
   // TODO - remove
   logValues: () => { },
+  resetGuestId: () => { },
 };
 
 const AuthContext = createContext<IAuthContext>(defaultContextValue);
@@ -43,36 +48,39 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [guestId, setGuestId] = useState<number>(-1);
+  const [redirectUri, setRedirectUri] = useState<string>("[NOT_SET]");
+  const [guestId, setGuestId] = useState<string>("[NOT_SET]");
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
   const { displayErrorModal } = useModalProvider();
 
   useEffect(() => {
-    // ensureGuestUserId();
-    console.info("Redirect uri: ", Auth0Config.redirectUri);
+    ensureGuestId();
+    setRedirectUri(Auth0Config.redirectUri)
   }, []);
 
-  const ensureGuestUserId = async () => {
-    const storedGuestId = await SecureStore.getItemAsync("guestId");
+  const ensureGuestId = async () => {
+    const storedGuestId = await SecureStore.getItemAsync("guest_id");
     if (storedGuestId) {
-      setGuestId(Number.parseInt(storedGuestId));
+      setGuestId(storedGuestId);
       console.log("User id retrieved from localstorage:", storedGuestId); // TODO - remove log
       return;
     }
 
-    const result = await createGuestUser();
+    // TODO - implement service provider
+    let service = new AuthService();
+    let result = await service.ensureGuestId();
     if (result.isError()) {
       console.error(result.error); // TODO - remove log
       return;
     }
 
-    setGuestId(result.value.id);
-    SecureStore.setItem("userId", result.value.id.toString());
-    console.log("Guest user created with id: ", result.value.id); // TODO - remove log
+    setGuestId(result.value);
+    await SecureStore.setItemAsync("guest_id", result.value);
+    console.log("Guest user created with id: ", result.value);
   };
 
-  const markUserAsActive = async () => {
+  const callUpdateUserActivity = async () => {
     const result = await updateUserActivity(guestId);
     if (result.isError()) {
       console.error(result.error);
@@ -191,6 +199,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       const refreshToken = await SecureStore.getItemAsync(REFRESH_TOKEN_KEY);
       if (!refreshToken) {
+        console.warn("Refreshtoken is undefined");
         setAccessToken(null);
         return;
       }
@@ -208,6 +217,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       });
 
       const tokens = await refreshResponse.json();
+
       if (!refreshResponse.ok) {
         displayErrorModal("Noe galt har skjedd med brukere din, ta kontakt.");
         triggerLogout();
@@ -231,17 +241,25 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     console.log("Guest id:", guestId);
   };
 
+  // TODO - remove
+  const resetGuestId = async () => {
+    setGuestId("");
+    await SecureStore.deleteItemAsync("guest_id");
+  }
+
   const value = {
-    markUserAsActive,
+    callUpdateUserActivity,
     guestId,
     setGuestId,
     accessToken,
     triggerLogin,
     triggerLogout,
     rotateTokens,
+    redirectUri,
 
     // TODO - remove
     logValues,
+    resetGuestId
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

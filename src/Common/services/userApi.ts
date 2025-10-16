@@ -1,16 +1,16 @@
 import { UserUrlBase } from "../constants/endpoints";
 import { RegisteredUserRequest, UserBase } from "../constants/types";
-import { Result } from "../utils/result";
+import { ok, Result } from "../utils/result";
 import httpResult from "./httpResult";
 
-export const updateUserActivity = async (userId: number): Promise<Result> => {
-  const url = `${UserUrlBase}/${userId}`;
-  return httpResult.simplePut(url);
+export const updateUserActivity = async (userId: string): Promise<Result> => {
+  // TODO
+  return ok();
 };
 
-export const createGuestUser = async (): Promise<Result<UserBase>> => {
-  const url = `${UserUrlBase}/create/guest`;
-  return httpResult.simplePost(url);
+export const createGuestUser = async (): Promise<Result<string>> => {
+  // TODO
+  return ok("[NOT_IMPLEMENTED]");
 };
 
 export const createRegisteredUser = async (request: RegisteredUserRequest) => {
