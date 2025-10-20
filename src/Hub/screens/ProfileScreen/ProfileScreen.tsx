@@ -6,10 +6,11 @@ import { useEffect, useState } from "react";
 import { UserService } from "@/src/common/services/userService";
 import { useModalProvider } from "@/src/common/context/ModalProvider";
 import { User } from "@/src/common/constants/types";
+import { PLATFORM_URL_BASE } from "@/src/common/constants/endpoints";
 
 export const ProfileScreen = () => {
   const { displayErrorModal } = useModalProvider();
-  const { logValues, rotateTokens, guestId, resetGuestId, redirectUri, triggerLogin, triggerLogout, accessToken } = useAuthProvider();
+  const { logValues, rotateTokens, guestId, resetGuestId, redirectUri, triggerLogin, triggerLogout, accessToken, invalidateAccessToken } = useAuthProvider();
   const isLoggedIn = accessToken != null;
 
   const [userData, setUserData] = useState<User | undefined>(undefined);
@@ -20,7 +21,7 @@ export const ProfileScreen = () => {
   }, [accessToken])
 
   const fetchUserData = async () => {
-    let service = new UserService();
+    let service = new UserService(PLATFORM_URL_BASE);
     let guestResult = await service.getUserData(guestId, accessToken);
     if (guestResult.isError()) {
       displayErrorModal("Klarte ikke hente brukerdata");
@@ -43,6 +44,7 @@ export const ProfileScreen = () => {
         <Text>User type: {userData?.userType}</Text>
         <Text>Redirect uri: {redirectUri}</Text>
 
+        <Button title="Invalidate AT" onPress={invalidateAccessToken} />
         <Button title="reset guest id" onPress={resetGuestId} />
         <Button title="log values" onPress={logValues} />
         <Button title="rotate tokens" onPress={rotateTokens} />
@@ -50,29 +52,33 @@ export const ProfileScreen = () => {
 
       <Text>ProfileScreen</Text>
 
-      <Text>Userdata:</Text>
-      <Text>username: {userData?.username}</Text>
-      <Text>name: {userData?.givenName} {userData?.familyName}</Text>
-      <Text>Last active: {userData?.lastActive}</Text>
-      <Text>gender: {userData?.gender}</Text>
-      <Text>email: {userData?.email}</Text>
-      <Text>email verified: {userData?.emailVerified ? "yes" : "no"}</Text>
-      <Text>updated at: {userData?.updated_at}</Text>
-      <Text>created at: {userData?.createdAt}</Text>
-      <Text>birth date: {userData?.birthDate}</Text>
-
       {
-        !isLoggedIn && (
-          <Pressable style={styles.loginButton} onPress={triggerLogin}>
-            <Text style={styles.loginButtonText}>Login</Text>
-          </Pressable>
+        isLoggedIn && (
+          <View style={styles.loggedIn}>
+            <Text>Userdata:</Text>
+            <Text>username: {userData?.username}</Text>
+            <Text>name: {userData?.givenName} {userData?.familyName}</Text>
+            <Text>Last active: {userData?.lastActive}</Text>
+            <Text>gender: {userData?.gender}</Text>
+            <Text>email: {userData?.email}</Text>
+            <Text>email verified: {userData?.emailVerified ? "yes" : "no"}</Text>
+            <Text>updated at: {userData?.updated_at}</Text>
+            <Text>created at: {userData?.createdAt}</Text>
+            <Text>birth date: {userData?.birthDate}</Text>
+
+            <Pressable style={styles.loginButton} onPress={triggerLogout}>
+              <Text style={styles.loginButtonText}>Logout</Text>
+            </Pressable>
+          </View>
         )
       }
 
       {
-        isLoggedIn && (
-          <Pressable style={styles.loginButton} onPress={triggerLogout}>
-            <Text style={styles.loginButtonText}>Logout</Text>
+        !isLoggedIn && (
+
+
+          <Pressable style={styles.loginButton} onPress={triggerLogin}>
+            <Text style={styles.loginButtonText}>Login</Text>
           </Pressable>
         )
       }

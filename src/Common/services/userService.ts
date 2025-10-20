@@ -115,12 +115,21 @@ export class UserService {
         }
     }
 
-    async validateToken(guest_id: string, token: string | null): Promise<Result<void>> {
+    async validateToken(guest_id: string, token: string | null): Promise<Result<boolean>> {
         try {
-            await axios.get(`${this.#baseUrl}/valid-token`, {
+            let response = await fetch(`${this.#baseUrl}/valid-token`, {
                 headers: this.getHeaders(guest_id, token)
             });
-            return ok(undefined);
+
+            if (response.status === 200) {
+                return ok(true);
+            }
+
+            if (response.status === 401 || response.status === 403) {
+                return ok(false);
+            }
+
+            return err("Invalid token");
         } catch (error) {
             console.log("validateToken:", error);
             return err("Klarte ikke validere token");

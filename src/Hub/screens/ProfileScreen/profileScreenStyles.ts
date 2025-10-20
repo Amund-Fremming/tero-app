@@ -37,5 +37,11 @@ export const styles = StyleSheet.create({
     loginButtonText: {
         fontSize: moderateScale(26),
         color: "black"
+    },
+
+    loggedIn: {
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center"
     }
 })

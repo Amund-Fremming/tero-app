@@ -22,6 +22,7 @@ interface IAuthContext {
   // TODO - remove
   logValues: () => void;
   resetGuestId: () => void;
+  invalidateAccessToken: () => void,
 }
 
 const defaultContextValue: IAuthContext = {
@@ -37,6 +38,7 @@ const defaultContextValue: IAuthContext = {
   // TODO - remove
   logValues: () => { },
   resetGuestId: () => { },
+  invalidateAccessToken: () => { },
 };
 
 const AuthContext = createContext<IAuthContext>(defaultContextValue);
@@ -59,8 +61,42 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     ensureGuestId();
+    ensureValidToken();
     setRedirectUri(Auth0Config.redirectUri)
   }, []);
+
+  const ensureValidToken = async () => {
+    let refreshToken = await SecureStore.getItemAsync(REFRESH_TOKEN_KEY);
+    if (!refreshToken) {
+      setAccessToken(null);
+      return;
+    }
+
+    if (!accessToken) {
+      await rotateTokens();
+    }
+
+    const result1 = await service.validateToken(guestId, accessToken);
+    if (result1.isError()) {
+      console.info("Failed to validate user token, loggin out");
+      setAccessToken(null);
+      await SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY);
+      return;
+    }
+
+    const validToken = result1.value;
+    if (!validToken) {
+      await rotateTokens();
+    }
+
+    const result2 = await service.validateToken(guestId, accessToken);
+    if (result2.isError()) {
+      console.info("Failed to validate user token, loggin out");
+      setAccessToken(null);
+      await SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY);
+      return;
+    }
+  }
 
   const ensureGuestId = async () => {
     const storedGuestId = await SecureStore.getItemAsync("guest_id");
@@ -231,6 +267,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       console.log("Tokens refreshed successfully");
     } catch (error) {
       displayErrorModal("En uventet feil har skjedd, logger deg ut.");
+      setAccessToken(null);
+      await SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY);
       console.error(error);
     }
   };
@@ -248,6 +286,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     await SecureStore.deleteItemAsync("guest_id");
   }
 
+  // TODO - remove
+  const invalidateAccessToken = () => {
+    setAccessToken("eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.NHVaYe26MbtOYhSKkoKYdFVomg4i8ZJd8_-RU8VNbftc4TSMb4bXP3l3YlNWACwyXPGffz5aXHc6lty1Y2t4SWRqGteragsVdZufDn5BlnJl9pdR_kdVFUsra2rWKEofkZeIC4yWytE58sMIihvo9H1ScmmVwBcQP6XETqYd0aSHp1gOa9RdUPDvoXQ5oqygTqVtxaDr6wUFKrKItgBMzWIdNZ6y7O9E0DhEPTbE9rfBo6KTFsHAZnMg4k68CDp2woYIaXbmYTWcvbzIuHO7_37GT79XdIwkm95QJ7hYC9RiwrV7mesbY4PAahERJawntho0my942XheVLmGwLMBkQ");
+  }
+
   const value = {
     callUpdateUserActivity,
     guestId,
@@ -260,7 +303,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     // TODO - remove
     logValues,
-    resetGuestId
+    resetGuestId,
+    invalidateAccessToken
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
