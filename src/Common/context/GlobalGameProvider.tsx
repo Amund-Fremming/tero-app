@@ -19,7 +19,7 @@ const defaultContextValue: IGlobalGameContext = {
   universalGameValues: undefined,
   setUniversalGameValues: () => { },
   setIterations: (_iterations: number) => { },
-  gameType: GameType.SpinGame,
+  gameType: GameType.Spin,
   setGameType: () => { },
 };
 
@@ -34,7 +34,7 @@ interface GlobalGameProviderProps {
 export const GlobalGameProvider = ({ children }: GlobalGameProviderProps) => {
   const [universalGameValues, setUniversalGameValues] = useState<UniversalGameValues | undefined>(undefined);
   const [gameEntryMode, setGameEntryMode] = useState<GameEntryMode>(GameEntryMode.Host);
-  const [gameType, setGameType] = useState<GameType>(GameType.SpinGame);
+  const [gameType, setGameType] = useState<GameType>(GameType.Spin);
 
   const clearValues = () => setUniversalGameValues(undefined);
 

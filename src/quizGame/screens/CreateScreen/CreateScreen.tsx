@@ -42,7 +42,7 @@ export const CreateScreen = ({ navigation }: any) => {
     setUniversalGameValues({
       gameId: game.id,
       universalGameId: game.universalId,
-      gameType: GameType.AskGame,
+      gameType: GameType.Quiz,
       iterations: game.iterations,
     });
     navigation.navigate(AskScreen.Lobby);

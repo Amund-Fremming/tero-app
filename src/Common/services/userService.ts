@@ -2,6 +2,7 @@ import { err, ok, Result } from "../utils/result";
 import axios from 'axios';
 
 import { User } from "../constants/types";
+import { getHeaders } from "./utils";
 
 export class UserService {
 
@@ -9,18 +10,6 @@ export class UserService {
 
     constructor(baseUrl: string) {
         this.#baseUrl = baseUrl;
-    }
-
-    private getHeaders(guest_id: string, token: string | null): Record<string, string> {
-        const headers: Record<string, string> = {
-            "X-Guest-Authentication": guest_id,
-        };
-
-        if (token) {
-            headers["Authorization"] = `Bearer ${token}`;
-        }
-
-        return headers;
     }
 
     async ensureGuestId(): Promise<Result<string>> {
@@ -38,7 +27,7 @@ export class UserService {
         try {
             let url = `${this.#baseUrl}/user`;
             let response = await axios.get<User>(url, {
-                headers: this.getHeaders(guest_id, token)
+                headers: getHeaders(guest_id, token)
             })
 
             return ok(response.data);
@@ -53,7 +42,7 @@ export class UserService {
         try {
             let url = `${this.#baseUrl}/user`;
             let response = axios.patch(url, request, {
-                headers: this.getHeaders(guest_id, token)
+                headers: getHeaders(guest_id, token)
             });
             if ((await response).status! = 200) {
                 // TODO AUDIT LOG
@@ -71,7 +60,7 @@ export class UserService {
         try {
             let url = `${this.#baseUrl}/user/activity`;
             let response = axios.patch(url, {
-                headers: this.getHeaders(guest_id, null)
+                headers: getHeaders(guest_id, null)
             });
             if ((await response).status! = 200) {
                 // TODO AUDIT LOG
@@ -89,7 +78,7 @@ export class UserService {
         try {
             let url = `${this.#baseUrl}/user/delete?user_id=${user_id}`;
             let response = await axios.delete(url, {
-                headers: this.getHeaders(guest_id, token)
+                headers: getHeaders(guest_id, token)
             });
             if (response.status != 200) {
                 return err("Klarte ikke slette bruker");
@@ -106,7 +95,7 @@ export class UserService {
         try {
             let url = `${this.#baseUrl}/user/list`
             let response = await axios.get<User[]>(url, {
-                headers: this.getHeaders(guest_id, token)
+                headers: getHeaders(guest_id, token)
             });
             return ok(response.data);
         } catch (error) {
@@ -118,7 +107,7 @@ export class UserService {
     async validateToken(guest_id: string, token: string | null): Promise<Result<boolean>> {
         try {
             let response = await fetch(`${this.#baseUrl}/valid-token`, {
-                headers: this.getHeaders(guest_id, token)
+                headers: getHeaders(guest_id, token)
             });
 
             if (response.status === 200) {
@@ -139,7 +128,7 @@ export class UserService {
     async getActivityStats(guest_id: string, token: string | null): Promise<Result<void>> {
         try {
             await axios.get(`${this.#baseUrl}/stats`, {
-                headers: this.getHeaders(guest_id, token)
+                headers: getHeaders(guest_id, token)
             });
             return ok(undefined);
         } catch (error) {
@@ -151,7 +140,7 @@ export class UserService {
     async getConfig(guest_id: string, token: string | null): Promise<Result<void>> {
         try {
             await axios.get(`${this.#baseUrl}/config`, {
-                headers: this.getHeaders(guest_id, token)
+                headers: getHeaders(guest_id, token)
             });
             return ok(undefined);
         } catch (error) {
@@ -163,7 +152,7 @@ export class UserService {
     async updateGlobalPopup(guest_id: string, token: string | null, popup: any): Promise<Result<void>> {
         try {
             await axios.put(`${this.#baseUrl}/popup`, popup, {
-                headers: this.getHeaders(guest_id, token),
+                headers: getHeaders(guest_id, token),
             });
             return ok(undefined);
         } catch (error) {

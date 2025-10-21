@@ -26,8 +26,27 @@ export interface User {
 }
 
 export enum GameType {
-  AskGame = "AskGame",
-  SpinGame = "SpinGame",
+  Quiz = "Quiz",
+  Spin = "Spin",
+}
+
+export interface CreateGameRequest {
+  name: string,
+  description?: string,
+  category?: GameCategory,
+}
+
+export enum GameCategory {
+  Casual,
+  Random,
+  Ladies,
+  Boys,
+  Default,
+}
+
+export interface InteractiveGameResponse {
+  key_word: string,
+  hub_address: string,
 }
 
 export enum GameEntryMode {
