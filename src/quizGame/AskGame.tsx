@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { TransitionPresets } from "@react-navigation/stack";
 import AskScreen from "./constants/askScreen";
-import AskGameProvider from "./context/AskGameProvider";
+import QuizGameProvider from "./context/AskGameProvider";
 import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
 import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
 import CreateScreen from "../spinGame/screens/CreateScreen/CreateScreen";
@@ -27,7 +27,7 @@ export const AskGame = () => {
   };
 
   return (
-    <AskGameProvider>
+    <QuizGameProvider>
       <Stack.Navigator
         initialRouteName={getInitialScreen()}
         screenOptions={{
@@ -42,7 +42,7 @@ export const AskGame = () => {
         <Stack.Screen name={AskScreen.Game} component={GameScreen} />
         <Stack.Screen name={AskScreen.Choose} component={GameListScreen} />
       </Stack.Navigator>
-    </AskGameProvider>
+    </QuizGameProvider>
   );
 };
 

@@ -1,12 +1,12 @@
 import Color from "@/src/common/constants/color";
 import MediumButton from "@/src/common/components/MediumButton/MediumButton";
 import { Text, View } from "react-native";
-import { useAskGameProvider } from "../../context/AskGameProvider";
+import { useQuizGameProvider } from "../../context/AskGameProvider";
 import styles from "./gameScreenStyles";
 import AbsoluteHomeButton from "@/src/common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 
 export const GameScreen = ({ navigation }: any) => {
-  const { askGame, setAskGame } = useAskGameProvider();
+  const { quizGame: askGame, setQuizGame: setAskGame } = useQuizGameProvider();
 
   const handlePrevPressed = () => {
     if (!askGame || askGame.currentIteration === 0) {

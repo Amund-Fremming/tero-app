@@ -4,8 +4,7 @@ import { Auth0Config } from "../components/Auth0/config";
 import * as AuthSession from "expo-auth-session";
 import { useModalProvider } from "./ModalProvider";
 import * as WebBrowser from "expo-web-browser";
-import { UserService } from "../services/userService";
-import { PLATFORM_URL_BASE } from "../constants/endpoints";
+import { useServiceProvider } from "./ServiceProvider";
 
 const REFRESH_TOKEN_KEY = "refresh_token";
 
@@ -45,9 +44,6 @@ const AuthContext = createContext<IAuthContext>(defaultContextValue);
 
 export const useAuthProvider = () => useContext(AuthContext);
 
-// TODO - implement service provider
-let service = new UserService(PLATFORM_URL_BASE);
-
 interface AuthProviderProps {
   children: ReactNode;
 }
@@ -58,55 +54,24 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
   const { displayErrorModal } = useModalProvider();
+  const { userService } = useServiceProvider();
 
   useEffect(() => {
-    ensureGuestId();
-    ensureValidToken();
+    handleAuth();
     setRedirectUri(Auth0Config.redirectUri)
   }, []);
 
-  const ensureValidToken = async () => {
-    let refreshToken = await SecureStore.getItemAsync(REFRESH_TOKEN_KEY);
-    if (!refreshToken) {
-      setAccessToken(null);
-      return;
-    }
-
-    if (!accessToken) {
-      await rotateTokens();
-    }
-
-    const result1 = await service.validateToken(guestId, accessToken);
-    if (result1.isError()) {
-      console.info("Failed to validate user token, loggin out");
-      setAccessToken(null);
-      await SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY);
-      return;
-    }
-
-    const validToken = result1.value;
-    if (!validToken) {
-      await rotateTokens();
-    }
-
-    const result2 = await service.validateToken(guestId, accessToken);
-    if (result2.isError()) {
-      console.info("Failed to validate user token, loggin out");
-      setAccessToken(null);
-      await SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY);
-      return;
-    }
-  }
-
-  const ensureGuestId = async () => {
+  const handleAuth = async () => {
     const storedGuestId = await SecureStore.getItemAsync("guest_id");
+    await rotateTokens();
+
     if (storedGuestId) {
       setGuestId(storedGuestId);
       console.log("User id retrieved from localstorage:", storedGuestId); // TODO - remove log
       return;
     }
 
-    let result = await service.ensureGuestId();
+    let result = await userService().ensureGuestId();
     if (result.isError()) {
       console.error(result.error); // TODO - remove log
       return;
@@ -118,7 +83,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const callUpdateUserActivity = async () => {
-    const result = await service.patchUserActivity(guestId);
+    const result = await userService().patchUserActivity(guestId);
     if (result.isError()) {
       console.error(result.error);
     }

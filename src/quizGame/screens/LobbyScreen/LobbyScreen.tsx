@@ -13,7 +13,7 @@ import { HubChannel } from "@/src/common/constants/hubChannel";
 import AskScreen from "../../constants/askScreen";
 import { AskGame, AskGameState } from "../../constants/askTypes";
 import { GameEntryMode } from "@/src/common/constants/types";
-import { useAskGameProvider } from "../../context/AskGameProvider";
+import { useQuizGameProvider } from "../../context/AskGameProvider";
 
 export const LobbyScreen = ({ navigation }: any) => {
   const [question, setQuestion] = useState<string>("");
@@ -21,7 +21,7 @@ export const LobbyScreen = ({ navigation }: any) => {
   const { gameEntryMode, universalGameValues, setIterations } = useGlobalGameProvider();
   const { connect, disconnect, setListener, invokeFunction } = useHubConnectionProvider();
   const { displayErrorModal } = useModalProvider();
-  const { setAskGame } = useAskGameProvider();
+  const { setQuizGame: setAskGame } = useQuizGameProvider();
 
   useEffect(() => {
     if (universalGameValues) {

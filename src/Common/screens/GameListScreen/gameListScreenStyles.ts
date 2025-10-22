@@ -8,18 +8,18 @@ export const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: Color.Black,
+    backgroundColor: Color.White,
   },
 
   header: {
-    color: "white",
+    color: Color.Black,
     paddingTop: verticalScale(20),
     fontSize: moderateScale(35),
     fontWeight: 600,
   },
 
   paragraph: {
-    color: "white",
+    color: Color.Black,
     fontSize: moderateScale(16),
   },
 
@@ -32,16 +32,30 @@ export const styles = StyleSheet.create({
   },
 
   buttonLabel: {
-    color: Color.Black,
+    color: Color.White,
     fontSize: moderateScale(16),
   },
 
   button: {
-    backgroundColor: Color.White,
+    backgroundColor: Color.Black,
     width: horizontalScale(100),
     height: verticalScale(35),
     justifyContent: "center",
     alignItems: "center",
+  },
+
+  cardHeader: {
+    fontSize: moderateScale(20),
+    color: Color.Black
+  },
+
+  cardDescription: {
+    fontSize: moderateScale(14),
+    color: Color.Gray
+  },
+
+  cardCategory: {
+    color: Color.Green
   },
 });
 

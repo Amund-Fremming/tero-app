@@ -56,4 +56,28 @@ export enum GameEntryMode {
   Member,
 }
 
+export interface PagedResponse<T> {
+  items: T[],
+  has_next: boolean
+}
 
+export interface GamePageQuery {
+  page_num: number;
+  game_type: GameType;
+  category: GameCategory | null;
+}
+
+export interface SavedGamesPageQuery {
+  pageNum: number
+}
+
+export interface GameBase {
+  id: string,
+  name: string,
+  description?: string,
+  gameType: GameType,
+  category: GameCategory,
+  iterations: number,
+  timesPlayed: number,
+  lastPlayed: string,
+}

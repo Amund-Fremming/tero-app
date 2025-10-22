@@ -1,15 +1,15 @@
 [
     {
-        "name": "Spin",
-        "description": "Hver runde runde starter med en spin, her vil du endten få vite oppgaven på forhånd eller når noen blir utvalgt. Når spinneren stopper blir noen av dere nødt til å utføre oppgaven.",
+        "name": "Rulett",
+        "description": "Hver runde blir noen tilfeldige valgt, de må så gjøre en oppgave, være førstemann eller gjøre det telefonen sier",
         "icon": "",
-        "screen": "SpinGame"
+        "screen": "Spin"
     },
     {
-        "name": "100 Spm",
+        "name": "100 Spørsmål",
         "description": "Dette spillet kan spillet litt som en vil selv. Man kan svare på spørsmålene på rundtur i rommet, eller spille med en snusboks. Da vil personen som har boksen måtte svare, og får dermed lov til å kaste den til neste person.",
         "icon": "",
-        "screen": "AskGame"
+        "screen": "Quiz"
     },
     {
         "name": "Imposter",

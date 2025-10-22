@@ -4,39 +4,39 @@ import { horizontalScale, moderateScale, verticalScale } from "../../utils/dimen
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: Color.Black,
+    backgroundColor: Color.White,
     width: "100%",
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
+    flexWrap: "wrap",
+    flexDirection: "row"
   },
 
   header: {
     paddingTop: verticalScale(20),
     paddingLeft: horizontalScale(20),
     width: "100%",
-    color: Colors.White,
+    color: Colors.Black,
     fontSize: moderateScale(40),
     fontWeight: 900,
   },
 
   card: {
-    borderWidth: 2,
-    borderColor: Color.White,
-    padding: 10,
-    gap: 8,
-    height: 150,
-    width: "95%",
+    borderWidth: 6,
+    borderColor: Color.Black,
+    height: 230,
+    width: "45%",
   },
 
   cardHeader: {
     fontWeight: 600,
     fontSize: 20,
-    color: Color.White,
+    color: Color.Black,
   },
 
   paragraph: {
-    color: Color.White,
+    color: Color.Black,
   },
 });
 

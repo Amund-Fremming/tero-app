@@ -1,40 +1,40 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { AskGame } from "../constants/askTypes";
+import { AskGame as QuizGame } from "../constants/askTypes";
 
-interface IAskGameContext {
-  clearAskValues: () => void;
-  askGame: AskGame | undefined;
-  setAskGame: React.Dispatch<React.SetStateAction<AskGame | undefined>>;
+interface IQuizGameContext {
+  clearQuizGameValues: () => void;
+  quizGame: QuizGame | undefined;
+  setQuizGame: React.Dispatch<React.SetStateAction<QuizGame | undefined>>;
 }
 
-const defaultContextValue: IAskGameContext = {
-  clearAskValues: () => { },
-  askGame: undefined,
-  setAskGame: () => { },
+const defaultContextValue: IQuizGameContext = {
+  clearQuizGameValues: () => { },
+  quizGame: undefined,
+  setQuizGame: () => { },
 };
 
-const AskGameContext = createContext<IAskGameContext>(defaultContextValue);
+const QuizGameContext = createContext<IQuizGameContext>(defaultContextValue);
 
-export const useAskGameProvider = () => useContext(AskGameContext);
+export const useQuizGameProvider = () => useContext(QuizGameContext);
 
-interface AskGameProviderProps {
+interface QuizGameProviderProps {
   children: ReactNode;
 }
 
-export const AskGameProvider = ({ children }: AskGameProviderProps) => {
-  const [askGame, setAskGame] = useState<AskGame | undefined>(undefined);
+export const QuizGameProvider = ({ children }: QuizGameProviderProps) => {
+  const [quizGame, setQuizGame] = useState<QuizGame | undefined>(undefined);
 
-  const clearAskValues = () => {
-    setAskGame(undefined);
+  const clearQuizGameValues = () => {
+    setQuizGame(undefined);
   };
 
   const value = {
-    clearAskValues,
-    askGame,
-    setAskGame,
+    clearQuizGameValues,
+    quizGame,
+    setQuizGame,
   };
 
-  return <AskGameContext.Provider value={value}>{children}</AskGameContext.Provider>;
+  return <QuizGameContext.Provider value={value}>{children}</QuizGameContext.Provider>;
 };
 
-export default AskGameProvider;
+export default QuizGameProvider;
