@@ -78,6 +78,10 @@ export const GameListScreen = () => {
     setHasNext(pagedResponse.has_next);
   }
 
+  const handleSaveGame = async (gameId: string) => {
+    const result = await gameService().saveGame(guestId, accessToken, gameType, gameId);
+  }
+
   const { setSpinGame } = useSpinGameProvider();
   const { setQuizGame } = useQuizGameProvider();
 
@@ -94,6 +98,9 @@ export const GameListScreen = () => {
             <Text style={styles.cardHeader}>{game.name}</Text>
             <Text style={styles.cardDescription}>{game.description}</Text>
             <Text style={styles.cardCategory}>{game.category}</Text>
+            <Pressable onPress={() => handleSaveGame(game.id)} >
+              <Text>Lagre</Text>
+            </Pressable>
           </Pressable>
         ))}
 
