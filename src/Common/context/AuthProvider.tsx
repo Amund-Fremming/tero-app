@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       return;
     }
 
-    let result = await userService().ensureGuestId();
+    let result = await userService().ensurePseudoId();
     if (result.isError()) {
       console.error(result.error); // TODO - remove log
       return;

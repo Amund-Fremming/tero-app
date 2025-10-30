@@ -12,7 +12,7 @@ export class UserService {
         this.#baseUrl = baseUrl;
     }
 
-    async ensureGuestId(): Promise<Result<string>> {
+    async ensurePseudoId(): Promise<Result<string>> {
         try {
             let url = `${this.#baseUrl}/guest/ensure`;
             let response = await axios.post<string>(url);
