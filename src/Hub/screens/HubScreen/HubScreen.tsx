@@ -10,6 +10,7 @@ export const HubScreen = ({ navigation }: any) => {
 
       <Button title="Admin dashboard" onPress={() => navigation.navigate(Screen.Admin)} />
       <Button title="Profile screen" onPress={() => navigation.navigate(Screen.Profile)} />
+      <Button title="Saved games" onPress={() => navigation.navigate(Screen.SavedGames)} />
 
       <AbsoluteHomeButton />
     </View>

@@ -8,7 +8,8 @@ export enum Screen {
   GameTypeList = "GameTypeList",
   GameList = "GameList",
   Admin = "Admin",
-  Profile= "Profile",
+  Profile = "Profile",
+  SavedGames = "SavedGames",
 }
 
 export default Screen;

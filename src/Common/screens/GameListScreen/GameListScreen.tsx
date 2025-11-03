@@ -79,7 +79,7 @@ export const GameListScreen = () => {
   }
 
   const handleSaveGame = async (gameId: string) => {
-    const result = await gameService().saveGame(guestId, accessToken, gameType, gameId);
+    const result = await gameService().saveGame(guestId, accessToken, gameId);
   }
 
   const { setSpinGame } = useSpinGameProvider();

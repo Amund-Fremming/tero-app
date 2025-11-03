@@ -51,9 +51,9 @@ export class GameService {
         }
     }
 
-    async saveGame(guest_id: string, token: string | null, game_type: string, game_id: string): Promise<Result<void>> {
+    async saveGame(guest_id: string, token: string | null, game_id: string): Promise<Result<void>> {
         try {
-            await axios.post(`${this.#urlBase}/game/general/${game_type}/save/${game_id}`, {}, {
+            await axios.post(`${this.#urlBase}/game/general/save/${game_id}`, {}, {
                 headers: getHeaders(guest_id, token)
             });
 
@@ -64,9 +64,9 @@ export class GameService {
         }
     }
 
-    async unsaveGame(guest_id: string, token: string | null, game_type: string, game_id: string): Promise<Result<void>> {
+    async unsaveGame(guest_id: string, token: string | null, game_id: string): Promise<Result<void>> {
         try {
-            await axios.delete(`${this.#urlBase}/game/general/${game_type}/unsave/${game_id}`, {
+            await axios.delete(`${this.#urlBase}/game/general/unsave/${game_id}`, {
                 headers: getHeaders(guest_id, token)
             });
 
@@ -77,10 +77,11 @@ export class GameService {
         }
     }
 
-    async getSavedGames(guest_id: string, token: string | null): Promise<Result<PagedResponse<GameBase>>> {
+    async getSavedGames(guest_id: string, token: string | null, page_num: number): Promise<Result<PagedResponse<GameBase>>> {
         try {
-            const response = await axios.get(`${this.#urlBase}/game/general/saved`, {
-                headers: getHeaders(guest_id, token)
+            const response = await axios.post(`${this.#urlBase}/game/general/saved`, {}, {
+                headers: getHeaders(guest_id, token),
+                params: { page_num },
             });
 
             return ok(response.data);

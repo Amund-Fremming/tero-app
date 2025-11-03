@@ -68,7 +68,7 @@ export interface GamePageQuery {
 }
 
 export interface SavedGamesPageQuery {
-  pageNum: number
+  page_num: number
 }
 
 export interface GameBase {

@@ -7,10 +7,13 @@ import { UserService } from "@/src/common/services/userService";
 import { useModalProvider } from "@/src/common/context/ModalProvider";
 import { User } from "@/src/common/constants/types";
 import { PLATFORM_URL_BASE } from "@/src/common/constants/endpoints";
+import { useServiceProvider } from "@/src/common/context/ServiceProvider";
 
 export const ProfileScreen = () => {
   const { displayErrorModal } = useModalProvider();
   const { logValues, rotateTokens, guestId, resetGuestId, redirectUri, triggerLogin, triggerLogout, accessToken, invalidateAccessToken } = useAuthProvider();
+  const { userService } = useServiceProvider();
+
   const isLoggedIn = accessToken != null;
 
   const [userData, setUserData] = useState<User | undefined>(undefined);
@@ -21,8 +24,7 @@ export const ProfileScreen = () => {
   }, [accessToken])
 
   const fetchUserData = async () => {
-    let service = new UserService(PLATFORM_URL_BASE);
-    let guestResult = await service.getUserData(guestId, accessToken);
+    let guestResult = await userService().getUserData(guestId, accessToken);
     if (guestResult.isError()) {
       displayErrorModal("Klarte ikke hente brukerdata");
       return;
