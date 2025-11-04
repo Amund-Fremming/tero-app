@@ -1,12 +1,10 @@
 import AbsoluteHomeButton from "@/src/common/components/AbsoluteHomeButton/AbsoluteHomeButton";
-import { Button, Pressable, Text, View } from "react-native";
+import { Button, Image, Pressable, Text, View } from "react-native";
 import { styles } from "./profileScreenStyles";
 import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { useEffect, useState } from "react";
-import { UserService } from "@/src/common/services/userService";
 import { useModalProvider } from "@/src/common/context/ModalProvider";
 import { User } from "@/src/common/constants/types";
-import { PLATFORM_URL_BASE } from "@/src/common/constants/endpoints";
 import { useServiceProvider } from "@/src/common/context/ServiceProvider";
 
 export const ProfileScreen = () => {
@@ -16,7 +14,9 @@ export const ProfileScreen = () => {
 
   const isLoggedIn = accessToken != null;
 
+  const [avatar, setAvatar] = useState<string>("");
   const [userData, setUserData] = useState<User | undefined>(undefined);
+  const [displayDebugTools, setDisplayDebugTools] = useState<boolean>(false);
 
   useEffect(() => {
     fetchUserData();
@@ -24,49 +24,59 @@ export const ProfileScreen = () => {
   }, [accessToken])
 
   const fetchUserData = async () => {
-    let guestResult = await userService().getUserData(guestId, accessToken);
-    if (guestResult.isError()) {
-      displayErrorModal("Klarte ikke hente brukerdata");
+
+    if (!accessToken) {
       return;
     }
 
-    console.info(userData);
-    setUserData(guestResult.value);
+    let result = await userService().getUserData(guestId, accessToken);
+    if (result.isError()) {
+      return;
+    }
+
+    const userData = result.value;
+    setUserData(userData);
+    setAvatar(userService().getProfilePicture(guestId, userData.username));
     return;
   }
 
   return (
     <View style={styles.container}>
-      <View style={styles.debugBox}>
-        <Text style={styles.debugHeader}>
-          Debug tools
-        </Text>
-        <Text>Guest id: {guestId}</Text>
-        <Text>User id: {userData?.id}</Text>
-        <Text>User type: {userData?.userType}</Text>
-        <Text>Redirect uri: {redirectUri}</Text>
+      {
+        displayDebugTools && (
+          <View style={styles.debugBox}>
+            <Text style={styles.debugHeader}>
+              Debug tools
+            </Text>
+            <Text>Guest id: {guestId}</Text>
+            <Text>User id: {userData?.id}</Text>
+            <Text>User type: {userData?.userType}</Text>
+            <Text>Redirect uri: {redirectUri}</Text>
 
-        <Button title="Invalidate AT" onPress={invalidateAccessToken} />
-        <Button title="reset guest id" onPress={resetGuestId} />
-        <Button title="log values" onPress={logValues} />
-        <Button title="rotate tokens" onPress={rotateTokens} />
-      </View>
-
-      <Text>ProfileScreen</Text>
+            <Button title="Invalidate AT" onPress={invalidateAccessToken} />
+            <Button title="reset guest id" onPress={resetGuestId} />
+            <Button title="log values" onPress={logValues} />
+            <Button title="rotate tokens" onPress={rotateTokens} />
+          </View>
+        )
+      }
 
       {
         isLoggedIn && (
           <View style={styles.loggedIn}>
-            <Text>Userdata:</Text>
-            <Text>username: {userData?.username}</Text>
-            <Text>name: {userData?.givenName} {userData?.familyName}</Text>
-            <Text>Last active: {userData?.lastActive}</Text>
+            <View style={styles.imageCard}>
+              <Image source={{ uri: avatar }} style={styles.image} />
+            </View>
+            <Text style={styles.name}>{userData?.family_name} {userData?.given_name}</Text>
+            <Text style={styles.username}> @ {userData?.username}</Text>
+
+
+            <Text>Last active: {userData?.last_active}</Text>
             <Text>gender: {userData?.gender}</Text>
             <Text>email: {userData?.email}</Text>
-            <Text>email verified: {userData?.emailVerified ? "yes" : "no"}</Text>
             <Text>updated at: {userData?.updated_at}</Text>
-            <Text>created at: {userData?.createdAt}</Text>
-            <Text>birth date: {userData?.birthDate}</Text>
+            <Text>created at: {userData?.created_at}</Text>
+            <Text>birth date: {userData?.birth_date}</Text>
 
             <Pressable style={styles.loginButton} onPress={triggerLogout}>
               <Text style={styles.loginButtonText}>Logout</Text>
@@ -77,7 +87,6 @@ export const ProfileScreen = () => {
 
       {
         !isLoggedIn && (
-
 
           <Pressable style={styles.loginButton} onPress={triggerLogin}>
             <Text style={styles.loginButtonText}>Login</Text>

@@ -14,15 +14,15 @@ export interface User {
   username: string,
   auth0_id?: string,
   userType: UserType,
-  lastActive?: string,
+  last_active?: string,
   gender: Gender,
   email?: string,
-  emailVerified?: boolean,
+  email_verified?: boolean,
   updated_at: string,
-  familyName?: string,
-  givenName?: string,
-  createdAt?: string,
-  birthDate?: string
+  family_name?: string,
+  given_name?: string,
+  created_at?: string,
+  birth_date?: string
 }
 
 export enum GameType {

@@ -1,5 +1,5 @@
 import Color from "@/src/common/constants/color";
-import { moderateScale, verticalScale } from "@/src/common/utils/dimensions";
+import { horizontalScale, moderateScale, verticalScale } from "@/src/common/utils/dimensions";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -43,5 +43,33 @@ export const styles = StyleSheet.create({
         width: "100%",
         justifyContent: "center",
         alignItems: "center"
+    },
+
+    image: {
+        width: horizontalScale(100),
+        height: verticalScale(100),
+    },
+
+    imageCard: {
+        marginTop: verticalScale(30),
+        justifyContent: "flex-end",
+        alignItems: "center",
+        width: horizontalScale(120),
+        height: verticalScale(120),
+        borderRadius: moderateScale(28),
+        backgroundColor: Color.Blue
+    },
+
+    name: {
+        paddingTop: verticalScale(15),
+        fontSize: moderateScale(25
+
+        ),
+        fontWeight: 600,
+    },
+
+    username: {
+        paddingTop: verticalScale(5),
+        fontSize: moderateScale(18)
     }
 })

@@ -12,6 +12,16 @@ export class UserService {
         this.#baseUrl = baseUrl;
     }
 
+    getProfilePicture(guest_id: string, username?: string): string {
+        if (!username) {
+            username = guest_id
+        }
+
+        const avatar = `https://api.dicebear.com/9.x/pixel-art/png?seed=${username}`;
+        console.log(avatar);
+        return avatar;
+    }
+
     async ensurePseudoId(): Promise<Result<string>> {
         try {
             let url = `${this.#baseUrl}/guest/ensure`;

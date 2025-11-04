@@ -7,6 +7,7 @@ export const Color = {
   Beige: "#F1D6CE",
   Green: "green",
   Gray: "gray",
+  Blue: "#6db0b6"
 };
 
 export default Color;
