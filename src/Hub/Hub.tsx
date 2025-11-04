@@ -21,7 +21,7 @@ export const Hub = () => {
     <Stack.Navigator
       initialRouteName={Screen.Home}
       screenOptions={{
-        ...TransitionPresets.FadeFromBottomAndroid,
+        ...TransitionPresets.SlideFromRightIOS,
         headerShown: false,
         headerStatusBarHeight: 0,
         cardStyle: { flex: 1 },

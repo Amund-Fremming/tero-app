@@ -6,8 +6,13 @@ import { useEffect, useState } from "react";
 import { useModalProvider } from "@/src/common/context/ModalProvider";
 import { User } from "@/src/common/constants/types";
 import { useServiceProvider } from "@/src/common/context/ServiceProvider";
+import { useNavigation } from '@react-navigation/native';
+import { Feather } from '@expo/vector-icons';
+import Color from "@/src/common/constants/color";
 
 export const ProfileScreen = () => {
+  const navigation = useNavigation();
+
   const { displayErrorModal } = useModalProvider();
   const { logValues, rotateTokens, guestId, resetGuestId, redirectUri, triggerLogin, triggerLogout, accessToken, invalidateAccessToken } = useAuthProvider();
   const { userService } = useServiceProvider();
@@ -40,8 +45,21 @@ export const ProfileScreen = () => {
     return;
   }
 
+  const handleEditProfile = () => {
+    //
+  }
+
   return (
     <View style={styles.container}>
+      <View style={styles.iconsBar}>
+        <Pressable onPress={() => navigation.goBack()}>
+          <Feather name="chevron-left" size={32} color={Color.Black} />
+        </Pressable>
+        {isLoggedIn && (<Pressable onPress={triggerLogout}>
+          <Feather name="log-out" size={26} color={Color.Black} />
+        </Pressable>)}
+      </View>
+
       {
         displayDebugTools && (
           <View style={styles.debugBox}>
@@ -69,22 +87,39 @@ export const ProfileScreen = () => {
             </View>
             <Text style={styles.name}>{userData?.family_name} {userData?.given_name}</Text>
             <Text style={styles.username}> @ {userData?.username}</Text>
-
-
-            <Text>Last active: {userData?.last_active}</Text>
-            <Text>gender: {userData?.gender}</Text>
-            <Text>email: {userData?.email}</Text>
-            <Text>updated at: {userData?.updated_at}</Text>
-            <Text>created at: {userData?.created_at}</Text>
-            <Text>birth date: {userData?.birth_date}</Text>
-
-            <Pressable style={styles.loginButton} onPress={triggerLogout}>
-              <Text style={styles.loginButtonText}>Logout</Text>
-            </Pressable>
+            <View style={styles.layover}>
+              <View style={styles.bigButton}>
+                <View style={styles.iconGuard}>
+                  <Feather name="edit" size={30} color={Color.Black} />
+                </View>
+                <Text style={styles.buttonText}>Rediger profil</Text>
+                <Feather name="chevron-right" size={24} color={Color.Black} />
+              </View>
+              <View style={styles.bigButton}>
+                <View style={styles.iconGuard}>
+                  <Feather name="lock" size={28} color={Color.Black} />
+                </View>
+                <Text style={styles.buttonText}>Bytt passord</Text>
+                <Feather name="chevron-right" size={28} color={Color.Black} />
+              </View>
+              <View style={styles.bigButton}>
+                <View style={styles.iconGuard}>
+                  <Feather name="settings" size={28} color={Color.Black} />
+                </View>
+                <Text style={styles.buttonText}>Innstillinger</Text>
+                <Feather name="chevron-right" size={28} color={Color.Black} />
+              </View>
+              <View style={styles.bigButton}>
+                <View style={styles.iconGuard}>
+                  <Feather name="sun" size={28} color={Color.Black} />
+                </View>
+                <Text style={styles.buttonText}>Tips oss!</Text>
+                <Feather name="chevron-right" size={28} color={Color.Black} />
+              </View>
+            </View>
           </View>
         )
       }
-
       {
         !isLoggedIn && (
 
@@ -93,8 +128,6 @@ export const ProfileScreen = () => {
           </Pressable>
         )
       }
-
-      <AbsoluteHomeButton />
     </View>
   );
 };

@@ -4,10 +4,12 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     container: {
-        justifyContent: "flex-start",
+        flex: 1,
+        justifyContent: "flex-end",
         alignItems: "center",
         width: "100%",
         height: "100%",
+        backgroundColor: Color.White
     },
 
     debugHeader: {
@@ -40,8 +42,9 @@ export const styles = StyleSheet.create({
     },
 
     loggedIn: {
+        flex: 1,
         width: "100%",
-        justifyContent: "center",
+        justifyContent: "flex-end",
         alignItems: "center"
     },
 
@@ -62,14 +65,73 @@ export const styles = StyleSheet.create({
 
     name: {
         paddingTop: verticalScale(15),
-        fontSize: moderateScale(25
-
-        ),
+        fontSize: moderateScale(25),
         fontWeight: 600,
     },
 
     username: {
         paddingTop: verticalScale(5),
+        fontSize: moderateScale(18)
+    },
+
+    editText: {
+        fontSize: moderateScale(25),
+        color: Color.Purple,
+    },
+
+    editButton: {
+        marginTop: verticalScale(15),
+        height: verticalScale(40),
+        width: horizontalScale(205),
+        borderRadius: moderateScale(10),
+        borderColor: Color.Purple,
+        borderWidth: moderateScale(2.5),
+        justifyContent: "center",
+        alignItems: "center"
+    },
+
+    layover: {
+        width: "100%",
+        height: "55%",
+        backgroundColor: Color.LightGray,
+        borderTopLeftRadius: moderateScale(50),
+        borderTopRightRadius: moderateScale(50),
+        marginTop: verticalScale(20),
+        justifyContent: "flex-start",
+        alignItems: "center",
+    },
+
+    iconsBar: {
+        position: "absolute",
+        top: verticalScale(15),
+        width: "95%",
+        justifyContent: "space-between",
+        display: "flex",
+        flexDirection: "row"
+    },
+
+    bigButton: {
+        marginTop: verticalScale(30),
+        width: "86%",
+        height: verticalScale(60),
+        borderRadius: moderateScale(15),
+        alignItems: "center",
+        justifyContent: "space-between",
+        display: "flex",
+        flexDirection: "row"
+    },
+
+    iconGuard: {
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: moderateScale(10),
+        backgroundColor: Color.White,
+        width: horizontalScale(55),
+        height: verticalScale(55),
+    },
+
+    buttonText: {
+        paddingRight: horizontalScale(110),
         fontSize: moderateScale(18)
     }
 })
