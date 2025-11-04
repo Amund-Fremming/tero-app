@@ -13,31 +13,89 @@ export const styles = StyleSheet.create({
     flexDirection: "row"
   },
 
-  header: {
-    paddingTop: verticalScale(20),
-    paddingLeft: horizontalScale(20),
+  topWrapper: {
+    flexDirection: "row",
     width: "100%",
-    color: Colors.Black,
+    justifyContent: "space-around",
+    alignItems: "center",
+    backgroundColor: Color.LightBlue,
+    height: verticalScale(90)
+  },
+
+  header: {
+    marginTop: verticalScale(5),
+    paddingLeft: horizontalScale(10),
+    color: Colors.OffBlack,
     fontSize: moderateScale(40),
     fontWeight: 900,
   },
 
+  icon: {
+    fontSize: moderateScale(28)
+  },
+
+  borderWrapper: {
+    paddingTop: verticalScale(4),
+    flexDirection: "row",
+    width: horizontalScale(100)
+  },
+
+  borderLeft: {
+    backgroundColor: Color.Red,
+    borderTopLeftRadius: moderateScale(5),
+    borderBottomLeftRadius: moderateScale(5),
+    width: "100%",
+    height: verticalScale(7)
+  },
+
+  borderRight: {
+    borderTopRightRadius: moderateScale(5),
+    borderBottomRightRadius: moderateScale(5),
+    backgroundColor: Color.Green,
+    width: "100%",
+    height: verticalScale(7)
+  },
+
+  iconWrapper: {
+    backgroundColor: Color.LightGray,
+    borderRadius: moderateScale(10),
+    justifyContent: "center",
+    alignItems: "center",
+    height: verticalScale(40),
+    width: horizontalScale(40)
+  },
+
   card: {
-    borderWidth: 6,
+    borderWidth: moderateScale(6.3),
     borderColor: Color.Black,
-    height: 230,
+    height: verticalScale(220),
     width: "45%",
+    borderRadius: moderateScale(20),
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   cardHeader: {
-    fontWeight: 600,
-    fontSize: 20,
-    color: Color.Black,
+    position: "absolute",
+    fontWeight: 800,
+    fontSize: moderateScale(28),
+    color: Color.White,
+    bottom: moderateScale(5),
+    left: moderateScale(15),
+    display: "flex",
+    paddingBottom: verticalScale(5)
   },
 
   paragraph: {
     color: Color.Black,
   },
+
+  imagePlaceholder: {
+    backgroundColor: Color.Purple,
+    width: "100%",
+    height: "100%",
+    borderRadius: moderateScale(13)
+  }
 });
 
 export default styles;

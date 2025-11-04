@@ -10,13 +10,19 @@ export const styles = StyleSheet.create({
   },
 
   header: {
-    paddingTop: verticalScale(20),
-    paddingLeft: horizontalScale(20),
-    width: "100%",
     color: Colors.Purple,
     fontSize: moderateScale(40),
     fontWeight: 900,
   },
+
+  topWrapper: {
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingTop: verticalScale(20),
+    width: "90%",
+    display: "flex",
+    flexDirection: "row"
+  }
 });
 
 export default styles;

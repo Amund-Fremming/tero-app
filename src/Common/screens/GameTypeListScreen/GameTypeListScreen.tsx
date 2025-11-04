@@ -1,14 +1,15 @@
 import styles from "./gameTypeListScreenStyles";
 import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
 import data from "./data.json";
-import { View, Text, Pressable, ScrollView, Dimensions } from "react-native";
+import { View, Text, Pressable, ScrollView, Dimensions, Image } from "react-native";
 import React from "react";
-import VerticalScroll from "../../wrappers/VerticalScroll";
 import { useNavigation } from "expo-router";
 import { useGlobalGameProvider } from "../../context/GlobalGameProvider";
 import { GameEntryMode, GameType } from "../../constants/types";
 import Screen from "../../constants/screen";
 import { verticalScale } from "../../utils/dimensions";
+import { Feather } from "@expo/vector-icons";
+import Color from "../../constants/color";
 
 const { height } = Dimensions.get("window");
 
@@ -42,16 +43,33 @@ export const GameTypeListScreen = () => {
           paddingBottom: verticalScale(200),
         }}
       >
-        <Text style={styles.header}>Velg spill type</Text>
+        <View style={styles.topWrapper}>
+          <Pressable onPress={() => navigation.goBack()} style={styles.iconWrapper}>
+            <Feather name="chevron-left" size={32} color={Color.OffBlack} />
+          </Pressable>
+          <View>
+            <Text style={styles.header}>Velg spill</Text>
+            <View style={styles.borderWrapper}>
+              <View style={styles.borderLeft} />
+              <View style={styles.borderRight} />
+            </View>
+          </View>
+          <Pressable style={styles.iconWrapper}>
+            <Text style={styles.icon}>?</Text>
+          </Pressable>
+        </View>
         {data &&
           data.map((item, index) => (
             <Pressable key={index} style={styles.card} onPress={() => handlePress(item.screen as GameType)}>
+              <View style={styles.imagePlaceholder}></View>
               <Text style={styles.cardHeader}>{item.name}</Text>
-              <Text style={styles.paragraph}>{item.description}</Text>
             </Pressable>
           ))}
+        <Pressable key={100} style={styles.card} onPress={() => console.log("Not implemented")}>
+          <View style={styles.imagePlaceholder}></View>
+          <Text style={styles.cardHeader}>Ditt spill?</Text>
+        </Pressable>
       </ScrollView>
-      <AbsoluteHomeButton />
     </View>
   );
 };

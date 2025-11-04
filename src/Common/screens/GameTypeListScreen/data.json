@@ -1,25 +1,26 @@
 [
     {
         "name": "Rulett",
-        "description": "Hver runde blir noen tilfeldige valgt, de må så gjøre en oppgave, være førstemann eller gjøre det telefonen sier",
-        "icon": "",
+        "icon": "roulette.webp",
         "screen": "Spin"
     },
     {
-        "name": "100 Spørsmål",
-        "description": "Dette spillet kan spillet litt som en vil selv. Man kan svare på spørsmålene på rundtur i rommet, eller spille med en snusboks. Da vil personen som har boksen måtte svare, og får dermed lov til å kaste den til neste person.",
-        "icon": "",
+        "name": "Quiz",
+        "icon": "quiz.webp",
         "screen": "Quiz"
     },
     {
-        "name": "Imposter",
-        "description": "På tur, si din assosiasjon med det valgte ordet. Twisten er at en eller fler av dere har fått en blank lapp!",
-        "icon": "",
+        "name": "Challenge",
+        "icon": "spin.webp",
         "screen": "Home"
     },
     {
         "name": "Terning",
-        "description": "Superenkel terning som kan brukes til hva som helst. For eksempel Opus!",
+        "icon": "",
+        "screen": "Home"
+    },
+    {
+        "name": "Imposter",
         "icon": "",
         "screen": "Home"
     }

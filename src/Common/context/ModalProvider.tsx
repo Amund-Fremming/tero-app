@@ -13,7 +13,7 @@ enum DisplayOption {
 interface IModalContext {
   displayActionModal: (message: string, onLeftCloseAction: () => void, onRightCloseAction: () => void) => void;
   displayErrorModal: (errorMessage: string, onCloseAction?: () => void) => void;
-  displayInfoModal: (infoModal: string, onCloseAction?: () => void) => void;
+  displayInfoModal: (message: string, onCloseAction?: () => void) => void;
 }
 
 const defaultContextValue: IModalContext = {
@@ -86,10 +86,9 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     <ModalContext.Provider value={value}>
       {children}
       <Modal visible={displayOption !== DisplayOption.None} animationType="fade" transparent={true}>
-        {displayOption === DisplayOption.Info ||
-          (displayOption === DisplayOption.Error && (
-            <InfoModal message={message} isError={displayOption === DisplayOption.Error} onCloseFunc={onCloseFunc} />
-          ))}
+        {(displayOption === DisplayOption.Info || displayOption === DisplayOption.Error) && (
+          <InfoModal message={message} isError={displayOption === DisplayOption.Error} onCloseFunc={onCloseFunc} />
+        )}
 
         {displayOption === DisplayOption.Action && (
           <ActionModal message={message} onLeftClick={onLeftCloseFunc} onRightClick={onRightCloseFunc} />

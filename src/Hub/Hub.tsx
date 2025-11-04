@@ -13,6 +13,7 @@ import GameTypeListScreen from "../common/screens/GameTypeListScreen/GameTypeLis
 import GameListScreen from "../common/screens/GameListScreen/GameListScreen";
 import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
 import { SavedGamesScreen } from "./screens/SavedGamesScreen/SavedGamesScreen";
+import { TipsUsScreen } from "../common/screens/TipsUsScreen/TipsUsScreen";
 
 const Stack = createStackNavigator();
 
@@ -37,6 +38,7 @@ export const Hub = () => {
       <Stack.Screen name={Screen.GameTypeList} component={GameTypeListScreen} />
       <Stack.Screen name={Screen.Admin} component={AdminScreen} />
       <Stack.Screen name={Screen.SavedGames} component={SavedGamesScreen} />
+      <Stack.Screen name={Screen.TipsUs} component={TipsUsScreen} />
     </Stack.Navigator>
   );
 };
