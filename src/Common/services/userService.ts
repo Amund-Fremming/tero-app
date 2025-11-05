@@ -1,7 +1,7 @@
 import { err, ok, Result } from "../utils/result";
 import axios from 'axios';
 
-import { User } from "../constants/types";
+import { BaseUser, UserWithRole } from "../constants/types";
 import { getHeaders } from "./utils";
 
 export class UserService {
@@ -33,14 +33,16 @@ export class UserService {
         }
     }
 
-    async getUserData(token: string): Promise<Result<User>> {
+    async getUserData(token: string): Promise<Result<UserWithRole>> {
         try {
             let url = `${this.#baseUrl}/user`;
-            let response = await axios.get<User>(url, {
+            let response = await axios.get<UserWithRole>(url, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
             })
+
+            console.log(response.data);
 
             return ok(response.data);
         } catch (error) {
@@ -107,10 +109,10 @@ export class UserService {
         }
     }
 
-    async listUsers(token: string): Promise<Result<User[]>> {
+    async listUsers(token: string): Promise<Result<BaseUser[]>> {
         try {
             let url = `${this.#baseUrl}/user/list`
-            let response = await axios.get<User[]>(url, {
+            let response = await axios.get<BaseUser[]>(url, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }

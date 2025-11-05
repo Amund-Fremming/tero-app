@@ -3,7 +3,7 @@ import { styles } from "./profileScreenStyles";
 import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { useEffect, useState } from "react";
 import { useModalProvider } from "@/src/common/context/ModalProvider";
-import { User } from "@/src/common/constants/types";
+import { BaseUser, UserRole } from "@/src/common/constants/types";
 import { useServiceProvider } from "@/src/common/context/ServiceProvider";
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
@@ -19,8 +19,9 @@ export const ProfileScreen = () => {
 
   const isLoggedIn = accessToken != null;
 
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [avatar, setAvatar] = useState<string>("");
-  const [userData, setUserData] = useState<User | undefined>(undefined);
+  const [userData, setUserData] = useState<BaseUser | undefined>(undefined);
   const [displayDebugTools, setDisplayDebugTools] = useState<boolean>(false);
 
   useEffect(() => {
@@ -29,8 +30,8 @@ export const ProfileScreen = () => {
   }, [accessToken])
 
   const fetchUserData = async () => {
-
     if (!accessToken) {
+      console.warn("No access token present");
       return;
     }
 
@@ -39,7 +40,9 @@ export const ProfileScreen = () => {
       return;
     }
 
-    const userData = result.value;
+    const role = result.value.role;
+    const userData = result.value.user;
+    setIsAdmin(role === UserRole.Admin);
     setUserData(userData);
     setAvatar(userService().getProfilePicture(guestId, userData.username));
     return;
@@ -55,6 +58,9 @@ export const ProfileScreen = () => {
         <Pressable onPress={() => navigation.goBack()}>
           <Feather name="chevron-left" size={32} color={Color.Black} />
         </Pressable>
+        {
+          isAdmin && (<Text>Admin</Text>)
+        }
         {isLoggedIn && (<Pressable onPress={triggerLogout}>
           <Feather name="log-out" size={26} color={Color.Black} />
         </Pressable>)}
@@ -102,13 +108,13 @@ export const ProfileScreen = () => {
                 <Text style={styles.buttonText}>Bytt passord</Text>
                 <Feather name="chevron-right" size={28} color={Color.Black} />
               </View>
-              <View style={styles.bigButton}>
+              <Pressable onPress={() => navigation.navigate(Screen.TipsUs)} style={styles.bigButton}>
                 <View style={styles.iconGuard}>
-                  <Feather name="settings" size={28} color={Color.Black} />
+                  <Feather name="sun" size={28} color={Color.Black} />
                 </View>
-                <Text style={styles.buttonText}>Innstillinger</Text>
+                <Text style={styles.buttonText}>Tips oss</Text>
                 <Feather name="chevron-right" size={28} color={Color.Black} />
-              </View>
+              </Pressable>
               <Pressable onPress={() => navigation.navigate(Screen.SavedGames)} style={styles.bigButton}>
                 <View style={styles.iconGuard}>
                   <Feather name="play" size={28} color={Color.Black} />

@@ -9,7 +9,7 @@ export enum Gender {
   Unknown
 }
 
-export interface User {
+export interface BaseUser {
   id: string,
   username: string,
   auth0_id?: string,
@@ -23,6 +23,16 @@ export interface User {
   given_name?: string,
   created_at?: string,
   birth_date?: string
+}
+
+export enum UserRole {
+  BaseUser,
+  Admin,
+}
+
+export interface UserWithRole {
+  role: UserRole,
+  user: BaseUser
 }
 
 export enum GameType {
