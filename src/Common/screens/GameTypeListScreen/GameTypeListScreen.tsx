@@ -65,9 +65,10 @@ export const GameTypeListScreen = () => {
               <Text style={styles.cardHeader}>{item.name}</Text>
             </Pressable>
           ))}
-        <Pressable key={100} style={styles.card} onPress={() => console.log("Not implemented")}>
+        <Pressable key={100} style={styles.card} onPress={() => navigation.navigate(Screen.TipsUs)}>
           <View style={styles.imagePlaceholder}></View>
           <Text style={styles.cardHeader}>Ditt spill?</Text>
+          <Text style={styles.cardSubheader}>Send inn forslag til nye spill</Text>
         </Pressable>
       </ScrollView>
     </View>

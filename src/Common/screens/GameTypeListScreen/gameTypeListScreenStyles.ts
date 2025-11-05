@@ -86,6 +86,17 @@ export const styles = StyleSheet.create({
     paddingBottom: verticalScale(5)
   },
 
+  cardSubheader: {
+    position: "absolute",
+    fontWeight: 600,
+    fontSize: moderateScale(18),
+    color: Color.White,
+    bottom: moderateScale(5),
+    left: moderateScale(15),
+    display: "flex",
+    paddingBottom: verticalScale(5)
+  },
+
   paragraph: {
     color: Color.Black,
   },
