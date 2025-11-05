@@ -12,7 +12,7 @@ import { GameEntryMode } from "@/src/common/constants/types";
 
 const Stack = createStackNavigator();
 
-export const AskGame = () => {
+export const QuizGame = () => {
   const { gameEntryMode } = useGlobalGameProvider();
 
   const getInitialScreen = () => {
@@ -46,4 +46,4 @@ export const AskGame = () => {
   );
 };
 
-export default AskGame;
+export default QuizGame;

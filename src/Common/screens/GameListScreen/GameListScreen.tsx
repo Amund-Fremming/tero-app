@@ -11,11 +11,12 @@ import { useQuizGameProvider } from "@/src/quizGame/context/AskGameProvider";
 import styles from "./gameListScreenStyles";
 import { useServiceProvider } from "../../context/ServiceProvider";
 import { GameBase, GameCategory, GamePageQuery, PagedResponse } from "../../constants/types";
+import Screen from "../../constants/screen";
 
 export const GameListScreen = () => {
   const navigation: any = useNavigation();
 
-  const { displayErrorModal } = useModalProvider();
+  const { displayErrorModal, displayActionModal } = useModalProvider();
   const { guestId, accessToken } = useAuthProvider();
   const { setUniversalGameValues, gameType } = useGlobalGameProvider();
   const { gameService } = useServiceProvider();
@@ -65,7 +66,7 @@ export const GameListScreen = () => {
 
   const getPage = async (pageNum: number) => {
     const request = createPageQuery(pageNum);
-    const result = await gameService().getGamePage<GameBase>(guestId, accessToken, request);
+    const result = await gameService().getGamePage<GameBase>(guestId, request);
     if (result.isError()) {
       displayErrorModal(result.error);
       return;
@@ -79,7 +80,15 @@ export const GameListScreen = () => {
   }
 
   const handleSaveGame = async (gameId: string) => {
-    const result = await gameService().saveGame(guestId, accessToken, gameId);
+    if (!accessToken) {
+      displayActionModal("Vil du logge inn for å lagre spill?", () => { }, () => navigation.navigate(Screen.Profile))
+      return;
+    }
+
+    const result = await gameService().saveGame(accessToken, gameId);
+    if (result.isError()) {
+      displayErrorModal("Det har skjedd en feil, forsøk igjen senere");
+    }
   }
 
   const { setSpinGame } = useSpinGameProvider();

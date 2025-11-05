@@ -24,12 +24,22 @@ export const SavedGamesScreen = () => {
     }, []);
 
     const handleUnsavePressed = async (game: GameBase) => {
+        if (!accessToken) {
+            console.warn("No access token present");
+            return;
+        }
+
         setGames((prev) => (prev?.filter(g => g.id != game.id)));
-        await gameService().unsaveGame(guestId, accessToken, game.id);
+        await gameService().unsaveGame(accessToken, game.id);
     }
 
     const fetchSavedGames = async () => {
-        const result = await gameService().getSavedGames(guestId, accessToken, pageNum);
+        if (!accessToken) {
+            console.warn("No access token present");
+            return;
+        }
+
+        const result = await gameService().getSavedGames(accessToken, pageNum);
         if (result.isError()) {
             displayErrorModal(result.error);
             return;

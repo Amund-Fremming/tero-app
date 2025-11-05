@@ -13,13 +13,13 @@ import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
 import AbsoluteHomeButton from "@/src/common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 
 export const CreateScreen = ({ navigation }: any) => {
-  const { guestId: userId } = useAuthProvider();
+  const { guestId } = useAuthProvider();
   const { displayErrorModal } = useModalProvider();
   const { setUniversalGameValues } = useGlobalGameProvider();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [createRequest, setCreateRequest] = useState<CreateAskGameRequest>({
-    userId,
+    guestId,
     gameName: "",
     description: "",
     category: Category.Random,

@@ -10,11 +10,23 @@ export const styles = StyleSheet.create({
         gap: verticalScale(15)
     },
 
+
+    iconWrapper: {
+        backgroundColor: Color.White,
+        borderRadius: moderateScale(10),
+        justifyContent: "center",
+        alignItems: "center",
+        height: verticalScale(40),
+        width: horizontalScale(40)
+    },
+
     header: {
         fontSize: moderateScale(28),
         fontWeight: 600,
         color: Color.Black
     },
+
+
 
     subHeader: {
         fontSize: moderateScale(20),

@@ -3,6 +3,8 @@ import { styles } from "./tipsUsScreenStyles";
 import { Pressable, TextInput } from "react-native-gesture-handler";
 import { useNavigation } from "expo-router";
 import { useModalProvider } from "../../context/ModalProvider";
+import { Feather } from "@expo/vector-icons";
+import Color from "../../constants/color";
 
 export const TipsUsScreen = () => {
     const navigation: any = useNavigation();
@@ -16,6 +18,11 @@ export const TipsUsScreen = () => {
 
     return (
         <View style={styles.container}>
+
+            <Pressable onPress={() => navigation.goBack()} style={styles.iconWrapper}>
+                <Feather name="chevron-left" size={32} color={Color.OffBlack} />
+            </Pressable>
+
             <Text style={styles.header}>Tips oss!</Text>
             <Text style={styles.subHeader}>Send oss ditt spillforslag</Text>
 

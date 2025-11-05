@@ -34,7 +34,7 @@ export const ProfileScreen = () => {
       return;
     }
 
-    let result = await userService().getUserData(guestId, accessToken);
+    let result = await userService().getUserData(accessToken);
     if (result.isError()) {
       return;
     }
@@ -85,7 +85,7 @@ export const ProfileScreen = () => {
             <View style={styles.imageCard}>
               <Image source={{ uri: avatar }} style={styles.image} />
             </View>
-            <Text style={styles.name}>{userData?.family_name} {userData?.given_name}</Text>
+            <Text style={styles.name}>{userData?.given_name} {userData?.family_name} </Text>
             <Text style={styles.username}> @ {userData?.username}</Text>
             <View style={styles.layover}>
               <View style={styles.bigButton}>
@@ -109,11 +109,11 @@ export const ProfileScreen = () => {
                 <Text style={styles.buttonText}>Innstillinger</Text>
                 <Feather name="chevron-right" size={28} color={Color.Black} />
               </View>
-              <Pressable onPress={() => navigation.navigate(Screen.TipsUs)} style={styles.bigButton}>
+              <Pressable onPress={() => navigation.navigate(Screen.SavedGames)} style={styles.bigButton}>
                 <View style={styles.iconGuard}>
-                  <Feather name="sun" size={28} color={Color.Black} />
+                  <Feather name="play" size={28} color={Color.Black} />
                 </View>
-                <Text style={styles.buttonText}>Tips oss!</Text>
+                <Text style={styles.buttonText}>Dine spill</Text>
                 <Feather name="chevron-right" size={28} color={Color.Black} />
               </Pressable>
             </View>

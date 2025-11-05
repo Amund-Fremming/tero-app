@@ -33,11 +33,13 @@ export class UserService {
         }
     }
 
-    async getUserData(guest_id: string, token: string | null): Promise<Result<User>> {
+    async getUserData(token: string): Promise<Result<User>> {
         try {
             let url = `${this.#baseUrl}/user`;
             let response = await axios.get<User>(url, {
-                headers: getHeaders(guest_id, token)
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             })
 
             return ok(response.data);
@@ -48,11 +50,13 @@ export class UserService {
     }
 
     // TODO
-    async patchUserData(guest_id: string, token: string | null, request: string): Promise<Result<void>> {
+    async patchUserData(token: string, request: string): Promise<Result<void>> {
         try {
             let url = `${this.#baseUrl}/user`;
             let response = axios.patch(url, request, {
-                headers: getHeaders(guest_id, token)
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
             if ((await response).status! = 200) {
                 // TODO AUDIT LOG
@@ -84,11 +88,13 @@ export class UserService {
         }
     }
 
-    async deleteUser(guest_id: string, token: string | null, user_id: string): Promise<Result<void>> {
+    async deleteUser(token: string, user_id: string): Promise<Result<void>> {
         try {
             let url = `${this.#baseUrl}/user/delete?user_id=${user_id}`;
             let response = await axios.delete(url, {
-                headers: getHeaders(guest_id, token)
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
             if (response.status != 200) {
                 return err("Klarte ikke slette bruker");
@@ -101,11 +107,13 @@ export class UserService {
         }
     }
 
-    async listUsers(guest_id: string, token: string | null): Promise<Result<User[]>> {
+    async listUsers(token: string): Promise<Result<User[]>> {
         try {
             let url = `${this.#baseUrl}/user/list`
             let response = await axios.get<User[]>(url, {
-                headers: getHeaders(guest_id, token)
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
             return ok(response.data);
         } catch (error) {
@@ -114,10 +122,12 @@ export class UserService {
         }
     }
 
-    async validateToken(guest_id: string, token: string | null): Promise<Result<boolean>> {
+    async validateToken(token: string): Promise<Result<boolean>> {
         try {
             let response = await fetch(`${this.#baseUrl}/valid-token`, {
-                headers: getHeaders(guest_id, token)
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
 
             if (response.status === 200) {
@@ -135,10 +145,12 @@ export class UserService {
         }
     }
 
-    async getActivityStats(guest_id: string, token: string | null): Promise<Result<void>> {
+    async getActivityStats(token: string): Promise<Result<void>> {
         try {
             await axios.get(`${this.#baseUrl}/stats`, {
-                headers: getHeaders(guest_id, token)
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
             return ok(undefined);
         } catch (error) {
@@ -147,10 +159,12 @@ export class UserService {
         }
     }
 
-    async getConfig(guest_id: string, token: string | null): Promise<Result<void>> {
+    async getConfig(token: string): Promise<Result<void>> {
         try {
             await axios.get(`${this.#baseUrl}/config`, {
-                headers: getHeaders(guest_id, token)
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
             return ok(undefined);
         } catch (error) {
@@ -159,10 +173,12 @@ export class UserService {
         }
     }
 
-    async updateGlobalPopup(guest_id: string, token: string | null, popup: any): Promise<Result<void>> {
+    async updateGlobalPopup(token: string, popup: any): Promise<Result<void>> {
         try {
             await axios.put(`${this.#baseUrl}/popup`, popup, {
-                headers: getHeaders(guest_id, token),
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
             return ok(undefined);
         } catch (error) {

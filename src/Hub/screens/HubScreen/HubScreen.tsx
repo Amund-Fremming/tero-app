@@ -1,6 +1,5 @@
 import { View, Text, Button, Pressable } from "react-native";
 import styles from "./hubScreenStyles";
-import AbsoluteHomeButton from "@/src/common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import Screen from "../../../common/constants/screen";
 import { Feather } from "@expo/vector-icons";
 import Color from "@/src/common/constants/color";
@@ -21,9 +20,10 @@ export const HubScreen = () => {
       </View>
 
       <Button title="Admin dashboard" onPress={() => navigation.navigate(Screen.Admin)} />
-      <Button title="Saved games" onPress={() => navigation.navigate(Screen.SavedGames)} />
     </View>
   );
 };
 
 export default HubScreen;
+// a319f637-58d0-45e7-bc89-8c2b3a668a42
+// a319f637-58d0-45e7-bc89-8c2b3a668a42

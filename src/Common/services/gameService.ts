@@ -51,10 +51,12 @@ export class GameService {
         }
     }
 
-    async saveGame(guest_id: string, token: string | null, game_id: string): Promise<Result<void>> {
+    async saveGame(token: string, game_id: string): Promise<Result<void>> {
         try {
             await axios.post(`${this.#urlBase}/game/general/save/${game_id}`, {}, {
-                headers: getHeaders(guest_id, token)
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
 
             return ok(undefined);
@@ -64,10 +66,12 @@ export class GameService {
         }
     }
 
-    async unsaveGame(guest_id: string, token: string | null, game_id: string): Promise<Result<void>> {
+    async unsaveGame(token: string, game_id: string): Promise<Result<void>> {
         try {
             await axios.delete(`${this.#urlBase}/game/general/unsave/${game_id}`, {
-                headers: getHeaders(guest_id, token)
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
 
             return ok(undefined);
@@ -77,11 +81,13 @@ export class GameService {
         }
     }
 
-    async getSavedGames(guest_id: string, token: string | null, page_num: number): Promise<Result<PagedResponse<GameBase>>> {
+    async getSavedGames(token: string, page_num: number): Promise<Result<PagedResponse<GameBase>>> {
         try {
             const response = await axios.post(`${this.#urlBase}/game/general/saved`, {}, {
-                headers: getHeaders(guest_id, token),
                 params: { page_num },
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
 
             return ok(response.data);
@@ -91,10 +97,10 @@ export class GameService {
         }
     }
 
-    async getGamePage<T>(guest_id: string, token: string | null, request: GamePageQuery): Promise<Result<PagedResponse<T>>> {
+    async getGamePage<T>(guest_id: string, request: GamePageQuery): Promise<Result<PagedResponse<T>>> {
         try {
             const response = await axios.post(`${this.#urlBase}/game/general/page`, request, {
-                headers: getHeaders(guest_id, token)
+                headers: getHeaders(guest_id, null)
             });
 
             const page: PagedResponse<T> = response.data;

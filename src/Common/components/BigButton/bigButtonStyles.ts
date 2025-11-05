@@ -3,14 +3,16 @@ import { horizontalScale, moderateScale, verticalScale } from "../../utils/dimen
 
 export const styles = StyleSheet.create({
   container: {
-    width: horizontalScale(200),
-    height: verticalScale(60),
+    width: horizontalScale(300),
+    height: verticalScale(63),
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: moderateScale(10)
   },
+
   text: {
-    fontFamily: "SpaceMono",
-    fontSize: moderateScale(22),
+    fontFamily: "PassionOne-Regular",
+    fontSize: moderateScale(28),
   },
 });
 

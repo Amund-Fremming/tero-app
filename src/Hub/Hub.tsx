@@ -4,7 +4,7 @@ import { TransitionPresets } from "@react-navigation/stack";
 
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
 import SpinGame from "../spinGame/SpinGame";
-import AskGame from "../quizGame/AskGame";
+import QuizGame from "../quizGame/QuizGame";
 import HubScreen from "./screens/HubScreen/HubScreen";
 import JoinScreen from "./screens/JoinScreen/JoinScreen";
 import Screen from "../common/constants/screen";
@@ -24,8 +24,6 @@ export const Hub = () => {
       screenOptions={{
         ...TransitionPresets.SlideFromRightIOS,
         headerShown: false,
-        headerStatusBarHeight: 0,
-        cardStyle: { flex: 1 },
       }}
     >
       <Stack.Screen name={Screen.Home} component={HomeScreen} />
@@ -33,13 +31,13 @@ export const Hub = () => {
       <Stack.Screen name={Screen.Hub} component={HubScreen} />
       <Stack.Screen name={Screen.Join} component={JoinScreen} />
       <Stack.Screen name={Screen.SpinGame} component={SpinGame} />
-      <Stack.Screen name={Screen.AskGame} component={AskGame} />
+      <Stack.Screen name={Screen.QuizGame} component={QuizGame} />
       <Stack.Screen name={Screen.GameList} component={GameListScreen} />
       <Stack.Screen name={Screen.GameTypeList} component={GameTypeListScreen} />
       <Stack.Screen name={Screen.Admin} component={AdminScreen} />
       <Stack.Screen name={Screen.SavedGames} component={SavedGamesScreen} />
       <Stack.Screen name={Screen.TipsUs} component={TipsUsScreen} />
-    </Stack.Navigator>
+    </Stack.Navigator >
   );
 };
 

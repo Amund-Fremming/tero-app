@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
-import Colors from "../../../common/constants/color";
+import { Color } from "../../../common/constants/color";
 import { verticalScale, moderateScale, horizontalScale } from "@/src/common/utils/dimensions";
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.Red,
+    backgroundColor: Color.Beige,
     width: "100%",
     height: "100%",
     justifyContent: "center",
@@ -16,21 +16,50 @@ export const styles = StyleSheet.create({
     paddingTop: verticalScale(20),
     paddingLeft: horizontalScale(20),
     width: "100%",
-    color: Colors.Black,
+    color: Color.Black,
     fontSize: moderateScale(40),
     fontWeight: 900,
+    fontFamily: "PassionOne-Bold"
+  },
+
+  goBack: {
+    backgroundColor: Color.LightGray,
+    borderRadius: moderateScale(10),
+    justifyContent: "center",
+    alignItems: "center",
+    width: horizontalScale(40)
   },
 
   paragraph: {
     fontSize: moderateScale(16),
   },
 
+
   input: {
-    borderWidth: 2,
-    borderColor: "black",
+    paddingLeft: horizontalScale(15),
+    fontSize: moderateScale(18),
+    color: Color.OffBlack,
     height: 50,
     width: 240,
   },
+
+  card: {
+    width: "90%",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: moderateScale(20),
+    backgroundColor: Color.White,
+    gap: verticalScale(25),
+    paddingBottom: verticalScale(40)
+  },
+
+  inputWrapper: {
+    justifyContent: "flex-start",
+    flexDirection: "row",
+    alignItems: "center",
+    borderBottomWidth: moderateScale(4),
+    borderRadius: moderateScale(10)
+  }
 });
 
 export default styles;
