@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
-    backgroundColor: Colors.White,
+    backgroundColor: Colors.LightGray,
     justifyContent: "space-between",
     alignItems: "center",
   },
@@ -19,13 +19,17 @@ export const styles = StyleSheet.create({
   },
 
   header: {
-    fontSize: moderateScale(60),
+    fontSize: moderateScale(80),
     color: Colors.Black,
     fontWeight: 900,
+    fontFamily: "PassionOne-Bold"
   },
 
   subHeader: {
-    color: Colors.White,
+    fontWeight: 700,
+    fontSize: moderateScale(20),
+    color: Colors.Gray,
+    fontFamily: "PassionOne-Regular"
   },
 
   buttonContainer: {

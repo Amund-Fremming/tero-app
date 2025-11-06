@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
 import styles from "./joinScreenStyles";
 import { Pressable, TextInput } from "react-native-gesture-handler";
@@ -42,7 +42,9 @@ export const JoinScreen = ({ navigation }: any) => {
             onChangeText={(input) => setUserInput(input)}
           />
         </View>
-        <BigButton text="Bli med" color={Color.Burgunde} onClick={handleJoinGame} inverted={false} />
+        <TouchableOpacity style={styles.button} onPress={handleJoinGame}>
+          <Text style={styles.buttonText}>Bli med</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

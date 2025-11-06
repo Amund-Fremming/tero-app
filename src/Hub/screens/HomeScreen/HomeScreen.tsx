@@ -3,23 +3,39 @@ import Screen from "../../../common/constants/screen";
 import styles from "./homeScreenStyles";
 import { GameEntryMode } from "../../../common/constants/types";
 import { useGlobalGameProvider } from "../../../common/context/GlobalGameProvider";
-import { useEffect } from "react";
-import { useAuthProvider } from "@/src/common/context/AuthProvider";
+import { useEffect, useState } from "react";
+
+const subHeaderList = [
+  "lorem ipsum dolor amet",
+  "consectetur adipiscing elit",
+  "sed do eiusmod tempor",
+  "incididunt ut labore et",
+  "dolore magna aliqua ut",
+  "enim ad minim veniam",
+  "quis nostrud exercitation"
+];
+
 
 export const HomeScreen = ({ navigation }: any) => {
   const { setGameEntryMode } = useGlobalGameProvider();
+
+  const [subHeader, setSubheader] = useState<string>("");
+
+  useEffect(() => {
+    const idx = Math.floor(Math.random() * subHeaderList.length);
+    setSubheader(subHeaderList[idx]);
+  }, []);
 
   const handlePress = (gameEntryMode: GameEntryMode, destination: Screen) => {
     setGameEntryMode(gameEntryMode);
     navigation.navigate(destination);
   };
 
-
   return (
     <View style={styles.container}>
       <View style={styles.leadContainer}>
-        <Text style={styles.header}>name</Text>
-        <Text style={styles.subHeader}>lorem ipsum dolor amet</Text>
+        <Text style={styles.header}>tero</Text>
+        <Text style={styles.subHeader}>{subHeader}</Text>
       </View>
       <View style={styles.buttonContainer}>
         <Pressable

@@ -15,7 +15,7 @@ interface IAuthContext {
   accessToken: string | null;
   callUpdateUserActivity: () => Promise<void>;
   triggerLogin: () => void;
-  triggerLogout: () => Promise<void>;
+  triggerLogout: () => Promise<boolean>;
   rotateTokens: () => Promise<void>;
 
   // TODO - remove
@@ -31,7 +31,7 @@ const defaultContextValue: IAuthContext = {
   accessToken: null,
   callUpdateUserActivity: async () => { },
   triggerLogin: () => { },
-  triggerLogout: async () => { },
+  triggerLogout: async () => { return false },
   rotateTokens: async () => { },
 
   // TODO - remove
@@ -157,14 +157,27 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     });
   };
 
-  const triggerLogout = async () => {
+  const triggerLogout = async (): Promise<boolean> => {
     try {
       const refreshToken = await SecureStore.getItemAsync(REFRESH_TOKEN_KEY);
 
       if (!refreshToken) {
-        // HANDLE
-        displayErrorModal("THIS SHOULD NEVER HAPPEN");
-        return;
+        // TODO - HANDLE
+        console.error("THIS SHOULD NEVER HAPPEN");
+        return false;
+      }
+
+      const returnTo = Auth0Config.redirectUri;
+      const params = new URLSearchParams({
+        client_id: Auth0Config.clientId,
+        returnTo: returnTo,
+      });
+
+      const logoutUrl = `https://${Auth0Config.domain}/v2/logout?${params.toString()}`;
+      let response = await WebBrowser.openAuthSessionAsync(logoutUrl, returnTo);
+      if (response.type === 'cancel' || response.type === 'dismiss') {
+        console.warn("Logout was cancelled by user");
+        return false;
       }
 
       const revokeConfig = {
@@ -181,19 +194,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       await SecureStore.deleteItemAsync("id_token");
       setAccessToken(null);
 
-      const returnTo = Auth0Config.redirectUri;
-      const params = new URLSearchParams({
-        client_id: Auth0Config.clientId,
-        returnTo: returnTo,
-      });
-
-      const logoutUrl = `https://${Auth0Config.domain}/v2/logout?${params.toString()}`;
-      await WebBrowser.openAuthSessionAsync(logoutUrl, returnTo);
-
       console.log("User has been successfully logged out.");
+
+      return true;
     } catch (e) {
+      // TODO - just cleanup as a "logout" do not show errors, maybe log to backend
       console.error("Error during logout:", e);
-      displayErrorModal("Noe feil skjedde ved utlogg");
+      await SecureStore.deleteItemAsync("access_token");
+      await SecureStore.deleteItemAsync("refresh_token");
+      await SecureStore.deleteItemAsync("id_token");
+      setAccessToken(null);
+      return true;
     }
   };
 
@@ -221,9 +232,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const tokens = await refreshResponse.json();
 
       if (!refreshResponse.ok) {
-        displayErrorModal("Noe galt har skjedd med brukere din, ta kontakt.");
-        triggerLogout();
+        console.error("Refresh token response was an error, logging user out");
         console.error(tokens);
+        await SecureStore.deleteItemAsync("access_token");
+        await SecureStore.deleteItemAsync("refresh_token");
+        await SecureStore.deleteItemAsync("id_token");
+        setAccessToken(null)
         return;
       }
 

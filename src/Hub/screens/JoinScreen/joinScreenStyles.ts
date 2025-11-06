@@ -4,7 +4,7 @@ import { verticalScale, moderateScale, horizontalScale } from "@/src/common/util
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: Color.Beige,
+    backgroundColor: Color.LightGray,
     width: "100%",
     height: "100%",
     justifyContent: "center",
@@ -16,24 +16,27 @@ export const styles = StyleSheet.create({
     paddingTop: verticalScale(20),
     paddingLeft: horizontalScale(20),
     width: "100%",
-    color: Color.Black,
+    color: Color.OffBlack,
     fontSize: moderateScale(40),
     fontWeight: 900,
     fontFamily: "PassionOne-Bold"
   },
 
   goBack: {
+    position: "absolute",
+    top: verticalScale(20),
+    left: verticalScale(20),
     backgroundColor: Color.LightGray,
     borderRadius: moderateScale(10),
     justifyContent: "center",
     alignItems: "center",
-    width: horizontalScale(40)
+    width: horizontalScale(40),
+    height: horizontalScale(40)
   },
 
   paragraph: {
     fontSize: moderateScale(16),
   },
-
 
   input: {
     paddingLeft: horizontalScale(15),
@@ -54,12 +57,28 @@ export const styles = StyleSheet.create({
   },
 
   inputWrapper: {
+    paddingLeft: horizontalScale(30),
     justifyContent: "flex-start",
     flexDirection: "row",
     alignItems: "center",
     borderBottomWidth: moderateScale(4),
     borderRadius: moderateScale(10)
-  }
+  },
+
+  button: {
+    width: horizontalScale(300),
+    height: verticalScale(63),
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: moderateScale(10),
+    backgroundColor: Color.Purple,
+  },
+
+  buttonText: {
+    fontFamily: "PassionOne-Regular",
+    fontSize: moderateScale(28),
+    color: Color.White
+  },
 });
 
 export default styles;

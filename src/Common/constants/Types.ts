@@ -25,9 +25,17 @@ export interface BaseUser {
   birth_date?: string
 }
 
+export interface PatchUserRequest {
+  username?: string,
+  gender?: Gender,
+  family_name?: string,
+  given_name?: string,
+  birth_date?: string
+}
+
 export enum UserRole {
-  BaseUser,
-  Admin,
+  BaseUser = "BaseUser",
+  Admin = "Admin",
 }
 
 export interface UserWithRole {

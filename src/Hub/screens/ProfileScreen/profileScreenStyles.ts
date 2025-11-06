@@ -8,24 +8,64 @@ export const styles = StyleSheet.create({
         justifyContent: "flex-end",
         alignItems: "center",
         width: "100%",
-        height: "100%",
-        backgroundColor: Color.White
+        minHeight: "100%",
+        backgroundColor: Color.White,
+        borderRadius: moderateScale(10),
     },
 
-    debugHeader: {
-        fontSize: moderateScale(25),
-        fontWeight: 700,
-        paddingRight: "60%",
-        paddingBottom: verticalScale(15)
-    },
-
-    debugBox: {
+    subContainer: {
         justifyContent: "center",
-        alignItems: "flex-start",
-        paddingLeft: verticalScale(25),
-        borderColor: Color.Red,
-        borderWidth: moderateScale(6),
-        width: "90%"
+        alignItems: "center"
+    },
+
+    email: {
+        paddingTop: verticalScale(15),
+        fontWeight: 600,
+        fontSize: moderateScale(22)
+    },
+
+    layoverEditScroll: {
+        width: "100%",
+    },
+
+    input: {
+        width: "86%",
+        backgroundColor: Color.White,
+        height: verticalScale(60),
+        paddingLeft: horizontalScale(20),
+        padding: moderateScale(5),
+        borderRadius: moderateScale(10),
+        fontWeight: 100,
+        fontSize: moderateScale(20)
+    },
+
+    adminText: {
+        fontSize: moderateScale(22),
+        color: Color.Purple
+    },
+
+    inputWrapper: {
+        width: "100%",
+        alignItems: "center",
+        gap: verticalScale(8),
+    },
+
+    inputLabel: {
+        paddingTop: verticalScale(20),
+        width: "86%",
+        fontSize: moderateScale(16),
+        fontWeight: 500,
+        color: Color.Black,
+    },
+
+    adminButton: {
+        justifyContent: "center",
+        alignItems: "center",
+        width: horizontalScale(160),
+        height: verticalScale(40),
+        borderRadius: moderateScale(12),
+        borderWidth: moderateScale(3),
+        borderColor: Color.Purple
     },
 
     loginButton: {
@@ -90,6 +130,21 @@ export const styles = StyleSheet.create({
         alignItems: "center"
     },
 
+    layoverEdit: {
+        width: "100%",
+        height: "55%",
+        backgroundColor: Color.LightGray,
+        borderTopLeftRadius: moderateScale(50),
+        borderTopRightRadius: moderateScale(50),
+        marginTop: verticalScale(20),
+    },
+
+    layoverEditContent: {
+        alignItems: "center",
+        justifyContent: "flex-start",
+        paddingBottom: verticalScale(40),
+    },
+
     layover: {
         width: "100%",
         height: "55%",
@@ -133,5 +188,53 @@ export const styles = StyleSheet.create({
     buttonText: {
         paddingRight: horizontalScale(110),
         fontSize: moderateScale(18)
+    },
+
+    crown: {
+        height: verticalScale(70),
+        width: horizontalScale(70),
+        resizeMode: "cover"
+    },
+
+    buttonWrapper: {
+        paddingTop: verticalScale(25),
+        width: "90%",
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignItems: "center",
+    },
+
+    cancelButtonText: {
+        fontSize: moderateScale(24),
+        color: Color.Purple,
+        fontWeight: 600
+    },
+
+    cancelButton: {
+        width: "46%",
+        height: verticalScale(53),
+        backgroundColor: Color.White,
+        borderRadius: moderateScale(10),
+        borderWidth: moderateScale(4),
+        borderColor: Color.Purple,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+
+    saveButtonText: {
+        fontSize: moderateScale(24),
+        color: Color.White,
+        fontWeight: 600
+    },
+
+    saveButton: {
+        width: "46%",
+        height: verticalScale(57),
+        backgroundColor: Color.Purple,
+        borderRadius: moderateScale(10),
+        borderWidth: moderateScale(4),
+        borderColor: Color.White,
+        justifyContent: "center",
+        alignItems: "center"
     }
 })

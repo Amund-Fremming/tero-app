@@ -18,16 +18,18 @@ export const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: Color.LightBlue,
-    height: verticalScale(90)
+    backgroundColor: Color.LightGray,
+    paddingTop: verticalScale(20),
+    paddingBottom: verticalScale(20)
   },
 
   header: {
     marginTop: verticalScale(5),
     paddingLeft: horizontalScale(10),
-    color: Colors.OffBlack,
-    fontSize: moderateScale(40),
+    color: Colors.Purple,
+    fontSize: moderateScale(50),
     fontWeight: 900,
+    fontFamily: "PassionOne-Bold"
   },
 
   icon: {
