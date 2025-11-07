@@ -4,9 +4,9 @@ export enum UserType {
 }
 
 export enum Gender {
-  Male,
-  Female,
-  Unknown
+  Male = "Male",
+  Female = "Female",
+  Unknown = "Unknown"
 }
 
 export interface BaseUser {

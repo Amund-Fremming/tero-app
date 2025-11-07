@@ -1,7 +1,7 @@
 import { err, ok, Result } from "../utils/result";
 import axios from 'axios';
 
-import { BaseUser, UserWithRole } from "../constants/types";
+import { BaseUser, PatchUserRequest, UserWithRole } from "../constants/types";
 import { getHeaders } from "./utils";
 
 export class UserService {
@@ -33,7 +33,7 @@ export class UserService {
         }
     }
 
-    async getUserData(token: string): Promise<Result<UserWithRole>> {
+    async getUser(token: string): Promise<Result<UserWithRole>> {
         try {
             let url = `${this.#baseUrl}/user`;
             let response = await axios.get<UserWithRole>(url, {
@@ -42,7 +42,21 @@ export class UserService {
                 }
             })
 
-            console.log(response.data);
+            return ok(response.data);
+        } catch (error) {
+            console.error("getUserData:", error);
+            return err("Klarte ikke hente brukerdata");
+        }
+    }
+
+    async patchUser(token: string, request: PatchUserRequest): Promise<Result<BaseUser>> {
+        try {
+            let url = `${this.#baseUrl}/user`;
+            let response = await axios.patch<BaseUser>(url, request, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
 
             return ok(response.data);
         } catch (error) {

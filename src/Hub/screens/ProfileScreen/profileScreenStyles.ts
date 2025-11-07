@@ -236,5 +236,39 @@ export const styles = StyleSheet.create({
         borderColor: Color.White,
         justifyContent: "center",
         alignItems: "center"
+    },
+
+    genderButtonContainer: {
+        width: "86%",
+        height: verticalScale(60),
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        gap: horizontalScale(8),
+    },
+
+    genderButton: {
+        flex: 1,
+        height: "100%",
+        backgroundColor: Color.White,
+        borderRadius: moderateScale(10),
+        borderWidth: moderateScale(2),
+        borderColor: Color.LightGray,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    genderButtonSelected: {
+        borderColor: Color.Black,
+    },
+
+    genderButtonText: {
+        fontSize: moderateScale(16),
+        fontWeight: 400,
+        color: Color.Black,
+    },
+
+    genderButtonTextSelected: {
+        fontWeight: 600,
     }
 })

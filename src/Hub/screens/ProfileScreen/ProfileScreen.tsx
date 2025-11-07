@@ -2,19 +2,21 @@ import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { styles } from "./profileScreenStyles";
 import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { useEffect, useState } from "react";
-import { BaseUser, PatchUserRequest, UserRole } from "@/src/common/constants/types";
+import { BaseUser, Gender, PatchUserRequest, UserRole } from "@/src/common/constants/types";
 import { useServiceProvider } from "@/src/common/context/ServiceProvider";
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import Color from "@/src/common/constants/color";
 import Screen from "@/src/common/constants/screen";
 import { TextInput } from "react-native-gesture-handler";
+import { useModalProvider } from "@/src/common/context/ModalProvider";
 
 export const ProfileScreen = () => {
   const navigation: any = useNavigation();
 
-  const { guestId, redirectUri, triggerLogout, accessToken } = useAuthProvider();
+  const { guestId, triggerLogout, accessToken } = useAuthProvider();
   const { userService } = useServiceProvider();
+  const { displayErrorModal } = useModalProvider();
 
   const isLoggedIn = accessToken != null;
 
@@ -23,12 +25,60 @@ export const ProfileScreen = () => {
   const [avatar, setAvatar] = useState<string>("");
   const [userData, setUserData] = useState<BaseUser | undefined>(undefined);
   const [patchRequest, setPatchRequest] = useState<PatchUserRequest>({});
+  const [birthDate, setBirthDate] = useState<string>("");
 
   const crown = require("../../../common/assets/images/crown.png")
 
+  const handleBirthDateChange = (text: string) => {
+    const cleaned = text.replace(/[^0-9]/g, '');
+
+    let formatted = cleaned;
+    if (cleaned.length >= 2) {
+      formatted = cleaned.slice(0, 2);
+      if (cleaned.length >= 4) {
+        formatted += '.' + cleaned.slice(2, 4);
+        if (cleaned.length >= 8) {
+          formatted += '.' + cleaned.slice(4, 8);
+        } else if (cleaned.length > 4) {
+          formatted += '.' + cleaned.slice(4);
+        }
+      } else if (cleaned.length > 2) {
+        formatted += '.' + cleaned.slice(2);
+      }
+    }
+
+    if (formatted.length === 10) {
+      const [day, month, year] = formatted.split('.').map(Number);
+      const date = new Date(year, month - 1, day);
+
+      if (
+        date.getFullYear() === year &&
+        date.getMonth() === month - 1 &&
+        date.getDate() === day &&
+        day >= 1 && day <= 31 &&
+        month >= 1 && month <= 12 &&
+        year >= 1900 && year <= new Date().getFullYear()
+      ) {
+        setBirthDate(formatted);
+      }
+    } else {
+      setBirthDate(formatted);
+    }
+  }
+
+  useEffect(() => {
+    setAvatar(userService().getProfilePicture(guestId, userData?.username));
+    setPatchRequest({
+      username: userData?.username,
+      gender: userData?.gender,
+      family_name: userData?.family_name,
+      given_name: userData?.given_name,
+      birth_date: userData?.birth_date
+    })
+  }, [userData]);
+
   useEffect(() => {
     fetchUserData();
-    console.log("Callback url:", redirectUri)
   }, [accessToken])
 
   const fetchUserData = async () => {
@@ -37,7 +87,7 @@ export const ProfileScreen = () => {
       return;
     }
 
-    let result = await userService().getUserData(accessToken);
+    let result = await userService().getUser(accessToken);
     if (result.isError()) {
       return;
     }
@@ -59,6 +109,23 @@ export const ProfileScreen = () => {
     }
 
     navigation.goBack();
+  }
+
+  const handlePatchUser = async () => {
+    if (!accessToken) {
+      console.error("No access token present");
+      return;
+    }
+
+    const result = await userService().patchUser(accessToken, patchRequest);
+    if (result.isError()) {
+      displayErrorModal(result.error);
+      return;
+    }
+
+    console.warn(result.value);
+    setUserData(result.value);
+    setEditMode(false);
   }
 
   if (!isLoggedIn) {
@@ -144,34 +211,78 @@ export const ProfileScreen = () => {
             >
               <View style={styles.inputWrapper}>
                 <Text style={styles.inputLabel}>Fornavn</Text>
-                <TextInput onChangeText={input => setPatchRequest(prev => ({ ...prev, given_name: input }))} style={styles.input} value={userData?.given_name} placeholder="Skriv inn fornavn" />
+                <TextInput onChangeText={input => setPatchRequest(prev => ({ ...prev, given_name: input }))} style={styles.input} value={patchRequest.given_name} placeholder="Skriv inn fornavn" />
               </View>
 
               <View style={styles.inputWrapper}>
                 <Text style={styles.inputLabel}>Etternavn</Text>
-                <TextInput onChangeText={input => setPatchRequest(prev => ({ ...prev, family_name: input }))} style={styles.input} value={userData?.family_name} placeholder="Skriv inn etternavn" />
+                <TextInput onChangeText={input => setPatchRequest(prev => ({ ...prev, family_name: input }))} style={styles.input} value={patchRequest.family_name} placeholder="Skriv inn etternavn" />
               </View>
 
               <View style={styles.inputWrapper}>
                 <Text style={styles.inputLabel}>Brukernavn</Text>
-                <TextInput onChangeText={input => setPatchRequest(prev => ({ ...prev, username: input }))} style={styles.input} value={userData?.username} placeholder="Velg brukernavn" />
+                <TextInput onChangeText={input => setPatchRequest(prev => ({ ...prev, username: input }))} style={styles.input} value={patchRequest.username} placeholder="Velg brukernavn" />
               </View>
 
               <View style={styles.inputWrapper}>
                 <Text style={styles.inputLabel}>Fødselsdato</Text>
-                <TextInput onChangeText={input => setPatchRequest(prev => ({ ...prev, birth_date: input }))} style={styles.input} value={userData?.birth_date} placeholder="dd.mm.åååå" />
+                <TextInput
+                  style={styles.input}
+                  value={birthDate}
+                  onChangeText={handleBirthDateChange}
+                  placeholder="dd.mm.yyyy"
+                  keyboardType="numeric"
+                  maxLength={10}
+                />
               </View>
 
               <View style={styles.inputWrapper}>
                 <Text style={styles.inputLabel}>Kjønn</Text>
-                <TextInput style={styles.input} value={userData?.gender} placeholder="Oppgi kjønn" />
+                <View style={styles.genderButtonContainer}>
+                  <Pressable
+                    style={[
+                      styles.genderButton,
+                      patchRequest?.gender === Gender.Male && styles.genderButtonSelected
+                    ]}
+                    onPress={() => setPatchRequest(prev => ({ ...prev, gender: Gender.Male }))}
+                  >
+                    <Text style={[
+                      styles.genderButtonText,
+                      patchRequest?.gender === Gender.Male && styles.genderButtonTextSelected
+                    ]}>Mann</Text>
+                  </Pressable>
+                  <Pressable
+                    style={[
+                      styles.genderButton,
+                      patchRequest?.gender === Gender.Female && styles.genderButtonSelected
+                    ]}
+                    onPress={() => setPatchRequest(prev => ({ ...prev, gender: Gender.Female }))}
+                  >
+                    <Text style={[
+                      styles.genderButtonText,
+                      patchRequest?.gender === Gender.Female && styles.genderButtonTextSelected
+                    ]}>Kvinne</Text>
+                  </Pressable>
+                  <Pressable
+                    style={[
+                      styles.genderButton,
+                      patchRequest?.gender === Gender.Unknown && styles.genderButtonSelected
+                    ]}
+                    onPress={() => setPatchRequest(prev => ({ ...prev, gender: Gender.Unknown }))}
+                  >
+                    <Text style={[
+                      styles.genderButtonText,
+                      (userData == undefined || userData?.gender === Gender.Unknown) && styles.genderButtonTextSelected
+                    ]}>Annet</Text>
+                  </Pressable>
+                </View>
               </View>
 
               <View style={styles.buttonWrapper}>
                 <Pressable style={styles.cancelButton} onPress={() => setEditMode(false)}>
                   <Text style={styles.cancelButtonText}>avbryt</Text>
                 </Pressable>
-                <Pressable style={styles.saveButton}>
+                <Pressable onPress={handlePatchUser} style={styles.saveButton}>
                   <Text style={styles.saveButtonText}>lagre</Text>
                 </Pressable>
               </View>
@@ -179,7 +290,6 @@ export const ProfileScreen = () => {
           </View>
         )}
       </View>
-
     </View>
   )
 }
