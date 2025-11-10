@@ -1,10 +1,9 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, SectionList, Text, View } from "react-native";
 import styles from "./adminScreenStyles";
-import AbsoluteHomeButton from "@/src/common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { useServiceProvider } from "@/src/common/context/ServiceProvider";
 import { useEffect, useState } from "react";
-import { ActivityStats, SystemHealth } from "@/src/common/constants/types";
+import { ActivityStats, ClientPopup, SystemHealth } from "@/src/common/constants/types";
 import { useNavigation } from "expo-router";
 import { useModalProvider } from "@/src/common/context/ModalProvider";
 
@@ -13,7 +12,6 @@ export const AdminScreen = () => {
   const { redirectUri } = useAuthProvider();
   const { commonService, userService } = useServiceProvider();
   const { accessToken } = useAuthProvider();
-  const { displayErrorModal } = useModalProvider();
 
   const [systemHealth, setSystemHealth] = useState<SystemHealth>({
     platform: false,
@@ -21,10 +19,12 @@ export const AdminScreen = () => {
     database: false
   });
   const [stats, setStats] = useState<ActivityStats | undefined>(undefined);
+  const [popup, setPopup] = useState<ClientPopup | undefined>(undefined);
 
   useEffect(() => {
     getHealth();
     getUserActivityStats();
+    getClientPopup();
   }, []);
 
   const getHealth = async () => {
@@ -52,6 +52,16 @@ export const AdminScreen = () => {
     setStats(result.value);
   }
 
+  const getClientPopup = async () => {
+    const result = await userService().getGlobalPopup();
+    if (result.isError()) {
+      console.error("Failed to load client popup");
+      return;
+    }
+
+    setPopup(result.value)
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.leadContainer}>
@@ -75,7 +85,6 @@ export const AdminScreen = () => {
           <Text style={styles.healthText}>{systemHealth.session ? "✅" : "❌"}</Text>
         </View>
       </View>
-
       {
         !stats && (
           // TODO - load again button
@@ -126,6 +135,24 @@ export const AdminScreen = () => {
           </View>
         )
       }
+
+      {
+        !popup && (
+          // TODO - load again button
+          <View style={styles.healthCard}>
+            <Text style={styles.healthText}>Klarte ikke laste modal...</Text>
+          </View>
+        )
+      }
+      {
+        popup && (
+          <View style={styles.healthCard}>
+            <Text>Modal</Text>
+            <Text style={styles.healthText}></Text>
+          </View>
+        )
+      }
+
     </View >
   );
 };

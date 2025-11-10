@@ -9,6 +9,12 @@ export enum Gender {
   Unknown = "Unknown"
 }
 
+export interface ClientPopup {
+  heading: string,
+  paragraph: string,
+  active: boolean,
+}
+
 export interface ActivityStats {
   total_game_count: number,
   total_user_count: number,

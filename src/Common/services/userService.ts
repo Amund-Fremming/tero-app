@@ -1,7 +1,7 @@
 import { err, ok, Result } from "../utils/result";
 import axios from 'axios';
 
-import { ActivityStats, BaseUser, PatchUserRequest, UserWithRole } from "../constants/types";
+import { ActivityStats, BaseUser, ClientPopup, PatchUserRequest, UserWithRole } from "../constants/types";
 import { getHeaders } from "./utils";
 
 export class UserService {
@@ -160,6 +160,18 @@ export class UserService {
         }
     }
 
+    async getGlobalPopup(): Promise<Result<ClientPopup>> {
+        try {
+            const url = `${this.#baseUrl}/pseudo/popup`;
+            const response = await axios.get<ClientPopup>(url);
+            console.log(response.data);
+            return ok(response.data)
+        } catch (error) {
+            console.error("getGlobalPopup:", error);
+            return err("Failed to get client popup")
+        }
+    }
+
     async updateGlobalPopup(token: string, popup: any): Promise<Result<void>> {
         try {
             await axios.put(`${this.#baseUrl}/popup`, popup, {
@@ -187,7 +199,6 @@ export class UserService {
                 return err("Response was not 200");
             }
 
-            console.log(response.data);
             return ok(response.data)
         } catch (error) {
             console.error("getUserStats:", error);
