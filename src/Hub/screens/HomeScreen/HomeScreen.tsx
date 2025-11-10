@@ -1,7 +1,7 @@
 import { View, Text, Pressable, Button } from "react-native";
 import Screen from "../../../common/constants/screen";
 import styles from "./homeScreenStyles";
-import { GameEntryMode } from "../../../common/constants/types";
+import { ClientPopup, GameEntryMode } from "../../../common/constants/types";
 import { useGlobalGameProvider } from "../../../common/context/GlobalGameProvider";
 import { useEffect, useState } from "react";
 import { useServiceProvider } from "@/src/common/context/ServiceProvider";
@@ -20,28 +20,54 @@ const subHeaderList = [
 
 export const HomeScreen = ({ navigation }: any) => {
   const { setGameEntryMode } = useGlobalGameProvider();
-  const { commonService } = useServiceProvider();
-  const { displayErrorModal } = useModalProvider();
+  const { commonService, userService } = useServiceProvider();
+  const { displayErrorModal, displayInfoModal } = useModalProvider();
 
   const [subHeader, setSubheader] = useState<string>("");
+  const [popupCloseCount, setPopupCloseCount] = useState<number>(0);
 
   useEffect(() => {
+    setSubHeader();
+    systemHealth();
+    getClientPopup();
+  }, []);
+
+  const getClientPopup = async () => {
+    if (popupCloseCount >= 2) {
+      return;
+    }
+
+    const result = await userService().getGlobalPopup();
+    if (result.isError()) {
+      // TODO - add audit
+      console.error(result.error);
+      return;
+    }
+
+    const popup = result.value;
+    if (!popup.active) {
+      return;
+    }
+
+    displayInfoModal(popup.paragraph, popup.heading, () => setPopupCloseCount(prev => prev + 1));
+  }
+
+  const setSubHeader = () => {
     const idx = Math.floor(Math.random() * subHeaderList.length);
     setSubheader(subHeaderList[idx]);
-    systemHealth();
-  }, []);
+  }
 
   const systemHealth = async () => {
     const result = await commonService().healthDetailed();
     if (result.isError()) {
       // TODO; Block user from using the ap
-      displayErrorModal("Appen har nedetid, kom tilbake senere");
+      // Navigate to a error screen!
     }
 
     let status = result.value;
     if (!status.database || !status.session || !status.platform) {
       // TODO; Block user from using the ap
-      displayErrorModal("Appen har nedetid, kom tilbake senere");
+      // Navigate to a error screen!
     }
   }
 

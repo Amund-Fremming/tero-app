@@ -1,6 +1,7 @@
 # Tasklist
 
-- Popup modal vises når active, og kan oppdateres fra admin siden
+- Get data on every time window is HomeScreen? or some strategy to update data
+- Popup modal kan oppdateres fra admin siden
 - Tips oss funcksjonalitet i fe + be
 - Fix på pseudo bruker bug: logger du inn med ny bruker finnes det forsatt bare 1
 - bytt passord
