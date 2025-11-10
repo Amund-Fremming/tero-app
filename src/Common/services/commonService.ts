@@ -31,7 +31,6 @@ export class CommonService {
             const response = await axios.get(url);
             return ok(response.data)
         } catch (error) {
-            console.error("healthDetailed:", error);
             return err("health detailed check failed");
         }
     }

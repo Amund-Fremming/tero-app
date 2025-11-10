@@ -10,7 +10,8 @@ export enum Screen {
   Admin = "Admin",
   Profile = "Profile",
   SavedGames = "SavedGames",
-  TipsUs = "TipsUs"
+  TipsUs = "TipsUs",
+  Error = "Error"
 }
 
 export default Screen;

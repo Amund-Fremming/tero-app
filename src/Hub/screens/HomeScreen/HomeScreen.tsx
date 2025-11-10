@@ -60,14 +60,14 @@ export const HomeScreen = ({ navigation }: any) => {
   const systemHealth = async () => {
     const result = await commonService().healthDetailed();
     if (result.isError()) {
-      // TODO; Block user from using the ap
-      // Navigate to a error screen!
+      console.error("Failed health, returning error page");
+      navigation.navigate(Screen.Error);
     }
 
     let status = result.value;
     if (!status.database || !status.session || !status.platform) {
-      // TODO; Block user from using the ap
-      // Navigate to a error screen!
+      console.error("Failed health, returning error page");
+      navigation.navigate(Screen.Error);
     }
   }
 
