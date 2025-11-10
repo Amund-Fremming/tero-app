@@ -113,11 +113,18 @@ export const ProfileScreen = () => {
 
   const handlePatchUser = async () => {
     if (!accessToken) {
+      // HANDLE LOGOUT!
       console.error("No access token present");
       return;
     }
 
-    const result = await userService().patchUser(accessToken, patchRequest);
+    if (!userData) {
+      // HANDLE LOGOUT!
+      console.error("No user data present");
+      return;
+    }
+
+    const result = await userService().patchUser(accessToken, userData?.id, patchRequest);
     if (result.isError()) {
       displayErrorModal(result.error);
       return;
@@ -141,9 +148,13 @@ export const ProfileScreen = () => {
           <Feather name="chevron-left" size={32} color={Color.Black} />
         </Pressable>
 
-        <Pressable onPress={() => navigation.navigate(Screen.Admin)} style={styles.adminButton}>
-          <Text style={styles.adminText}>dashboard</Text>
-        </Pressable>
+        {
+          isAdmin && (
+            <Pressable onPress={() => navigation.navigate(Screen.Admin)} style={styles.adminButton}>
+              <Text style={styles.adminText}>dashboard</Text>
+            </Pressable>
+          )
+        }
 
         {isLoggedIn && (<Pressable onPress={handleLogout}>
           <Feather name="log-out" size={26} color={Color.Black} />

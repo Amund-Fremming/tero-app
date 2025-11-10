@@ -14,5 +14,20 @@ export const styles = StyleSheet.create({
         borderTopWidth: moderateScale(2),
         borderBottomWidth: moderateScale(2),
         width: "90%"
-    }
+    },
+
+    header: {
+        color: Color.Purple,
+        fontFamily: "PassionOne-Bold",
+        fontSize: moderateScale(50),
+    },
+
+    topWrapper: {
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingTop: verticalScale(20),
+        width: "90%",
+        display: "flex",
+        flexDirection: "row"
+    },
 });

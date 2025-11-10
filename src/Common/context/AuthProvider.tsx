@@ -68,10 +68,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     if (storedGuestId) {
       setGuestId(storedGuestId);
       console.log("User id retrieved from localstorage:", storedGuestId); // TODO - remove log
-      return;
     }
 
-    let result = await userService().ensurePseudoId();
+    let result = await userService().ensurePseudoId(storedGuestId);
     if (result.isError()) {
       console.error(result.error); // TODO - remove log
       return;

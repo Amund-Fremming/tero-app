@@ -48,7 +48,7 @@ export const GameTypeListScreen = () => {
             <Feather name="chevron-left" size={32} color={Color.OffBlack} />
           </Pressable>
           <View>
-            <Text style={styles.header}>Velg spill</Text>
+            <Text style={styles.header}>{gameEntryMode === GameEntryMode.Creator ? "Lag spill" : "Velg spill"}</Text>
             <View style={styles.borderWrapper}>
               <View style={styles.borderLeft} />
               <View style={styles.borderRight} />

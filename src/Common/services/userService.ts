@@ -1,7 +1,7 @@
 import { err, ok, Result } from "../utils/result";
 import axios from 'axios';
 
-import { BaseUser, PatchUserRequest, UserWithRole } from "../constants/types";
+import { ActivityStats, BaseUser, PatchUserRequest, UserWithRole } from "../constants/types";
 import { getHeaders } from "./utils";
 
 export class UserService {
@@ -22,10 +22,16 @@ export class UserService {
         return avatar;
     }
 
-    async ensurePseudoId(): Promise<Result<string>> {
+    async ensurePseudoId(pseudo_id: string | null): Promise<Result<string>> {
         try {
-            let url = `${this.#baseUrl}/guest/ensure`;
-            let response = await axios.post<string>(url);
+            let url: string;
+            if (pseudo_id) {
+                url = `${this.#baseUrl}/pseudo/ensure?pseudo_id=${pseudo_id}`;
+            } else {
+                url = `${this.#baseUrl}/pseudo/ensure`;
+            }
+
+            const response = await axios.post<string>(url);
             return ok(response.data)
         } catch (error) {
             console.error("ensureGuestId:", error);
@@ -49,10 +55,10 @@ export class UserService {
         }
     }
 
-    async patchUser(token: string, request: PatchUserRequest): Promise<Result<BaseUser>> {
+    async patchUser(token: string, user_id: string, request: PatchUserRequest): Promise<Result<BaseUser>> {
         try {
-            let url = `${this.#baseUrl}/user`;
-            let response = await axios.patch<BaseUser>(url, request, {
+            const url = `${this.#baseUrl}/user/${user_id}`;
+            const response = await axios.patch<BaseUser>(url, request, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -60,29 +66,8 @@ export class UserService {
 
             return ok(response.data);
         } catch (error) {
-            console.error("getUserData:", error);
-            return err("Klarte ikke hente brukerdata");
-        }
-    }
-
-    // TODO
-    async patchUserData(token: string, request: string): Promise<Result<void>> {
-        try {
-            let url = `${this.#baseUrl}/user`;
-            let response = axios.patch(url, request, {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-            if ((await response).status! = 200) {
-                // TODO AUDIT LOG
-                console.error("Failed to update userdata");
-            }
-
-            return ok();
-        } catch (error) {
-            console.log("patchUserData:", error);
-            return err("Klarte ikke oppdatere bruker aktivitet");
+            console.error("patchUser:", error);
+            return err("Klarte ikke oppdatere bruker");
         }
     }
 
@@ -161,20 +146,6 @@ export class UserService {
         }
     }
 
-    async getActivityStats(token: string): Promise<Result<void>> {
-        try {
-            await axios.get(`${this.#baseUrl}/stats`, {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-            return ok(undefined);
-        } catch (error) {
-            console.log("getActivityStats:", error);
-            return err("Klarte ikke hente aktivitetstats");
-        }
-    }
-
     async getConfig(token: string): Promise<Result<void>> {
         try {
             await axios.get(`${this.#baseUrl}/config`, {
@@ -182,7 +153,7 @@ export class UserService {
                     "Authorization": `Bearer ${token}`
                 }
             });
-            return ok(undefined);
+            return ok();
         } catch (error) {
             console.log("getConfig:", error);
             return err("Klarte ikke hente config");
@@ -196,11 +167,31 @@ export class UserService {
                     "Authorization": `Bearer ${token}`
                 }
             });
-            return ok(undefined);
+            return ok();
         } catch (error) {
             console.log("updateGlobalPopup:", error);
             return err("Klarte ikke oppdatere popup");
         }
     }
 
+    async getUserStats(token: string): Promise<Result<ActivityStats>> {
+        try {
+            const url = `${this.#baseUrl}/user/stats`;
+            const response = await axios.get<ActivityStats>(url, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            if (response.status !== 200) {
+                return err("Response was not 200");
+            }
+
+            console.log(response.data);
+            return ok(response.data)
+        } catch (error) {
+            console.error("getUserStats:", error);
+            return err("Failed to get user stats")
+        }
+    }
 }

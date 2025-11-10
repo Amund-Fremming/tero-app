@@ -4,6 +4,8 @@ import styles from "./homeScreenStyles";
 import { GameEntryMode } from "../../../common/constants/types";
 import { useGlobalGameProvider } from "../../../common/context/GlobalGameProvider";
 import { useEffect, useState } from "react";
+import { useServiceProvider } from "@/src/common/context/ServiceProvider";
+import { useModalProvider } from "@/src/common/context/ModalProvider";
 
 const subHeaderList = [
   "lorem ipsum dolor amet",
@@ -18,13 +20,30 @@ const subHeaderList = [
 
 export const HomeScreen = ({ navigation }: any) => {
   const { setGameEntryMode } = useGlobalGameProvider();
+  const { commonService } = useServiceProvider();
+  const { displayErrorModal } = useModalProvider();
 
   const [subHeader, setSubheader] = useState<string>("");
 
   useEffect(() => {
     const idx = Math.floor(Math.random() * subHeaderList.length);
     setSubheader(subHeaderList[idx]);
+    systemHealth();
   }, []);
+
+  const systemHealth = async () => {
+    const result = await commonService().healthDetailed();
+    if (result.isError()) {
+      // TODO; Block user from using the ap
+      displayErrorModal("Appen har nedetid, kom tilbake senere");
+    }
+
+    let status = result.value;
+    if (!status.database || !status.session || !status.platform) {
+      // TODO; Block user from using the ap
+      displayErrorModal("Appen har nedetid, kom tilbake senere");
+    }
+  }
 
   const handlePress = (gameEntryMode: GameEntryMode, destination: Screen) => {
     setGameEntryMode(gameEntryMode);

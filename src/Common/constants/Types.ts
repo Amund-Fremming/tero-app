@@ -9,6 +9,31 @@ export enum Gender {
   Unknown = "Unknown"
 }
 
+export interface ActivityStats {
+  total_game_count: number,
+  total_user_count: number,
+  recent: RecentUserStats,
+  average: AverageUserStats,
+}
+
+export interface RecentUserStats {
+  this_month_users: number,
+  this_week_users: number,
+  todays_users: number,
+}
+
+export interface AverageUserStats {
+  avg_month_users: number,
+  avg_week_users: number,
+  avg_daily_users: number,
+}
+
+export interface SystemHealth {
+  platform: boolean,
+  database: boolean,
+  session: boolean
+}
+
 export interface BaseUser {
   id: string,
   username: string,

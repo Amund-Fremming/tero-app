@@ -1,14 +1,15 @@
 import { View, Text, Pressable } from "react-native";
 import { styles } from "./savedGameScreenStyles";
-import AbsoluteHomeButton from "@/src/common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import VerticalScroll from "@/src/common/wrappers/VerticalScroll";
 import { useEffect, useState } from "react";
 import { useServiceProvider } from "@/src/common/context/ServiceProvider";
 import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { useModalProvider } from "@/src/common/context/ModalProvider";
 import { GameBase } from "@/src/common/constants/types";
+import { useNavigation } from "expo-router";
 
 export const SavedGamesScreen = () => {
+    const navigation: any = useNavigation();
     const { gameService } = useServiceProvider();
     const { guestId, accessToken } = useAuthProvider();
     const { displayErrorModal } = useModalProvider();
@@ -51,7 +52,11 @@ export const SavedGamesScreen = () => {
 
     return (
         <VerticalScroll>
-            <Text>Lagrede spill</Text>
+            <View style={styles.topWrapper}>
+                <Pressable onPress={() => navigation.goBack()}>
+                    <Text style={styles.header}>Dine spill</Text>
+                </Pressable>
+            </View>
 
             {games && (
                 games.map(game => (
@@ -66,7 +71,6 @@ export const SavedGamesScreen = () => {
                 ))
             )}
 
-            <AbsoluteHomeButton />
         </VerticalScroll >
     );
 }

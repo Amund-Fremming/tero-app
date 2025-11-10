@@ -10,9 +10,9 @@ export const styles = StyleSheet.create({
   },
 
   header: {
-    color: Colors.Purple,
-    fontSize: moderateScale(40),
-    fontWeight: 900,
+    color: Color.Purple,
+    fontFamily: "PassionOne-Bold",
+    fontSize: moderateScale(50),
   },
 
   topWrapper: {

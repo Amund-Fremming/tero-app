@@ -37,8 +37,6 @@ export const HubScreen = () => {
 
   return (
     <View style={styles.container}>
-
-
       <View style={styles.topWrapper}>
         <Pressable onPress={() => navigation.goBack()}>
           <Text style={styles.header}>Hub</Text>
