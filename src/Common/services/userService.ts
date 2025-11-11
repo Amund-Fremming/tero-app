@@ -34,7 +34,7 @@ export class UserService {
             const response = await axios.post<string>(url);
             return ok(response.data)
         } catch (error) {
-            console.error("ensureGuestId:", error);
+            console.error("ensurePseudoId:", error);
             return err("Klarte ikke å hente gjeste id");
         }
     }

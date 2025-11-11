@@ -64,11 +64,12 @@ export const HomeScreen = ({ navigation }: any) => {
       navigation.navigate(Screen.Error);
     }
 
+    /* TODO  -  UNCOMMENT
     let status = result.value;
     if (!status.database || !status.session || !status.platform) {
       console.error("Failed health, returning error page");
       navigation.navigate(Screen.Error);
-    }
+    }*/
   }
 
   const handlePress = (gameEntryMode: GameEntryMode, destination: Screen) => {

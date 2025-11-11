@@ -21,7 +21,7 @@ export const GameScreen = ({ navigation }: any) => {
   const { disconnect, connect, setListener, invokeFunction } = useHubConnectionProvider();
   const { universalGameValues, gameEntryMode } = useGlobalGameProvider();
   const { displayErrorModal } = useModalProvider();
-  const { guestId: userId } = useAuthProvider();
+  const { pseudoId: userId } = useAuthProvider();
 
   const isHost = gameEntryMode === GameEntryMode.Creator || gameEntryMode === GameEntryMode.Host;
 

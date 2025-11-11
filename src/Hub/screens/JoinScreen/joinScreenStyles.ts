@@ -13,7 +13,8 @@ export const styles = StyleSheet.create({
   },
 
   header: {
-    paddingTop: verticalScale(20),
+    paddingTop: verticalScale(40),
+    paddingBottom: verticalScale(25),
     paddingLeft: horizontalScale(20),
     width: "100%",
     color: Color.OffBlack,
@@ -24,7 +25,7 @@ export const styles = StyleSheet.create({
 
   goBack: {
     position: "absolute",
-    top: verticalScale(20),
+    top: verticalScale(50),
     left: verticalScale(20),
     backgroundColor: Color.LightGray,
     borderRadius: moderateScale(10),

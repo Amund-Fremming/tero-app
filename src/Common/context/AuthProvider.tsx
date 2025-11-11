@@ -10,8 +10,8 @@ const REFRESH_TOKEN_KEY = "refresh_token";
 
 interface IAuthContext {
   redirectUri: string,
-  guestId: string;
-  setGuestId: React.Dispatch<React.SetStateAction<string>>;
+  pseudoId: string | null;
+  setPseudoId: React.Dispatch<React.SetStateAction<string | null>>;
   accessToken: string | null;
   callUpdateUserActivity: () => Promise<void>;
   triggerLogin: () => void;
@@ -20,14 +20,14 @@ interface IAuthContext {
 
   // TODO - remove
   logValues: () => void;
-  resetGuestId: () => void;
+  resetPseudoId: () => void;
   invalidateAccessToken: () => void,
 }
 
 const defaultContextValue: IAuthContext = {
   redirectUri: "[NOT_SET]",
-  guestId: "[NOT_SET]",
-  setGuestId: () => { },
+  pseudoId: "[NOT_SET]",
+  setPseudoId: () => { },
   accessToken: null,
   callUpdateUserActivity: async () => { },
   triggerLogin: () => { },
@@ -36,7 +36,7 @@ const defaultContextValue: IAuthContext = {
 
   // TODO - remove
   logValues: () => { },
-  resetGuestId: () => { },
+  resetPseudoId: () => { },
   invalidateAccessToken: () => { },
 };
 
@@ -50,11 +50,18 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [redirectUri, setRedirectUri] = useState<string>("[NOT_SET]");
-  const [guestId, setGuestId] = useState<string>("[NOT_SET]");
+  const [pseudoId, setPseudoId] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
   const { displayErrorModal } = useModalProvider();
   const { userService } = useServiceProvider();
+
+  useEffect(() => {
+    if (pseudoId && pseudoId !== "") {
+      SecureStore.setItem("pseudo_id", pseudoId);
+      console.info("New pseudo id set to store:", pseudoId);
+    }
+  }, [pseudoId]);
 
   useEffect(() => {
     handleAuth();
@@ -62,27 +69,34 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   const handleAuth = async () => {
-    const storedGuestId = await SecureStore.getItemAsync("guest_id");
+    const storedPseudoId = await SecureStore.getItemAsync("pseudo_id");
     await rotateTokens();
 
-    if (storedGuestId) {
-      setGuestId(storedGuestId);
-      console.log("User id retrieved from localstorage:", storedGuestId); // TODO - remove log
+    if (storedPseudoId) {
+      setPseudoId(storedPseudoId);
+      console.log("Pseudo id retrieved from localstorage:", storedPseudoId); // TODO - remove log
     }
 
-    let result = await userService().ensurePseudoId(storedGuestId);
+    let result = await userService().ensurePseudoId(storedPseudoId);
     if (result.isError()) {
       console.error(result.error); // TODO - remove log
       return;
     }
 
-    setGuestId(result.value);
-    await SecureStore.setItemAsync("guest_id", result.value);
-    console.log("Guest user created with id: ", result.value);
+    setPseudoId(result.value);
+    await SecureStore.setItemAsync("pseudo_id", result.value);
+    console.log("Pseudo user created with id: ", result.value);
   };
 
   const callUpdateUserActivity = async () => {
-    const result = await userService().patchUserActivity(guestId);
+
+    if (!pseudoId) {
+      // TODO handle
+      console.error("No user id!");
+      return;
+    }
+
+    const result = await userService().patchUserActivity(pseudoId);
     if (result.isError()) {
       console.error(result.error);
     }
@@ -120,7 +134,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           );
 
           if (!tokenResponse.accessToken || !tokenResponse.refreshToken) {
-            displayErrorModal("Klarte ikke hente tokens fra auth0");
+            console.error("Klarte ikke hente tokens fra auth0");
             return;
           }
 
@@ -255,13 +269,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logValues = () => {
     console.log("Access token:", accessToken);
     console.log("Refresh token:", SecureStore.getItem(REFRESH_TOKEN_KEY));
-    console.log("Guest id:", guestId);
+    console.log("Pseudo id:", pseudoId);
   };
 
   // TODO - remove
-  const resetGuestId = async () => {
-    setGuestId("");
-    await SecureStore.deleteItemAsync("guest_id");
+  const resetPseudoId = async () => {
+    setPseudoId("");
+    await SecureStore.deleteItemAsync("pseudo_id");
   }
 
   // TODO - remove
@@ -271,8 +285,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const value = {
     callUpdateUserActivity,
-    guestId,
-    setGuestId,
+    pseudoId,
+    setPseudoId,
     accessToken,
     triggerLogin,
     triggerLogout,
@@ -281,7 +295,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     // TODO - remove
     logValues,
-    resetGuestId,
+    resetPseudoId,
     invalidateAccessToken
   };
 

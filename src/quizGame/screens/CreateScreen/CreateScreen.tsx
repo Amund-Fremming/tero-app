@@ -13,7 +13,7 @@ import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
 import AbsoluteHomeButton from "@/src/common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 
 export const CreateScreen = ({ navigation }: any) => {
-  const { guestId } = useAuthProvider();
+  const { pseudoId: guestId } = useAuthProvider();
   const { displayErrorModal } = useModalProvider();
   const { setUniversalGameValues } = useGlobalGameProvider();
 

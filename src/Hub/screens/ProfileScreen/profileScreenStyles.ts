@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
     input: {
         width: "86%",
         backgroundColor: Color.White,
-        height: verticalScale(60),
+        height: verticalScale(50),
         paddingLeft: horizontalScale(20),
         padding: moderateScale(5),
         borderRadius: moderateScale(10),
@@ -158,7 +158,7 @@ export const styles = StyleSheet.create({
 
     iconsBar: {
         position: "absolute",
-        top: verticalScale(15),
+        top: verticalScale(60),
         width: "95%",
         justifyContent: "space-between",
         display: "flex",
@@ -205,34 +205,33 @@ export const styles = StyleSheet.create({
     },
 
     cancelButtonText: {
-        fontSize: moderateScale(24),
+        fontSize: moderateScale(22),
         color: Color.Purple,
         fontWeight: 600
     },
 
     cancelButton: {
         width: "46%",
-        height: verticalScale(53),
+        height: verticalScale(45),
         backgroundColor: Color.White,
         borderRadius: moderateScale(10),
-        borderWidth: moderateScale(4),
+        borderWidth: moderateScale(3),
         borderColor: Color.Purple,
         justifyContent: "center",
         alignItems: "center"
     },
 
     saveButtonText: {
-        fontSize: moderateScale(24),
+        fontSize: moderateScale(22),
         color: Color.White,
         fontWeight: 600
     },
 
     saveButton: {
         width: "46%",
-        height: verticalScale(57),
+        height: verticalScale(45),
         backgroundColor: Color.Purple,
         borderRadius: moderateScale(10),
-        borderWidth: moderateScale(4),
         borderColor: Color.White,
         justifyContent: "center",
         alignItems: "center"
@@ -249,7 +248,7 @@ export const styles = StyleSheet.create({
 
     genderButton: {
         flex: 1,
-        height: "100%",
+        height: verticalScale(50),
         backgroundColor: Color.White,
         borderRadius: moderateScale(10),
         borderWidth: moderateScale(2),

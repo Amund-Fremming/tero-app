@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react";
 export const HubScreen = () => {
   const navigation: any = useNavigation();
 
-  const { logValues, rotateTokens, guestId, resetGuestId, redirectUri, triggerLogin, triggerLogout, accessToken, invalidateAccessToken } = useAuthProvider();
+  const { logValues, rotateTokens, pseudoId: guestId, resetPseudoId: resetGuestId, redirectUri, triggerLogin, triggerLogout, accessToken, invalidateAccessToken } = useAuthProvider();
 
   const [displayDebugTools, setDisplayDebugTools] = useState<boolean>(true);
 

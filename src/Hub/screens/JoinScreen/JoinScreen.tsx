@@ -14,7 +14,7 @@ import BigButton from "@/src/common/components/BigButton/BigButton";
 export const JoinScreen = ({ navigation }: any) => {
   const [userInput, setUserInput] = useState<string>("");
 
-  const { guestId } = useAuthProvider();
+  const { pseudoId: guestId } = useAuthProvider();
   const { displayErrorModal } = useModalProvider();
   const { setUniversalGameValues, setGameEntryMode } = useGlobalGameProvider();
 

@@ -16,7 +16,7 @@ const service = new GameService(PLATFORM_URL_BASE);
 export const CreateScreen = ({ navigation }: any) => {
   const { setUniversalGameValues } = useGlobalGameProvider();
   const { displayErrorModal } = useModalProvider();
-  const { guestId, accessToken } = useAuthProvider();
+  const { pseudoId: guestId, accessToken } = useAuthProvider();
 
   const [request, setRequest] = useState<CreateGameRequest>({ name: "" });
 

@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     backgroundColor: Color.LightGray,
-    paddingTop: verticalScale(20),
+    paddingTop: verticalScale(40),
     paddingBottom: verticalScale(20)
   },
 

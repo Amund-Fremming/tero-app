@@ -11,7 +11,7 @@ import { useNavigation } from "expo-router";
 export const SavedGamesScreen = () => {
     const navigation: any = useNavigation();
     const { gameService } = useServiceProvider();
-    const { guestId, accessToken } = useAuthProvider();
+    const { pseudoId: guestId, accessToken } = useAuthProvider();
     const { displayErrorModal } = useModalProvider();
 
     const [games, setGames] = useState<GameBase[] | undefined>(undefined);

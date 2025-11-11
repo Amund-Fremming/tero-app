@@ -15,7 +15,7 @@ import SpinScreen from "../../constants/spinScreen";
 import AddChallenge from "../../components/AddChallenge/AddChallenge";
 
 export const LobbyScreen = ({ navigation }: any) => {
-  const { guestId: userId } = useAuthProvider();
+  const { pseudoId: userId } = useAuthProvider();
   const { universalGameValues, setIterations, gameEntryMode } = useGlobalGameProvider();
   const { connect, disconnect, setListener, invokeFunction } = useHubConnectionProvider();
   const { displayErrorModal } = useModalProvider();

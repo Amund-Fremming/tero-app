@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
   },
 
   leadContainer: {
-    paddingTop: verticalScale(20),
+    paddingTop: verticalScale(50),
     width: "90%",
     justifyContent: "center",
   },

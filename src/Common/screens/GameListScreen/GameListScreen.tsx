@@ -17,7 +17,7 @@ export const GameListScreen = () => {
   const navigation: any = useNavigation();
 
   const { displayErrorModal, displayActionModal } = useModalProvider();
-  const { guestId, accessToken } = useAuthProvider();
+  const { pseudoId, accessToken } = useAuthProvider();
   const { setUniversalGameValues, gameType } = useGlobalGameProvider();
   const { gameService } = useServiceProvider();
 
@@ -65,8 +65,13 @@ export const GameListScreen = () => {
   }
 
   const getPage = async (pageNum: number) => {
+    if (!pseudoId) {
+      console.error("No user id");
+      return;
+    }
+
     const request = createPageQuery(pageNum);
-    const result = await gameService().getGamePage<GameBase>(guestId, request);
+    const result = await gameService().getGamePage<GameBase>(pseudoId, request);
     if (result.isError()) {
       displayErrorModal(result.error);
       return;

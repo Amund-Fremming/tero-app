@@ -4,24 +4,38 @@
     "slug": "tero",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./app/tero.webp",
+    "icon": "./app/tero.png",
     "scheme": "com.tero",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "UIViewControllerBasedStatusBarAppearance": false,
+        "UIStatusBarHidden": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./app/tero.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "androidStatusBar": {
+      "translucent": true,
+      "backgroundColor": "#00000000"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./app/tero.webp"
+      "favicon": "./app/tero.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./app/tero.webp",
+          "image": "./app/tero.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"

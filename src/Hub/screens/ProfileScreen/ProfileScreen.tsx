@@ -14,7 +14,7 @@ import { useModalProvider } from "@/src/common/context/ModalProvider";
 export const ProfileScreen = () => {
   const navigation: any = useNavigation();
 
-  const { guestId, triggerLogout, accessToken } = useAuthProvider();
+  const { pseudoId, triggerLogout, accessToken, setPseudoId } = useAuthProvider();
   const { userService } = useServiceProvider();
   const { displayErrorModal } = useModalProvider();
 
@@ -67,7 +67,12 @@ export const ProfileScreen = () => {
   }
 
   useEffect(() => {
-    setAvatar(userService().getProfilePicture(guestId, userData?.username));
+    if (!pseudoId) {
+      console.error("No user id");
+      return;
+    }
+
+    setAvatar(userService().getProfilePicture(pseudoId, userData?.username));
     setPatchRequest({
       username: userData?.username,
       gender: userData?.gender,
@@ -82,6 +87,11 @@ export const ProfileScreen = () => {
   }, [accessToken])
 
   const fetchUserData = async () => {
+    if (!pseudoId) {
+      console.error("No user id");
+      return;
+    }
+
     if (!accessToken) {
       console.warn("No access token present");
       return;
@@ -94,9 +104,10 @@ export const ProfileScreen = () => {
 
     const role = result.value.role;
     const userData = result.value.user;
+    setPseudoId(userData.id);
     setIsAdmin(role === UserRole.Admin);
     setUserData(userData);
-    setAvatar(userService().getProfilePicture(guestId, userData.username));
+    setAvatar(userService().getProfilePicture(pseudoId, userData.username));
     return;
   }
 

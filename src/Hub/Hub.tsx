@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TransitionPresets } from "@react-navigation/stack";
+import Color from "../common/constants/color";
 
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
 import SpinGame from "../spinGame/SpinGame";
@@ -25,6 +26,7 @@ export const Hub = () => {
       screenOptions={{
         ...TransitionPresets.SlideFromRightIOS,
         headerShown: false,
+        cardStyle: { backgroundColor: Color.White },
       }}
     >
       <Stack.Screen name={Screen.Home} component={HomeScreen} />
