@@ -175,7 +175,7 @@ export const AdminScreen = () => {
               <Text style={styles.healthText}>Tittel</Text>
               <Text style={styles.healthText}>{popup.heading}</Text>
             </View>
-            <View style={styles.healthWrapper}>
+            <View style={styles.fieldWrapper}>
               <Text style={styles.healthText}>Melding</Text>
               <Text style={styles.healthText}>{popup.paragraph}</Text>
             </View>

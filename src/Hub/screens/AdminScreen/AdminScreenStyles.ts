@@ -37,6 +37,10 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
   },
 
+  fieldWrapper: {
+    gap: verticalScale(5),
+  },
+
   healthText: {
     fontFamily: "MonoSpace-Regular",
     fontSize: moderateScale(18),
