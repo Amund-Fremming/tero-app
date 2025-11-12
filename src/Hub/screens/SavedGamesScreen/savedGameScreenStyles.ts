@@ -1,6 +1,7 @@
 import Color from "@/src/common/constants/color";
 import { moderateScale, verticalScale } from "@/src/common/utils/dimensions";
 import { StyleSheet } from "react-native";
+import { Font } from "../../../common/constants/Font";
 
 export const styles = StyleSheet.create({
     container: {
@@ -18,7 +19,7 @@ export const styles = StyleSheet.create({
 
     header: {
         color: Color.Purple,
-        fontFamily: "PassionOne-Bold",
+        fontFamily: Font.PassionOneBold,
         fontSize: moderateScale(50),
     },
 

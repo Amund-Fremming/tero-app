@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { horizontalScale, moderateScale, verticalScale } from "../../utils/dimensions";
+import { Font } from "../../constants/Font";
 
 export const styles = StyleSheet.create({
   container: {
@@ -9,7 +10,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    fontFamily: "SpaceMono",
+    fontFamily: Font.SpaceMonoRegular,
     fontSize: moderateScale(18),
   },
 });

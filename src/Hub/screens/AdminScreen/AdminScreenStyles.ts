@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import Colors, { Color } from "../../../common/constants/color";
 import { horizontalScale, moderateScale, verticalScale } from "@/src/common/utils/dimensions";
+import { Font } from "../../../common/constants/Font";
 
 export const styles = StyleSheet.create({
   container: {
@@ -19,7 +20,7 @@ export const styles = StyleSheet.create({
   header: {
     color: Colors.Purple,
     fontSize: moderateScale(40),
-    fontFamily: "PassionOne-Bold"
+    fontFamily: Font.PassionOneBold
   },
 
   healthCard: {
@@ -38,7 +39,7 @@ export const styles = StyleSheet.create({
   },
 
   healthText: {
-    fontFamily: "MonoSpace-Regular",
+    fontFamily: Font.SpaceMonoRegular,
     fontSize: moderateScale(18),
     fontWeight: 400
   }
