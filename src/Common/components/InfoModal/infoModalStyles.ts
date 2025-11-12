@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import { Color } from "../../constants/color";
 import { horizontalScale, moderateScale, verticalScale } from "../../utils/dimensions";
+import { Font } from "../../constants/Font";
 
 export const styles = StyleSheet.create({
   overlay: {
@@ -28,18 +29,18 @@ export const styles = StyleSheet.create({
     borderColor: Color.Red,
   },
   header: {
-    fontFamily: "SpaceMono",
+    fontFamily: Font.SpaceMonoRegular,
     fontSize: moderateScale(30),
   },
   message: {
-    fontFamily: "SpaceMono",
+    fontFamily: Font.SpaceMonoRegular,
     fontSize: moderateScale(18),
   },
   button: {
     borderBottomWidth: moderateScale(2),
   },
   buttonText: {
-    fontFamily: "SpaceMono",
+    fontFamily: Font.SpaceMonoRegular,
     fontSize: moderateScale(14),
   },
 });

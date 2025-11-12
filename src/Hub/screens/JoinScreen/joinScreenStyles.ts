@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import { Color } from "../../../common/constants/color";
 import { verticalScale, moderateScale, horizontalScale } from "@/src/common/utils/dimensions";
+import { Font } from "../../../common/constants/Font";
 
 export const styles = StyleSheet.create({
   container: {
@@ -20,7 +21,7 @@ export const styles = StyleSheet.create({
     color: Color.OffBlack,
     fontSize: moderateScale(40),
     fontWeight: 900,
-    fontFamily: "PassionOne-Bold"
+    fontFamily: Font.PassionOneBold
   },
 
   goBack: {
@@ -76,7 +77,7 @@ export const styles = StyleSheet.create({
   },
 
   buttonText: {
-    fontFamily: "PassionOne-Regular",
+    fontFamily: Font.PassionOneRegular,
     fontSize: moderateScale(28),
     color: Color.White
   },
