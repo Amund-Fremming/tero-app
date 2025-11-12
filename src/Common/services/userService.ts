@@ -205,4 +205,30 @@ export class UserService {
             return err("Failed to get user stats")
         }
     }
+
+    async changePassword(token: string, currentPassword: string, newPassword: string): Promise<Result<void>> {
+        try {
+            const url = `${this.#baseUrl}/user/change-password`;
+            const response = await axios.post(url, {
+                current_password: currentPassword,
+                new_password: newPassword
+            }, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            if (response.status !== 200) {
+                return err("Klarte ikke endre passord");
+            }
+
+            return ok();
+        } catch (error: any) {
+            console.error("changePassword:", error);
+            if (error.response?.data?.message) {
+                return err(error.response.data.message);
+            }
+            return err("Klarte ikke endre passord");
+        }
+    }
 }

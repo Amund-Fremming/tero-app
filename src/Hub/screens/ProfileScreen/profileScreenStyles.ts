@@ -269,5 +269,21 @@ export const styles = StyleSheet.create({
 
     genderButtonTextSelected: {
         fontWeight: 600,
+    },
+
+    errorContainer: {
+        width: "86%",
+        marginTop: verticalScale(10),
+        padding: moderateScale(10),
+        backgroundColor: Color.White,
+        borderRadius: moderateScale(10),
+        borderWidth: moderateScale(2),
+        borderColor: "#ff6b6b",
+    },
+
+    errorText: {
+        fontSize: moderateScale(14),
+        color: "#ff6b6b",
+        marginVertical: verticalScale(2),
     }
 })
