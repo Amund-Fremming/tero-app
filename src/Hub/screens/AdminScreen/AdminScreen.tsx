@@ -1,4 +1,4 @@
-import { Pressable, SectionList, Text, View } from "react-native";
+import { Pressable, SectionList, Text, TextInput, View } from "react-native";
 import styles from "./adminScreenStyles";
 import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { useServiceProvider } from "@/src/common/context/ServiceProvider";
@@ -20,6 +20,12 @@ export const AdminScreen = () => {
   });
   const [stats, setStats] = useState<ActivityStats | undefined>(undefined);
   const [popup, setPopup] = useState<ClientPopup | undefined>(undefined);
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [editedPopup, setEditedPopup] = useState<ClientPopup>({
+    heading: "",
+    paragraph: "",
+    active: false
+  });
 
   useEffect(() => {
     getHealth();
@@ -59,7 +65,24 @@ export const AdminScreen = () => {
       return;
     }
 
-    setPopup(result.value)
+    setPopup(result.value);
+    setEditedPopup(result.value);
+  }
+
+  const handleUpdatePopup = async () => {
+    if (!accessToken) {
+      console.error("Access token was not present!");
+      return;
+    }
+
+    const result = await userService().updateGlobalPopup(accessToken, editedPopup);
+    if (result.isError()) {
+      console.error("Failed to update popup");
+      return;
+    }
+
+    setPopup(editedPopup);
+    setEditMode(false);
   }
 
   return (
@@ -145,10 +168,79 @@ export const AdminScreen = () => {
         )
       }
       {
-        popup && (
+        popup && !editMode && (
           <View style={styles.healthCard}>
-            <Text>Modal</Text>
-            <Text style={styles.healthText}></Text>
+            <Text style={styles.sectionTitle}>Modal</Text>
+            <View style={styles.healthWrapper}>
+              <Text style={styles.healthText}>Tittel</Text>
+              <Text style={styles.healthText}>{popup.heading}</Text>
+            </View>
+            <View style={styles.healthWrapper}>
+              <Text style={styles.healthText}>Melding</Text>
+              <Text style={styles.healthText}>{popup.paragraph}</Text>
+            </View>
+            <View style={styles.healthWrapper}>
+              <Text style={styles.healthText}>Aktiv</Text>
+              <Text style={styles.healthText}>{popup.active ? "✅" : "❌"}</Text>
+            </View>
+            <Pressable onPress={() => setEditMode(true)} style={styles.editButton}>
+              <Text style={styles.editButtonText}>Rediger</Text>
+            </Pressable>
+          </View>
+        )
+      }
+      {
+        popup && editMode && (
+          <View style={styles.healthCard}>
+            <Text style={styles.sectionTitle}>Rediger Modal</Text>
+            <View style={styles.inputWrapper}>
+              <Text style={styles.inputLabel}>Tittel</Text>
+              <TextInput
+                style={styles.input}
+                value={editedPopup.heading}
+                onChangeText={(text) => setEditedPopup(prev => ({ ...prev, heading: text }))}
+                placeholder="Skriv inn tittel"
+              />
+            </View>
+            <View style={styles.inputWrapper}>
+              <Text style={styles.inputLabel}>Melding</Text>
+              <TextInput
+                style={[styles.input, styles.textArea]}
+                value={editedPopup.paragraph}
+                onChangeText={(text) => setEditedPopup(prev => ({ ...prev, paragraph: text }))}
+                placeholder="Skriv inn melding"
+                multiline
+                numberOfLines={4}
+              />
+            </View>
+            <View style={styles.inputWrapper}>
+              <Text style={styles.inputLabel}>Aktiv</Text>
+              <View style={styles.toggleWrapper}>
+                <Pressable
+                  style={[styles.toggleButton, editedPopup.active && styles.toggleButtonActive]}
+                  onPress={() => setEditedPopup(prev => ({ ...prev, active: true }))}
+                >
+                  <Text style={[styles.toggleButtonText, editedPopup.active && styles.toggleButtonTextActive]}>Ja</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.toggleButton, !editedPopup.active && styles.toggleButtonActive]}
+                  onPress={() => setEditedPopup(prev => ({ ...prev, active: false }))}
+                >
+                  <Text style={[styles.toggleButtonText, !editedPopup.active && styles.toggleButtonTextActive]}>Nei</Text>
+                </Pressable>
+              </View>
+            </View>
+            <View style={styles.buttonWrapper}>
+              <Pressable style={styles.cancelButton} onPress={() => {
+                setEditedPopup(popup);
+                setEditMode(false);
+              }}>
+                <Text style={styles.cancelButtonText}>Avbryt</Text>
+              </Pressable>
+              <Pressable onPress={handleUpdatePopup} style={styles.saveButton}>
+                <Text style={styles.saveButtonText}>Lagre</Text>
+              </Pressable>
+            </View>
           </View>
         )
       }
