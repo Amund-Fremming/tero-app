@@ -5,8 +5,6 @@
 - change password funk
 - Fix på pseudo bruker bug: logger du inn med ny bruker finnes det forsatt bare 1
 - bytt passord
-- getConfig på admin page
-- Style saved games page
 - style create game pages
 
 

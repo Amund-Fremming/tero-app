@@ -245,8 +245,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const tokens = await refreshResponse.json();
 
       if (!refreshResponse.ok) {
-        console.error("Refresh token response was an error, logging user out");
-        console.error(tokens);
+        console.warn("Refresh token response was an error, logging user out");
         await SecureStore.deleteItemAsync("access_token");
         await SecureStore.deleteItemAsync("refresh_token");
         await SecureStore.deleteItemAsync("id_token");

@@ -132,7 +132,7 @@ export const styles = StyleSheet.create({
 
     layoverEdit: {
         width: "100%",
-        height: "55%",
+        height: "70%",
         backgroundColor: Color.LightGray,
         borderTopLeftRadius: moderateScale(50),
         borderTopRightRadius: moderateScale(50),

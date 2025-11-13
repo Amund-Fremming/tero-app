@@ -13,4 +13,6 @@ export const verticalScale = (size: number) =>
 export const moderateScale = (size: number, factor = 0.5) =>
   size + (horizontalScale(size) - size) * factor;
 
-export default { horizontalScale, verticalScale, moderateScale };
+export const screenHeight = () => height;
+
+export default { horizontalScale, verticalScale, moderateScale, screenHeight };

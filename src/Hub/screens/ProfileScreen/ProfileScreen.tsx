@@ -160,7 +160,7 @@ export const ProfileScreen = () => {
         </Pressable>
 
         {
-          isAdmin && (
+          isAdmin && !editMode && (
             <Pressable onPress={() => navigation.navigate(Screen.Admin)} style={styles.adminButton}>
               <Text style={styles.adminText}>dashboard</Text>
             </Pressable>

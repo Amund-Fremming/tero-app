@@ -23,6 +23,36 @@ export const styles = StyleSheet.create({
     fontFamily: Font.PassionOneBold
   },
 
+  activeButton: {
+    position: "absolute",
+    top: verticalScale(20),
+    right: horizontalScale(20)
+  },
+
+  modalIndicator: {
+    fontSize: moderateScale(15),
+    position: "absolute",
+    top: verticalScale(0),
+    right: horizontalScale(0)
+  },
+
+  popupText: {
+    fontFamily: Font.SintonyBold,
+    fontSize: moderateScale(19),
+    color: Color.Purple
+  },
+
+  popupButton: {
+    marginTop: verticalScale(20),
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    borderRadius: moderateScale(10),
+    height: verticalScale(45),
+    borderWidth: moderateScale(3),
+    borderColor: Color.Purple
+  },
+
   healthCard: {
     borderRadius: moderateScale(10),
     backgroundColor: Color.White,
@@ -39,8 +69,8 @@ export const styles = StyleSheet.create({
   },
 
   healthText: {
-    fontFamily: Font.SpaceMonoRegular,
-    fontSize: moderateScale(18),
+    fontFamily: Font.SintonyRegular,
+    fontSize: moderateScale(17),
     fontWeight: 400
   }
 });

@@ -172,7 +172,7 @@ export class UserService {
         }
     }
 
-    async updateGlobalPopup(token: string, popup: any): Promise<Result<void>> {
+    async updateGlobalPopup(token: string, popup: ClientPopup): Promise<Result<void>> {
         try {
             await axios.put(`${this.#baseUrl}/popup`, popup, {
                 headers: {

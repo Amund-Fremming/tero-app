@@ -1,16 +1,20 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import styles from "./adminScreenStyles";
 import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { useServiceProvider } from "@/src/common/context/ServiceProvider";
 import { useEffect, useState } from "react";
 import { ActivityStats, ClientPopup, SystemHealth } from "@/src/common/constants/types";
 import { useNavigation } from "expo-router";
+import { screenHeight, verticalScale } from "@/src/common/utils/dimensions";
+import Color from "@/src/common/constants/color";
+import { useModalProvider } from "@/src/common/context/ModalProvider";
 
 export const AdminScreen = () => {
   const navigation: any = useNavigation();
   const { redirectUri } = useAuthProvider();
   const { commonService, userService } = useServiceProvider();
   const { accessToken } = useAuthProvider();
+  const { displayErrorModal } = useModalProvider();
 
   const [systemHealth, setSystemHealth] = useState<SystemHealth>({
     platform: false,
@@ -19,6 +23,7 @@ export const AdminScreen = () => {
   });
   const [stats, setStats] = useState<ActivityStats | undefined>(undefined);
   const [popup, setPopup] = useState<ClientPopup | undefined>(undefined);
+  const [popupEditing, setPopupEditing] = useState<boolean>(false);
 
   useEffect(() => {
     getHealth();
@@ -61,8 +66,39 @@ export const AdminScreen = () => {
     setPopup(result.value)
   }
 
+  const handleUpdateModal = async () => {
+    if (!accessToken) {
+      console.warn("No access token present");
+      return;
+    }
+
+    if (!popup) {
+      console.warn("No popup model present");
+      return;
+    }
+
+    const result = await userService().updateGlobalPopup(accessToken, popup);
+    if (result.isError()) {
+      displayErrorModal(result.error);
+      return;
+    }
+  }
+
   return (
-    <View style={styles.container}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      scrollEnabled={true}
+      style={{
+        width: "100%",
+        backgroundColor: Color.LightGray,
+        height: screenHeight(),
+      }}
+      contentContainerStyle={{
+        alignItems: "center",
+        gap: verticalScale(15),
+        paddingBottom: verticalScale(200),
+      }}
+    >
       <View style={styles.leadContainer}>
         <Pressable onPress={() => navigation.goBack()}>
           <Text style={styles.header}>Admin</Text>
@@ -144,15 +180,35 @@ export const AdminScreen = () => {
         )
       }
       {
-        popup && (
+        popup && !popupEditing && (
           <View style={styles.healthCard}>
-            <Text>Modal</Text>
-            <Text style={styles.healthText}></Text>
+            <Text style={styles.modalIndicator}>{popup.active ? "✅" : "❌"}</Text>
+            <Text>Popup</Text>
+            <Text style={styles.healthText}>{popup.heading}</Text>
+            <Text style={styles.healthText}>{popup.paragraph}</Text>
+            <Pressable onPress={() => setPopupEditing(true)} style={styles.popupButton}>
+              <Text style={styles.popupText}>Rediger</Text>
+            </Pressable>
+          </View>
+        )
+      }
+      {
+        popup && popupEditing && (
+          <View style={styles.healthCard}>
+            <Pressable style={styles.activeButton} onPress={() => setPopup(prev => prev ? { ...prev, active: !prev.active } : prev)}>
+              <Text style={styles.modalIndicator}>{popup.active ? "✅" : "❌"}</Text>
+            </Pressable>
+            <Text>Popup</Text>
+            <Text style={styles.healthText}>{popup.heading}</Text>
+            <Text style={styles.healthText}>{popup.paragraph}</Text>
+            <Pressable onPress={handleUpdateModal} style={styles.popupButton}>
+              <Text style={styles.popupText}>Lagre</Text>
+            </Pressable>
           </View>
         )
       }
 
-    </View >
+    </ScrollView>
   );
 };
 

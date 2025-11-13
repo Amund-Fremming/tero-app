@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, ScrollView, Dimensions, TouchableOpacity } from "react-native";
 import { styles } from "./savedGameScreenStyles";
 import VerticalScroll from "@/src/common/wrappers/VerticalScroll";
 import { useEffect, useState } from "react";
@@ -7,6 +7,10 @@ import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { useModalProvider } from "@/src/common/context/ModalProvider";
 import { GameBase } from "@/src/common/constants/types";
 import { useNavigation } from "expo-router";
+import { screenHeight, verticalScale } from "@/src/common/utils/dimensions";
+import Color from "@/src/common/constants/color";
+import { Feather } from "@expo/vector-icons";
+
 
 export const SavedGamesScreen = () => {
     const navigation: any = useNavigation();
@@ -50,8 +54,25 @@ export const SavedGamesScreen = () => {
         setGames(page.items);
     }
 
+    const handleGamePressed = (id: string) => {
+        //
+    }
+
     return (
-        <VerticalScroll>
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+            scrollEnabled={true}
+            style={{
+                width: "100%",
+                backgroundColor: Color.LightGray,
+                height: screenHeight(),
+            }}
+            contentContainerStyle={{
+                alignItems: "center",
+                gap: verticalScale(15),
+                paddingBottom: verticalScale(200),
+            }}
+        >
             <View style={styles.topWrapper}>
                 <Pressable onPress={() => navigation.goBack()}>
                     <Text style={styles.header}>Dine spill</Text>
@@ -60,17 +81,28 @@ export const SavedGamesScreen = () => {
 
             {games && (
                 games.map(game => (
-                    <View style={styles.card} key={game.id}>
-                        <Text>{game.name}</Text>
-                        <Text>{game.description}</Text>
-                        <Text>{game.gameType}</Text>
-                        <Pressable onPress={() => handleUnsavePressed(game)}>
-                            <Text>fjern</Text>
+                    <TouchableOpacity onPress={() => handleGamePressed(game.id)} style={styles.card} key={game.id}>
+                        <View style={styles.innerCard}>
+                            <View style={styles.iconCardOuter}>
+                                <View style={styles.iconCardInner}>
+                                    <Text style={styles.iconCardText}>{game.gameType ? game.gameType : "TEST"}</Text>
+                                </View>
+                            </View>
+
+                            <View style={styles.textWrapper}>
+                                <Text style={styles.cardHeader}>{game.name}</Text>
+                                <Text style={styles.cardParagraph}>{game.description}</Text>
+                                <Text>{game.gameType}</Text>
+                            </View>
+                        </View>
+                        <Pressable style={styles.icon} onPress={() => handleUnsavePressed(game)}>
+                            <Feather name="x" size={30} />
                         </Pressable>
-                    </View>
+
+                    </TouchableOpacity>
                 ))
             )}
 
-        </VerticalScroll >
+        </ScrollView>
     );
 }
