@@ -21,7 +21,7 @@ const subHeaderList = [
 export const HomeScreen = ({ navigation }: any) => {
   const { setGameEntryMode } = useGlobalGameProvider();
   const { commonService, userService } = useServiceProvider();
-  const { displayErrorModal, displayInfoModal } = useModalProvider();
+  const { displayInfoModal } = useModalProvider();
 
   const [subHeader, setSubheader] = useState<string>("");
   const [popupCloseCount, setPopupCloseCount] = useState<number>(0);
@@ -34,6 +34,7 @@ export const HomeScreen = ({ navigation }: any) => {
 
   const getClientPopup = async () => {
     if (popupCloseCount >= 2) {
+      console.error("Skipping modal");
       return;
     }
 
@@ -49,6 +50,7 @@ export const HomeScreen = ({ navigation }: any) => {
       return;
     }
 
+    console.error("Displaying modal")
     displayInfoModal(popup.paragraph, popup.heading, () => setPopupCloseCount(prev => prev + 1));
   }
 

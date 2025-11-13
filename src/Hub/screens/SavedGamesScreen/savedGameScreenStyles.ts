@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
     topWrapper: {
         justifyContent: "space-between",
         alignItems: "center",
-        paddingTop: verticalScale(20),
+        paddingTop: verticalScale(50),
         width: "90%",
         display: "flex",
         flexDirection: "row"

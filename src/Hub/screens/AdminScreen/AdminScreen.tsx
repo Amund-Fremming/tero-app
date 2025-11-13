@@ -1,11 +1,10 @@
-import { Pressable, SectionList, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import styles from "./adminScreenStyles";
 import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { useServiceProvider } from "@/src/common/context/ServiceProvider";
 import { useEffect, useState } from "react";
 import { ActivityStats, ClientPopup, SystemHealth } from "@/src/common/constants/types";
 import { useNavigation } from "expo-router";
-import { useModalProvider } from "@/src/common/context/ModalProvider";
 
 export const AdminScreen = () => {
   const navigation: any = useNavigation();
