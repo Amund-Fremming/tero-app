@@ -10,8 +10,8 @@ import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
 import AbsoluteHomeButton from "@/src/common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import Screen from "@/src/common/constants/screen";
 import { HubChannel } from "@/src/common/constants/hubChannel";
-import AskScreen from "../../constants/askScreen";
-import { AskGame, AskGameState } from "../../constants/askTypes";
+import AskScreen from "../../constants/quizScreen";
+import { AskGame, AskGameState } from "../../constants/spinTypes";
 import { GameEntryMode } from "@/src/common/constants/types";
 import { useQuizGameProvider } from "../../context/AskGameProvider";
 

@@ -1,7 +1,6 @@
 # Tasklist
 
 - change password funk
-- Fix på pseudo bruker bug: logger du inn med ny bruker finnes det forsatt bare 1
 - bytt passord
 - style create game pages
 

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { moderateScale } from "@/src/common/utils/dimensions";
+import { horizontalScale, moderateScale, verticalScale } from "@/src/common/utils/dimensions";
 import Colors, { Color } from "../../../common/constants/color";
 import { Font } from "../../../common/constants/Font";
 
@@ -37,6 +37,7 @@ export const styles = StyleSheet.create({
     width: "100%",
     height: "45%",
     flexWrap: "wrap",
+    flexDirection: "row",
   },
 
   buttonBase: {
@@ -44,55 +45,68 @@ export const styles = StyleSheet.create({
     height: "50%",
     justifyContent: "center",
     alignItems: "center",
+    overflow: "hidden",
   },
 
   topLeft: {
-    backgroundColor: Colors.HomeBlack,
+    backgroundColor: Colors.BuzzifyDarkBg,
   },
 
   topRight: {
-    backgroundColor: Colors.White,
+    backgroundColor: "transparent",
   },
 
   bottomLeft: {
-    backgroundColor: Colors.HomeBeige,
+    backgroundColor: Colors.BuzzifyPeach,
   },
 
   bottomRight: {
-    backgroundColor: Colors.HomeRed,
+    backgroundColor: Colors.BuzzifyOrange,
+  },
+
+  textCircle: {
+    borderRadius: moderateScale(400),
+    width: verticalScale(90),
+    height: horizontalScale(90),
+    backgroundColor: Color.White,
+    justifyContent: "center",
+    alignItems: "center"
   },
 
   buttonTextWrapper: {
     flexDirection: "column",
+    alignItems: "center",
+    zIndex: 10,
   },
 
   textBase: {
     fontSize: moderateScale(18),
-    fontWeight: 900,
+    fontWeight: "900",
+    textAlign: "center",
   },
 
   textTopLeft: {
-    fontFamily: Font.PassionOneRegular,
-    fontSize: moderateScale(30),
+    fontFamily: Font.PassionOneBold,
+    fontSize: moderateScale(35),
     color: Colors.White,
   },
 
   textTopRight: {
-    color: Colors.HomeRed,
-    fontFamily: Font.PassionOneRegular,
-    fontSize: moderateScale(30),
+    color: Colors.BuzzifyOrange,
+    fontFamily: Font.PassionOneBold,
+    fontSize: moderateScale(35),
   },
 
   textBottomLeft: {
-    color: Color.Purple,
-    fontFamily: Font.PassionOneRegular,
-    fontSize: moderateScale(30),
+    color: Colors.BuzzifyLavender,
+    fontFamily: Font.PassionOneBold,
+    fontSize: moderateScale(35),
   },
 
   textBottomRight: {
-    fontFamily: Font.PassionOneRegular,
-    fontSize: moderateScale(30),
-    color: Colors.HomeBlack,
+    fontFamily: Font.PassionOneBold,
+    fontSize: moderateScale(35),
+    color: Colors.Black,
   },
 });
 

@@ -6,15 +6,18 @@ import { useGlobalGameProvider } from "../../../common/context/GlobalGameProvide
 import { useEffect, useState } from "react";
 import { useServiceProvider } from "@/src/common/context/ServiceProvider";
 import { useModalProvider } from "@/src/common/context/ModalProvider";
+import DiagonalSplit from "../../../common/components/BuzzifyShapes/DiagonalSplit";
+import ArcWithCircles from "../../../common/components/BuzzifyShapes/ArcWithCircles";
+import ScatteredCircles from "../../../common/components/BuzzifyShapes/ScatteredCircles";
 
 const subHeaderList = [
-  "lorem ipsum dolor amet",
-  "consectetur adipiscing elit",
-  "sed do eiusmod tempor",
-  "incididunt ut labore et",
-  "dolore magna aliqua ut",
-  "enim ad minim veniam",
-  "quis nostrud exercitation"
+  "klar for en runde?",
+  "la spillet begynne",
+  "ta en pause og bli med",
+  "vi kjører på",
+  "få i gang kvelden",
+  "rolige vibber, gode valg",
+  "klart for neste?"
 ];
 
 
@@ -90,35 +93,40 @@ export const HomeScreen = ({ navigation }: any) => {
           onPress={() => handlePress(GameEntryMode.Creator, Screen.GameTypeList)}
         >
           <View style={styles.buttonTextWrapper}>
-            <Text style={{ ...styles.textBase, ...styles.textTopLeft }}>Lag</Text>
-            <Text style={{ ...styles.textBase, ...styles.textTopLeft }}>spill</Text>
-          </View>
-        </Pressable>
-        <Pressable
-          style={{ ...styles.buttonBase, ...styles.bottomLeft }}
-          onPress={() => navigation.navigate(Screen.Hub)}
-        >
-          <View style={styles.buttonTextWrapper}>
-            <Text style={{ ...styles.textBase, ...styles.textBottomLeft }}>Til</Text>
-            <Text style={{ ...styles.textBase, ...styles.textBottomLeft }}>hub</Text>
+            <Text style={{ ...styles.textBase, ...styles.textTopLeft }}>LAG</Text>
+            <Text style={{ ...styles.textBase, ...styles.textTopLeft }}>SPILL</Text>
           </View>
         </Pressable>
         <Pressable
           style={{ ...styles.buttonBase, ...styles.topRight }}
           onPress={() => handlePress(GameEntryMode.Host, Screen.GameTypeList)}
         >
+          <DiagonalSplit />
           <View style={styles.buttonTextWrapper}>
-            <Text style={{ ...styles.textBase, ...styles.textTopRight }}>Velg</Text>
-            <Text style={{ ...styles.textBase, ...styles.textTopRight }}>spill</Text>
+            <Text style={{ ...styles.textBase, ...styles.textTopRight }}>VELG</Text>
+            <Text style={{ ...styles.textBase, ...styles.textTopRight }}>SPILL</Text>
+          </View>
+        </Pressable>
+        <Pressable
+          style={{ ...styles.buttonBase, ...styles.bottomLeft }}
+          onPress={() => navigation.navigate(Screen.Hub)}
+        >
+          <ArcWithCircles />
+          <View style={styles.buttonTextWrapper}>
+            <Text style={{ ...styles.textBase, ...styles.textBottomLeft }}>TIL</Text>
+            <Text style={{ ...styles.textBase, ...styles.textBottomLeft }}>HUB</Text>
           </View>
         </Pressable>
         <Pressable
           style={{ ...styles.buttonBase, ...styles.bottomRight }}
           onPress={() => handlePress(GameEntryMode.Participant, Screen.Join)}
         >
+          <ScatteredCircles />
           <View style={styles.buttonTextWrapper}>
-            <Text style={{ ...styles.textBase, ...styles.textBottomRight }}>Bli</Text>
-            <Text style={{ ...styles.textBase, ...styles.textBottomRight }}>med</Text>
+            <View style={styles.textCircle}>
+            <Text style={{ ...styles.textBase, ...styles.textBottomRight }}>BLI</Text>
+            <Text style={{ ...styles.textBase, ...styles.textBottomRight }}>MED</Text>
+            </View>
           </View>
         </Pressable>
       </View>

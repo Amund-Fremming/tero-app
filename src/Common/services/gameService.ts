@@ -11,10 +11,11 @@ export class GameService {
     }
 
 
-    async createInteractiveGame(guest_id: string, token: string | null, type: GameType, request: CreateGameRequest): Promise<Result<InteractiveGameResponse>> {
+    async createInteractiveGame(pseudo_id: string, token: string | null, type: GameType, request: CreateGameRequest): Promise<Result<InteractiveGameResponse>> {
         try {
+
             const response = await axios.post(`${this.#urlBase}/game/general/${type}/create`, request, {
-                headers: getHeaders(guest_id, token)
+                headers: getHeaders(pseudo_id, token)
             });
 
             let result: InteractiveGameResponse = response.data;

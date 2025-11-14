@@ -9,7 +9,7 @@ import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { CreateGameRequest, GameType } from "@/src/common/constants/types";
 import SpinGame from "../../SpinGame";
 import { useState } from "react";
-import { CreateAskGameRequest } from "@/src/quizGame/constants/askTypes";
+import { CreateAskGameRequest } from "@/src/quizGame/constants/spinTypes";
 
 const service = new GameService(PLATFORM_URL_BASE);
 

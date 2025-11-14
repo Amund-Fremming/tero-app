@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { AskGame as QuizGame } from "../constants/askTypes";
+import { AskGame as QuizGame } from "../constants/spinTypes";
 
 interface IQuizGameContext {
   clearQuizGameValues: () => void;

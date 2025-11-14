@@ -15,7 +15,14 @@ export const Color = {
   Burgunde: "#720000",
   HomeBlack: "#222322",
   HomeBeige: "#F1D6CE",
-  HomeRed: "#F9715E"
+  HomeRed: "#F9715E",
+  // Buzzify colors
+  BuzzifyDarkBg: "#1E1E1E",
+  BuzzifyOrange: "#FF6E4A",
+  BuzzifyLavender: "#A9A4EB",
+  BuzzifyLightBeige: "#F3D9CC",
+  BuzzifyPeach: "#F3DDD6",
+  BuzzifyYellow: "#FFEB99"
 };
 
 export default Color;

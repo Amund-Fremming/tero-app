@@ -1,13 +1,11 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { GameEntryMode, GameType, UniversalGameValues } from "../constants/types";
+import { GameEntryMode, GameType} from "../constants/types";
 
 interface IGlobalGameContext {
   clearValues: () => void;
   gameEntryMode: GameEntryMode;
   setGameEntryMode: React.Dispatch<React.SetStateAction<GameEntryMode>>;
-  universalGameValues: UniversalGameValues | undefined;
-  setUniversalGameValues: React.Dispatch<React.SetStateAction<UniversalGameValues | undefined>>;
-  setIterations: (iterations: number) => void;
+  setIterations: React.Dispatch<React.SetStateAction<number>>;
   gameType: GameType;
   setGameType: React.Dispatch<React.SetStateAction<GameType>>;
 }
@@ -16,9 +14,7 @@ const defaultContextValue: IGlobalGameContext = {
   clearValues: () => { },
   gameEntryMode: GameEntryMode.Host,
   setGameEntryMode: () => { },
-  universalGameValues: undefined,
-  setUniversalGameValues: () => { },
-  setIterations: (_iterations: number) => { },
+  setIterations: () => { },
   gameType: GameType.Spin,
   setGameType: () => { },
 };
@@ -32,28 +28,19 @@ interface GlobalGameProviderProps {
 }
 
 export const GlobalGameProvider = ({ children }: GlobalGameProviderProps) => {
-  const [universalGameValues, setUniversalGameValues] = useState<UniversalGameValues | undefined>(undefined);
   const [gameEntryMode, setGameEntryMode] = useState<GameEntryMode>(GameEntryMode.Host);
   const [gameType, setGameType] = useState<GameType>(GameType.Spin);
+  const [iterations, setIterations] = useState<number>(0);
 
-  const clearValues = () => setUniversalGameValues(undefined);
-
-  const setIterations = (iterations: number) =>
-    setUniversalGameValues((prev) => {
-      if (!prev) {
-        return undefined;
-      }
-
-      return { ...prev, iterations };
-    });
+  const clearValues = () => {
+    setIterations(0);
+  }
 
   const value = {
     clearValues,
+    setIterations,
     gameEntryMode,
     setGameEntryMode,
-    universalGameValues,
-    setUniversalGameValues,
-    setIterations,
     gameType,
     setGameType,
   };
