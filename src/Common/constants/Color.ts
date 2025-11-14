@@ -13,7 +13,9 @@ export const Color = {
   Blue: "#6db0b6",
   LightBlue: "#ddeefb",
   Burgunde: "#720000",
-  HomeBlack: "#222322"
+  HomeBlack: "#222322",
+  HomeBeige: "#F1D6CE",
+  HomeRed: "#F9715E"
 };
 
 export default Color;

@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { moderateScale } from "@/src/common/utils/dimensions";
-import Colors from "../../../common/constants/color";
+import Colors, { Color } from "../../../common/constants/color";
 import { Font } from "../../../common/constants/Font";
 
 export const styles = StyleSheet.create({
@@ -55,11 +55,11 @@ export const styles = StyleSheet.create({
   },
 
   bottomLeft: {
-    backgroundColor: Colors.White,
+    backgroundColor: Colors.HomeBeige,
   },
 
   bottomRight: {
-    backgroundColor: Colors.Black,
+    backgroundColor: Colors.HomeRed,
   },
 
   buttonTextWrapper: {
@@ -72,19 +72,27 @@ export const styles = StyleSheet.create({
   },
 
   textTopLeft: {
+    fontFamily: Font.PassionOneRegular,
+    fontSize: moderateScale(30),
     color: Colors.White,
   },
 
   textTopRight: {
-    color: Colors.Black,
+    color: Colors.HomeRed,
+    fontFamily: Font.PassionOneRegular,
+    fontSize: moderateScale(30),
   },
 
   textBottomLeft: {
-    color: Colors.Black,
+    color: Color.Purple,
+    fontFamily: Font.PassionOneRegular,
+    fontSize: moderateScale(30),
   },
 
   textBottomRight: {
-    color: Colors.White,
+    fontFamily: Font.PassionOneRegular,
+    fontSize: moderateScale(30),
+    color: Colors.HomeBlack,
   },
 });
 
