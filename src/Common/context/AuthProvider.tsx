@@ -111,6 +111,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       usePKCE: true,
       extraParams: {
         audience: Auth0Config.audience,
+        pseudo_id: pseudoId ?? "unknown"
       },
     },
     Auth0Config.discovery
@@ -146,7 +147,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           displayErrorModal("Feil ved tokenutveksling");
         }
       } else if (response?.type === "error") {
+        console.error(response.error);
         displayErrorModal("Det skjedde en feil ved login");
+        return;
       }
     };
 

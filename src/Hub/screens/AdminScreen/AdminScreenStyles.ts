@@ -26,14 +26,18 @@ export const styles = StyleSheet.create({
   activeButton: {
     position: "absolute",
     top: verticalScale(20),
-    right: horizontalScale(20)
+    right: horizontalScale(20),
+    width: moderateScale(60),
+    height: moderateScale(60),
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   modalIndicator: {
-    fontSize: moderateScale(15),
+    fontSize: moderateScale(20),
     position: "absolute",
-    top: verticalScale(0),
-    right: horizontalScale(0)
+    top: verticalScale(5),
+    right: horizontalScale(5),
   },
 
   popupText: {
@@ -43,6 +47,16 @@ export const styles = StyleSheet.create({
   },
 
   popupButton: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: moderateScale(10),
+    height: verticalScale(45),
+    borderWidth: moderateScale(3),
+    borderColor: Color.Purple
+  },
+
+  singleButton: {
     marginTop: verticalScale(20),
     justifyContent: "center",
     alignItems: "center",
@@ -61,6 +75,7 @@ export const styles = StyleSheet.create({
     paddingRight: horizontalScale(20),
     gap: verticalScale(10),
     paddingVertical: verticalScale(20),
+    position: "relative",
   },
 
   healthWrapper: {
@@ -70,8 +85,50 @@ export const styles = StyleSheet.create({
 
   healthText: {
     fontFamily: Font.SintonyRegular,
-    fontSize: moderateScale(17),
+    fontSize: moderateScale(20),
     fontWeight: 400
+  },
+
+  inputField: {
+    fontFamily: Font.SintonyRegular,
+    fontSize: moderateScale(18),
+    borderWidth: moderateScale(2),
+    borderColor: Color.Purple,
+    borderRadius: moderateScale(8),
+    paddingHorizontal: horizontalScale(12),
+    paddingVertical: verticalScale(10),
+    backgroundColor: Color.White,
+    width: "100%",
+  },
+
+  multilineInput: {
+    minHeight: verticalScale(120),
+    maxHeight: verticalScale(200),
+    textAlignVertical: "top",
+  },
+
+  buttonContainer: {
+    flexDirection: "row",
+    gap: horizontalScale(10),
+    marginTop: verticalScale(10),
+    width: "100%",
+  },
+
+  cancelButton: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: moderateScale(10),
+    height: verticalScale(45),
+    borderWidth: moderateScale(3),
+    borderColor: Color.LightGray,
+    backgroundColor: Color.LightGray,
+  },
+
+  cancelText: {
+    fontFamily: Font.SintonyBold,
+    fontSize: moderateScale(19),
+    color: Color.Black
   }
 });
 

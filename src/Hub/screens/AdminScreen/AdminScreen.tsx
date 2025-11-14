@@ -82,6 +82,9 @@ export const AdminScreen = () => {
       displayErrorModal(result.error);
       return;
     }
+
+    setPopup(result.value);
+    setPopupEditing(false);
   }
 
   return (
@@ -182,7 +185,9 @@ export const AdminScreen = () => {
       {
         popup && !popupEditing && (
           <View style={styles.healthCard}>
-            <Text style={styles.modalIndicator}>{popup.active ? "✅" : "❌"}</Text>
+            <Pressable style={styles.activeButton}>
+              <Text style={styles.modalIndicator}>{popup.active ? "✅" : "❌"}</Text>
+            </Pressable>
             <Text>Popup</Text>
             <Text style={styles.healthText}>{popup.heading}</Text>
             <Text style={styles.healthText}>{popup.paragraph}</Text>
@@ -195,7 +200,7 @@ export const AdminScreen = () => {
       {
         popup && popupEditing && (
           <View style={styles.healthCard}>
-            <Pressable style={styles.activeButton} onPress={() => setPopup(prev => prev ? { ...prev, active: !prev.active } : prev)}>
+            <Pressable onPress={() => setPopup(prev => prev ? { ...prev, active: !prev.active } : prev)} style={styles.activeButton}>
               <Text style={styles.modalIndicator}>{popup.active ? "✅" : "❌"}</Text>
             </Pressable>
             <Text>Popup</Text>

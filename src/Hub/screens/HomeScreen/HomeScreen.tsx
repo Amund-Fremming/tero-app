@@ -50,7 +50,6 @@ export const HomeScreen = ({ navigation }: any) => {
       return;
     }
 
-    console.error("Displaying modal")
     displayInfoModal(popup.paragraph, popup.heading, () => setPopupCloseCount(prev => prev + 1));
   }
 

@@ -1,5 +1,6 @@
 export const Color = {
   Purple: "#678ff7",
+  SoftPurple: "#A6A6ED",
   Black: "#242a2f",
   OffBlack: "#414a55",
   Red: "#eb3d36",
@@ -11,7 +12,8 @@ export const Color = {
   LightGray: "#f2f2f4",
   Blue: "#6db0b6",
   LightBlue: "#ddeefb",
-  Burgunde: "#720000"
+  Burgunde: "#720000",
+  HomeBlack: "#222322"
 };
 
 export default Color;

@@ -21,11 +21,15 @@ export const ProfileScreen = () => {
   const isLoggedIn = accessToken != null;
 
   const [editMode, setEditMode] = useState<boolean>(false);
+  const [passwordChangeMode, setPasswordChangeMode] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [avatar, setAvatar] = useState<string>("");
   const [userData, setUserData] = useState<BaseUser | undefined>(undefined);
   const [patchRequest, setPatchRequest] = useState<PatchUserRequest>({});
   const [birthDate, setBirthDate] = useState<string>("");
+  const [oldPassword, setOldPassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
 
   const crown = require("../../../common/assets/images/crown.png")
 
@@ -146,9 +150,39 @@ export const ProfileScreen = () => {
     setEditMode(false);
   }
 
+  const handleChangePassword = async () => {
+    if (!accessToken) {
+      console.error("No access token present");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      displayErrorModal("Nye passord matcher ikke");
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      displayErrorModal("Passordet må være minst 8 tegn");
+      return;
+    }
+
+    const result = await userService().changePassword(accessToken, oldPassword, newPassword);
+    if (result.isError()) {
+      displayErrorModal(result.error);
+      return;
+    }
+
+    setOldPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
+    setPasswordChangeMode(false);
+    displayErrorModal("Passord endret!");
+  }
+
   if (!isLoggedIn) {
+    navigation.goBack();
     return (
-      <View></View>
+      <View />
     );
   }
 
@@ -182,7 +216,7 @@ export const ProfileScreen = () => {
           <Image source={{ uri: avatar }} style={styles.image} />
         </View>
         {
-          editMode && (
+          (editMode) && (
             <Text style={styles.email}>{userData?.email}</Text>
           )
         }
@@ -191,9 +225,9 @@ export const ProfileScreen = () => {
             <Text style={styles.name}>{userData?.given_name} {userData?.family_name}</Text>
           )
         }
-        <Text style={styles.username}>{editMode ? "" : "@"}{!editMode && userData?.username}</Text>
+        <Text style={styles.username}>{(editMode) ? "" : "@"}{!editMode && userData?.username}</Text>
 
-        {!editMode && (<View style={styles.layover}>
+        {!editMode && !passwordChangeMode && (<View style={styles.layover}>
           <Pressable onPress={() => setEditMode(true)} style={styles.bigButton}>
             <View style={styles.iconGuard}>
               <Feather name="edit" size={30} color={Color.Black} />
@@ -201,13 +235,13 @@ export const ProfileScreen = () => {
             <Text style={styles.buttonText}>Rediger profil</Text>
             <Feather name="chevron-right" size={24} color={Color.Black} />
           </Pressable>
-          <View style={styles.bigButton}>
+          <Pressable onPress={() => setPasswordChangeMode(true)} style={styles.bigButton}>
             <View style={styles.iconGuard}>
               <Feather name="lock" size={28} color={Color.Black} />
             </View>
             <Text style={styles.buttonText}>Bytt passord</Text>
             <Feather name="chevron-right" size={28} color={Color.Black} />
-          </View>
+          </Pressable>
           <Pressable onPress={() => navigation.navigate(Screen.TipsUs)} style={styles.bigButton}>
             <View style={styles.iconGuard}>
               <Feather name="sun" size={28} color={Color.Black} />
@@ -309,6 +343,63 @@ export const ProfileScreen = () => {
                 </Pressable>
               </View>
             </ScrollView>
+          </View>
+        )}
+        {passwordChangeMode && (
+          <View style={styles.layverPasswordEdit}>
+            <ScrollView
+              style={styles.layoverEditScroll}
+              contentContainerStyle={styles.layoverEditContent}
+              showsVerticalScrollIndicator={false}
+            >
+              <View style={styles.inputWrapper}>
+                <Text style={styles.inputLabel}>Gammelt passord</Text>
+                <TextInput
+                  onChangeText={setOldPassword}
+                  style={styles.input}
+                  value={oldPassword}
+                  placeholder="Skriv inn gammelt passord"
+                  secureTextEntry={true}
+                />
+              </View>
+
+              <View style={styles.inputWrapper}>
+                <Text style={styles.inputLabel}>Nytt passord</Text>
+                <TextInput
+                  onChangeText={setNewPassword}
+                  style={styles.input}
+                  value={newPassword}
+                  placeholder="Skriv inn nytt passord"
+                  secureTextEntry={true}
+                />
+              </View>
+
+              <View style={styles.inputWrapper}>
+                <Text style={styles.inputLabel}>Bekreft nytt passord</Text>
+                <TextInput
+                  onChangeText={setConfirmPassword}
+                  style={styles.input}
+                  value={confirmPassword}
+                  placeholder="Skriv inn nytt passord igjen"
+                  secureTextEntry={true}
+                />
+              </View>
+
+            </ScrollView>
+
+              <View style={styles.buttonWrapperPassword}>
+                <Pressable style={styles.cancelButtonPassword} onPress={() => {
+                  setPasswordChangeMode(false);
+                  setOldPassword("");
+                  setNewPassword("");
+                  setConfirmPassword("");
+                }}>
+                  <Text style={styles.cancelButtonText}>avbryt</Text>
+                </Pressable>
+                <Pressable onPress={handleChangePassword} style={styles.saveButtonPassword}>
+                  <Text style={styles.saveButtonText}>lagre</Text>
+                </Pressable>
+              </View>
           </View>
         )}
       </View>

@@ -4,7 +4,7 @@
 # To make this agent available, merge this file into the default repository branch.
 # For format details, see: https://gh.io/customagents/config
 
-name: PR Peter
+name: PR_Peter
 description: PR agent
 ---
 
@@ -52,21 +52,17 @@ Run the full type check:
 
 tsc --noEmit
 
-
 Run the linter:
 
 npm run lint
-
 
 Run the formatter:
 
 npm run format
 
-
 Run the tests:
 
 npm test
-
 
 If any step fails, fix the issue automatically and re-run validation until everything passes.
 
@@ -77,7 +73,6 @@ Use semantic commit messages, for example:
 feat(profile): add user avatar upload component
 fix(auth): correct token refresh logic
 refactor(settings): reorganize preferences screen
-
 
 Before opening a PR:
 
@@ -115,22 +110,19 @@ Inspect similar screens (e.g., ProfileScreen.tsx, SettingsScreen.tsx) to learn p
 
 Create the new component inside src/screens/NotificationSettings/NotificationSettings.tsx using identical patterns.
 
-Add a matching test in __tests__/NotificationSettings.test.tsx.
+Add a matching test in **tests**/NotificationSettings.test.tsx.
 
 Validate with:
 
 npm run lint && npm run test && npm run typecheck
 
-
 Once all pass, commit:
 
 feat(settings): add notification settings screen
 
-
 Open a PR titled:
 
 feat(settings): add notification settings screen
-
 
 With a description summarizing implementation details and dependencies.
 

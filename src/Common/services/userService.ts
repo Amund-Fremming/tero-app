@@ -172,14 +172,15 @@ export class UserService {
         }
     }
 
-    async updateGlobalPopup(token: string, popup: ClientPopup): Promise<Result<void>> {
+    async updateGlobalPopup(token: string, popup: ClientPopup): Promise<Result<ClientPopup>> {
         try {
-            await axios.put(`${this.#baseUrl}/popup`, popup, {
+            const response = await axios.put<ClientPopup>(`${this.#baseUrl}/user/popup`, popup, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
             });
-            return ok();
+
+            return ok(response.data);
         } catch (error) {
             console.log("updateGlobalPopup:", error);
             return err("Klarte ikke oppdatere popup");
@@ -203,6 +204,29 @@ export class UserService {
         } catch (error) {
             console.error("getUserStats:", error);
             return err("Failed to get user stats")
+        }
+    }
+
+    async changePassword(token: string, oldPassword: string, newPassword: string): Promise<Result<void>> {
+        try {
+            const url = `${this.#baseUrl}/user/password`;
+            const response = await axios.patch(url, {
+                old_password: oldPassword,
+                new_password: newPassword
+            }, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            if (response.status !== 200) {
+                return err("Klarte ikke endre passord");
+            }
+
+            return ok();
+        } catch (error) {
+            console.error("changePassword:", error);
+            return err("Klarte ikke endre passord");
         }
     }
 }

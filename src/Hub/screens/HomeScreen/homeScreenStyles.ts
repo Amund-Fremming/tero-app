@@ -8,19 +8,19 @@ export const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
-    backgroundColor: Colors.LightGray,
+    backgroundColor: Colors.SoftPurple,
     justifyContent: "space-between",
     alignItems: "center",
   },
 
   leadContainer: {
     width: "90%",
-    height: "50%",
+    height: "55%",
     justifyContent: "center",
   },
 
   header: {
-    fontSize: moderateScale(80),
+    fontSize: moderateScale(110),
     color: Colors.Black,
     fontWeight: 900,
     fontFamily: Font.PassionOneBold
@@ -28,14 +28,14 @@ export const styles = StyleSheet.create({
 
   subHeader: {
     fontWeight: 700,
-    fontSize: moderateScale(20),
-    color: Colors.Gray,
+    fontSize: moderateScale(30),
+    color: Colors.White,
     fontFamily: Font.PassionOneRegular
   },
 
   buttonContainer: {
     width: "100%",
-    height: "50%",
+    height: "45%",
     flexWrap: "wrap",
   },
 
@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
   },
 
   topLeft: {
-    backgroundColor: Colors.Black,
+    backgroundColor: Colors.HomeBlack,
   },
 
   topRight: {

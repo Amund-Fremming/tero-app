@@ -139,6 +139,15 @@ export const styles = StyleSheet.create({
         marginTop: verticalScale(20),
     },
 
+    layverPasswordEdit: {
+        width: "100%",
+        height: "55%",
+        backgroundColor: Color.LightGray,
+        borderTopLeftRadius: moderateScale(50),
+        borderTopRightRadius: moderateScale(50),
+        marginTop: verticalScale(20),
+    },
+
     layoverEditContent: {
         alignItems: "center",
         justifyContent: "flex-start",
@@ -204,6 +213,17 @@ export const styles = StyleSheet.create({
         alignItems: "center",
     },
 
+    buttonWrapperPassword: {
+        gap: verticalScale(10),
+        position:"absolute",
+        bottom: verticalScale(40),
+        paddingTop: verticalScale(25),
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
     cancelButtonText: {
         fontSize: moderateScale(22),
         color: Color.Purple,
@@ -221,6 +241,17 @@ export const styles = StyleSheet.create({
         alignItems: "center"
     },
 
+    cancelButtonPassword: {
+        width: "43%",
+        height: verticalScale(45),
+        backgroundColor: Color.White,
+        borderRadius: moderateScale(10),
+        borderWidth: moderateScale(3),
+        borderColor: Color.Purple,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+
     saveButtonText: {
         fontSize: moderateScale(22),
         color: Color.White,
@@ -229,6 +260,16 @@ export const styles = StyleSheet.create({
 
     saveButton: {
         width: "46%",
+        height: verticalScale(45),
+        backgroundColor: Color.Purple,
+        borderRadius: moderateScale(10),
+        borderColor: Color.White,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+
+     saveButtonPassword: {
+        width: "43%",
         height: verticalScale(45),
         backgroundColor: Color.Purple,
         borderRadius: moderateScale(10),
