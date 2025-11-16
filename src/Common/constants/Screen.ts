@@ -9,6 +9,8 @@ export enum Screen {
   GameList = "GameList",
   Admin = "Admin",
   Profile = "Profile",
+  EditProfile = "EditProfile",
+  ChangePassword = "ChangePassword",
   SavedGames = "SavedGames",
   TipsUs = "TipsUs",
   Error = "Error"
