@@ -40,6 +40,12 @@ export interface SystemHealth {
   session: boolean
 }
 
+export interface ErrorLogCounts {
+  info: number,
+  warning: number,
+  critical: number
+}
+
 export interface BaseUser {
   id: string,
   username: string,
