@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Rulett",
+        "icon": "roulette.webp",
+        "screen": "Spin"
+    },
+    {
+        "name": "Quiz",
+        "icon": "quiz.webp",
+        "screen": "Quiz"
+    },
+    {
+        "name": "Challenge",
+        "icon": "spin.webp",
+        "screen": "Home"
+    },
+    {
+        "name": "Terning",
+        "icon": "",
+        "screen": "Home"
+    },
+    {
+        "name": "Imposter",
+        "icon": "",
+        "screen": "Home"
+    }
+]

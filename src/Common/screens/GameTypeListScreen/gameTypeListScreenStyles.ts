@@ -1,0 +1,115 @@
+import { StyleSheet } from "react-native";
+import Colors, { Color } from "../../constants/color";
+import { horizontalScale, moderateScale, verticalScale } from "../../utils/dimensions";
+import { Font } from "../../constants/Font";
+
+export const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Color.White,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    flexWrap: "wrap",
+    flexDirection: "row"
+  },
+
+  topWrapper: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-around",
+    alignItems: "center",
+    backgroundColor: Color.LightGray,
+    paddingTop: verticalScale(40),
+    paddingBottom: verticalScale(20)
+  },
+
+  header: {
+    marginTop: verticalScale(5),
+    paddingLeft: horizontalScale(10),
+    color: Colors.Purple,
+    fontSize: moderateScale(50),
+    fontWeight: 900,
+    fontFamily: Font.PassionOneBold
+  },
+
+  icon: {
+    fontSize: moderateScale(28)
+  },
+
+  borderWrapper: {
+    paddingTop: verticalScale(4),
+    flexDirection: "row",
+    width: horizontalScale(100)
+  },
+
+  borderLeft: {
+    backgroundColor: Color.Red,
+    borderTopLeftRadius: moderateScale(5),
+    borderBottomLeftRadius: moderateScale(5),
+    width: "100%",
+    height: verticalScale(7)
+  },
+
+  borderRight: {
+    borderTopRightRadius: moderateScale(5),
+    borderBottomRightRadius: moderateScale(5),
+    backgroundColor: Color.Green,
+    width: "100%",
+    height: verticalScale(7)
+  },
+
+  iconWrapper: {
+    backgroundColor: Color.LightGray,
+    borderRadius: moderateScale(10),
+    justifyContent: "center",
+    alignItems: "center",
+    height: verticalScale(40),
+    width: horizontalScale(40)
+  },
+
+  card: {
+    borderWidth: moderateScale(6.3),
+    borderColor: Color.Black,
+    height: verticalScale(220),
+    width: "45%",
+    borderRadius: moderateScale(20),
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  cardHeader: {
+    position: "absolute",
+    fontWeight: 800,
+    fontSize: moderateScale(28),
+    color: Color.White,
+    bottom: moderateScale(5),
+    left: moderateScale(15),
+    display: "flex",
+    paddingBottom: verticalScale(5)
+  },
+
+  cardSubheader: {
+    position: "absolute",
+    fontWeight: 600,
+    fontSize: moderateScale(18),
+    color: Color.White,
+    bottom: moderateScale(5),
+    left: moderateScale(15),
+    display: "flex",
+    paddingBottom: verticalScale(5)
+  },
+
+  paragraph: {
+    color: Color.Black,
+  },
+
+  imagePlaceholder: {
+    backgroundColor: Color.Purple,
+    width: "100%",
+    height: "100%",
+    borderRadius: moderateScale(13)
+  }
+});
+
+export default styles;

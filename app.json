@@ -1,33 +1,31 @@
 {
   "expo": {
-    "name": "buzzify",
-    "slug": "buzzify",
+    "name": "tero",
+    "slug": "tero",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./app/App/assets/images/icon.png",
-    "scheme": "myapp",
+    "icon": "./app/tero.png",
+    "scheme": "com.tero",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": ".app/App/assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+      "supportsTablet": true,
+      "infoPlist": {
+        "UIViewControllerBasedStatusBarAppearance": false,
+        "UIStatusBarHidden": false
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./app/App/assets/images/favicon.png"
+      "favicon": "./app/tero.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./app/App/assets/images/splash-icon.png",
+          "image": "./app/tero.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
