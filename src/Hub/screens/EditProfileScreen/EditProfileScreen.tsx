@@ -105,7 +105,6 @@ export const EditProfileScreen = () => {
       return;
     }
 
-    console.warn(result.value);
     navigation.goBack();
   }
 

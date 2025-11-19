@@ -1,7 +1,7 @@
 import Color from "@/src/common/constants/color";
 import { horizontalScale, moderateScale, verticalScale } from "@/src/common/utils/dimensions";
 import { StyleSheet } from "react-native";
-import { Font } from "../../../common/constants/Font";
+import { Font } from "../../../common/constants/font";
 import { handleUrlParams } from "expo-router/build/fork/getStateFromPath-forks";
 
 export const styles = StyleSheet.create({

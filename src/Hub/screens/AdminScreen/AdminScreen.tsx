@@ -117,6 +117,8 @@ export const AdminScreen = () => {
         </Pressable>
       </View>
 
+      <Text>Redirect uri: {redirectUri}</Text>
+
       <Pressable onPress={handleErrorLogCardClick} style={styles.healthCard}>
         <View style={styles.healthWrapper}>
           <Text style={styles.errorLogTextBold}>Info</Text>
@@ -132,7 +134,6 @@ export const AdminScreen = () => {
         </View>
       </Pressable>
 
-      <Text>Redirect uri: {redirectUri}</Text>
       <View style={styles.healthCard}>
         <View style={styles.healthWrapper}>
           <Text style={styles.healthText}>Platform</Text>

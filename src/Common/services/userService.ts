@@ -26,9 +26,9 @@ export class UserService {
         try {
             let url: string;
             if (pseudo_id) {
-                url = `${this.#baseUrl}/pseudo-users/ensure?pseudo_id=${pseudo_id}`;
+                url = `${this.#baseUrl}/pseudo-users?pseudo_id=${pseudo_id}`;
             } else {
-                url = `${this.#baseUrl}/pseudo-users/ensure`;
+                url = `${this.#baseUrl}/pseudo-users`;
             }
 
             const response = await axios.post<string>(url);
@@ -146,23 +146,9 @@ export class UserService {
         }
     }
 
-    async getConfig(token: string): Promise<Result<void>> {
-        try {
-            await axios.get(`${this.#baseUrl}/config`, {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-            return ok();
-        } catch (error) {
-            console.log("getConfig:", error);
-            return err("Klarte ikke hente config");
-        }
-    }
-
     async getGlobalPopup(): Promise<Result<ClientPopup>> {
         try {
-            const url = `${this.#baseUrl}/popups`;
+            const url = `${this.#baseUrl}/pseudo-users/popups`;
             const response = await axios.get<ClientPopup>(url);
             console.log(response.data);
             return ok(response.data)

@@ -54,7 +54,7 @@ export class GameService {
 
     async saveGame(token: string, game_id: string): Promise<Result<void>> {
         try {
-            await axios.post(`${this.#urlBase}/games/${game_id}/saved`, {}, {
+            await axios.post(`${this.#urlBase}/games/general/save/${game_id}`, {}, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -69,7 +69,7 @@ export class GameService {
 
     async unsaveGame(token: string, game_id: string): Promise<Result<void>> {
         try {
-            await axios.delete(`${this.#urlBase}/games/${game_id}/saved`, {
+            await axios.delete(`${this.#urlBase}/games/general/unsave/${game_id}`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -84,8 +84,7 @@ export class GameService {
 
     async getSavedGames(token: string, page_num: number): Promise<Result<PagedResponse<GameBase>>> {
         try {
-            const response = await axios.get(`${this.#urlBase}/games/saved`, {
-                params: { page_num },
+            const response = await axios.get(`${this.#urlBase}/games/general/saved?page_num=${page_num}`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -100,7 +99,7 @@ export class GameService {
 
     async getGamePage<T>(guest_id: string, request: GamePageQuery): Promise<Result<PagedResponse<T>>> {
         try {
-            const response = await axios.post(`${this.#urlBase}/games`, request, {
+            const response = await axios.post(`${this.#urlBase}/games/general/page`, request, {
                 headers: getHeaders(guest_id, null)
             });
 
