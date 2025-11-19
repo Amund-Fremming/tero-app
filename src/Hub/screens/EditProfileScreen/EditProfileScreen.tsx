@@ -4,8 +4,8 @@ import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { useEffect, useState } from "react";
 import { BaseUser, Gender, PatchUserRequest } from "@/src/common/constants/types";
 import { useServiceProvider } from "@/src/common/context/ServiceProvider";
-import { useNavigation } from '@react-navigation/native';
-import { Feather } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
+import { Feather } from "@expo/vector-icons";
 import Color from "@/src/common/constants/color";
 import { TextInput } from "react-native-gesture-handler";
 import { useModalProvider } from "@/src/common/context/ModalProvider";
@@ -19,48 +19,59 @@ export const EditProfileScreen = () => {
 
   const [userData, setUserData] = useState<BaseUser | undefined>(undefined);
   const [patchRequest, setPatchRequest] = useState<PatchUserRequest>({});
-  const [birthDate, setBirthDate] = useState<string>("");
+  const [birthDateDisplay, setBirthDateDisplay] = useState<string>("");
 
-  const handleBirthDateChange = (text: string) => {
-    const cleaned = text.replace(/[^0-9]/g, '');
+  const handleBirthDateChangeIso = (text: string) => {
+    // Remove all non-numeric characters
+    const cleaned = text.replace(/[^0-9]/g, "");
 
-    let formatted = cleaned;
-    if (cleaned.length >= 2) {
-      formatted = cleaned.slice(0, 2);
-      if (cleaned.length >= 4) {
-        formatted += '.' + cleaned.slice(2, 4);
-        if (cleaned.length >= 8) {
-          formatted += '.' + cleaned.slice(4, 8);
-        } else if (cleaned.length > 4) {
-          formatted += '.' + cleaned.slice(4);
+    // Limit to 8 digits max (YYYYMMDD)
+    const limited = cleaned.slice(0, 8);
+
+    // Format for display: YYYY-MM-DD
+    let formatted = limited;
+    if (limited.length >= 5) {
+      formatted = limited.slice(0, 4) + "-" + limited.slice(4);
+    }
+    if (limited.length >= 7) {
+      formatted = limited.slice(0, 4) + "-" + limited.slice(4, 6) + "-" + limited.slice(6);
+    }
+
+    // Update display value
+    setBirthDateDisplay(formatted);
+
+    // Only update ISO date if we have complete date (8 digits)
+    if (limited.length === 8) {
+      const year = parseInt(limited.slice(0, 4), 10);
+      const month = parseInt(limited.slice(4, 6), 10);
+      const day = parseInt(limited.slice(6, 8), 10);
+
+      // Validate the date
+      if (year >= 1900 && year <= new Date().getFullYear() && month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+        const date = new Date(year, month - 1, day);
+
+        // Check if date is valid (handles invalid dates like Feb 30)
+        if (date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day) {
+          const isoDate = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+          setPatchRequest((prev) => ({
+            ...prev,
+            birth_date: isoDate,
+          }));
+          return;
         }
-      } else if (cleaned.length > 2) {
-        formatted += '.' + cleaned.slice(2);
       }
     }
 
-    if (formatted.length === 10) {
-      const [day, month, year] = formatted.split('.').map(Number);
-      const date = new Date(year, month - 1, day);
-
-      if (
-        date.getFullYear() === year &&
-        date.getMonth() === month - 1 &&
-        date.getDate() === day &&
-        day >= 1 && day <= 31 &&
-        month >= 1 && month <= 12 &&
-        year >= 1900 && year <= new Date().getFullYear()
-      ) {
-        setBirthDate(formatted);
-      }
-    } else {
-      setBirthDate(formatted);
-    }
-  }
+    // Clear ISO date if incomplete or invalid
+    setPatchRequest((prev) => ({
+      ...prev,
+      birth_date: undefined,
+    }));
+  };
 
   useEffect(() => {
     fetchUserData();
-  }, [accessToken])
+  }, [accessToken]);
 
   useEffect(() => {
     setPatchRequest({
@@ -68,8 +79,13 @@ export const EditProfileScreen = () => {
       gender: userData?.gender,
       family_name: userData?.family_name,
       given_name: userData?.given_name,
-      birth_date: userData?.birth_date
-    })
+      birth_date: userData?.birth_date,
+    });
+
+    // Set display value from existing birth_date
+    if (userData?.birth_date) {
+      setBirthDateDisplay(userData.birth_date);
+    }
   }, [userData]);
 
   const fetchUserData = async () => {
@@ -86,7 +102,7 @@ export const EditProfileScreen = () => {
     const userData = result.value.user;
     setUserData(userData);
     return;
-  }
+  };
 
   const handlePatchUser = async () => {
     if (!accessToken) {
@@ -101,12 +117,12 @@ export const EditProfileScreen = () => {
 
     const result = await userService().patchUser(accessToken, userData?.id, patchRequest);
     if (result.isError()) {
-      displayErrorModal(result.error);
+      displayErrorModal("Noe gikk galt. Sjekk at du har fylt inn gyldig data");
       return;
     }
 
     navigation.goBack();
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -128,26 +144,41 @@ export const EditProfileScreen = () => {
           >
             <View style={styles.inputWrapper}>
               <Text style={styles.inputLabel}>Fornavn</Text>
-              <TextInput onChangeText={input => setPatchRequest(prev => ({ ...prev, given_name: input }))} style={styles.input} value={patchRequest.given_name} placeholder="Skriv inn fornavn" />
+              <TextInput
+                onChangeText={(input) => setPatchRequest((prev) => ({ ...prev, given_name: input }))}
+                style={styles.input}
+                value={patchRequest.given_name}
+                placeholder="Skriv inn fornavn"
+              />
             </View>
 
             <View style={styles.inputWrapper}>
               <Text style={styles.inputLabel}>Etternavn</Text>
-              <TextInput onChangeText={input => setPatchRequest(prev => ({ ...prev, family_name: input }))} style={styles.input} value={patchRequest.family_name} placeholder="Skriv inn etternavn" />
+              <TextInput
+                onChangeText={(input) => setPatchRequest((prev) => ({ ...prev, family_name: input }))}
+                style={styles.input}
+                value={patchRequest.family_name}
+                placeholder="Skriv inn etternavn"
+              />
             </View>
 
             <View style={styles.inputWrapper}>
               <Text style={styles.inputLabel}>Brukernavn</Text>
-              <TextInput onChangeText={input => setPatchRequest(prev => ({ ...prev, username: input }))} style={styles.input} value={patchRequest.username} placeholder="Velg brukernavn" />
+              <TextInput
+                onChangeText={(input) => setPatchRequest((prev) => ({ ...prev, username: input }))}
+                style={styles.input}
+                value={patchRequest.username}
+                placeholder="Velg brukernavn"
+              />
             </View>
 
             <View style={styles.inputWrapper}>
               <Text style={styles.inputLabel}>Fødselsdato</Text>
               <TextInput
                 style={styles.input}
-                value={birthDate}
-                onChangeText={handleBirthDateChange}
-                placeholder="dd.mm.yyyy"
+                value={birthDateDisplay}
+                onChangeText={handleBirthDateChangeIso}
+                placeholder="YYYY-MM-DD"
                 keyboardType="numeric"
                 maxLength={10}
               />
@@ -157,40 +188,43 @@ export const EditProfileScreen = () => {
               <Text style={styles.inputLabel}>Kjønn</Text>
               <View style={styles.genderButtonContainer}>
                 <Pressable
-                  style={[
-                    styles.genderButton,
-                    patchRequest?.gender === Gender.Male && styles.genderButtonSelected
-                  ]}
-                  onPress={() => setPatchRequest(prev => ({ ...prev, gender: Gender.Male }))}
+                  style={[styles.genderButton, patchRequest?.gender === Gender.Male && styles.genderButtonSelected]}
+                  onPress={() => setPatchRequest((prev) => ({ ...prev, gender: Gender.Male }))}
                 >
-                  <Text style={[
-                    styles.genderButtonText,
-                    patchRequest?.gender === Gender.Male && styles.genderButtonTextSelected
-                  ]}>Mann</Text>
+                  <Text
+                    style={[
+                      styles.genderButtonText,
+                      patchRequest?.gender === Gender.Male && styles.genderButtonTextSelected,
+                    ]}
+                  >
+                    Mann
+                  </Text>
                 </Pressable>
                 <Pressable
-                  style={[
-                    styles.genderButton,
-                    patchRequest?.gender === Gender.Female && styles.genderButtonSelected
-                  ]}
-                  onPress={() => setPatchRequest(prev => ({ ...prev, gender: Gender.Female }))}
+                  style={[styles.genderButton, patchRequest?.gender === Gender.Female && styles.genderButtonSelected]}
+                  onPress={() => setPatchRequest((prev) => ({ ...prev, gender: Gender.Female }))}
                 >
-                  <Text style={[
-                    styles.genderButtonText,
-                    patchRequest?.gender === Gender.Female && styles.genderButtonTextSelected
-                  ]}>Kvinne</Text>
+                  <Text
+                    style={[
+                      styles.genderButtonText,
+                      patchRequest?.gender === Gender.Female && styles.genderButtonTextSelected,
+                    ]}
+                  >
+                    Kvinne
+                  </Text>
                 </Pressable>
                 <Pressable
-                  style={[
-                    styles.genderButton,
-                    patchRequest?.gender === Gender.Unknown && styles.genderButtonSelected
-                  ]}
-                  onPress={() => setPatchRequest(prev => ({ ...prev, gender: Gender.Unknown }))}
+                  style={[styles.genderButton, patchRequest?.gender === Gender.Unknown && styles.genderButtonSelected]}
+                  onPress={() => setPatchRequest((prev) => ({ ...prev, gender: Gender.Unknown }))}
                 >
-                  <Text style={[
-                    styles.genderButtonText,
-                    (userData == undefined || userData?.gender === Gender.Unknown) && styles.genderButtonTextSelected
-                  ]}>Annet</Text>
+                  <Text
+                    style={[
+                      styles.genderButtonText,
+                      (userData == undefined || userData?.gender === Gender.Unknown) && styles.genderButtonTextSelected,
+                    ]}
+                  >
+                    Annet
+                  </Text>
                 </Pressable>
               </View>
             </View>
@@ -207,7 +241,7 @@ export const EditProfileScreen = () => {
         </View>
       </View>
     </View>
-  )
-}
+  );
+};
 
 export default EditProfileScreen;

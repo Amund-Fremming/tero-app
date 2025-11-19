@@ -3,7 +3,6 @@
 - change password funk
 - bytt passord
 - style create game pages
-- service add get log stats
 
 **Etter session er på plass**
 

@@ -40,7 +40,7 @@ export interface SystemHealth {
   session: boolean
 }
 
-export interface ErrorLogCounts {
+export interface LogCategoryCount {
   info: number,
   warning: number,
   critical: number

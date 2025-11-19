@@ -1,37 +1,55 @@
 import axios from "axios";
 import { err, ok, Result } from "../utils/result";
-import { SystemHealth } from "../constants/types";
+import { LogCategoryCount, SystemHealth } from "../constants/types";
+import { getHeaders } from "./utils";
 
 export class CommonService {
-    #urlBase: string;
+  #urlBase: string;
 
-    constructor(urlBase: string) {
-        this.#urlBase = urlBase;
-    }
+  constructor(urlBase: string) {
+    this.#urlBase = urlBase;
+  }
 
-    async health(): Promise<Result<string>> {
-        try {
-            const url = `${this.#urlBase}/health`
-            const response = await axios.get(url);
-            console.log(response.data)
-            if (response.data !== "OK") {
-                console.error("Server is down");
-                return err("Server er nede, prøv igjen senere");
-            }
-            return ok(response.data)
-        } catch (error) {
-            console.error("health:", error);
-            return err("health check failed");
-        }
+  async health(): Promise<Result<string>> {
+    try {
+      const url = `${this.#urlBase}/health`;
+      const response = await axios.get(url);
+      console.log(response.data);
+      if (response.data !== "OK") {
+        console.error("Server is down");
+        return err("Server er nede, prøv igjen senere");
+      }
+      return ok(response.data);
+    } catch (error) {
+      console.error("health:", error);
+      return err("health check failed");
     }
+  }
 
-    async healthDetailed(): Promise<Result<SystemHealth>> {
-        try {
-            const url = `${this.#urlBase}/health/detailed`
-            const response = await axios.get(url);
-            return ok(response.data)
-        } catch (error) {
-            return err("health detailed check failed");
-        }
+  async healthDetailed(): Promise<Result<SystemHealth>> {
+    try {
+      const url = `${this.#urlBase}/health/detailed`;
+      const response = await axios.get(url);
+      return ok(response.data);
+    } catch (error) {
+      return err("health detailed check failed");
     }
+  }
+
+  /* Move to admin service? */
+
+  async getLogCounts(token: string): Promise<Result<LogCategoryCount>> {
+    try {
+      const url = `${this.#urlBase}/logs/count`;
+      const response = await axios.get<LogCategoryCount>(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return ok(response.data);
+    } catch (error) {
+      console.error("getLogCounts:", error);
+      return err("Failed to get error log counts");
+    }
+  }
 }

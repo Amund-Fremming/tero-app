@@ -86,7 +86,7 @@ export const styles = StyleSheet.create({
 
     buttonWrapper: {
         paddingTop: verticalScale(25),
-        width: "90%",
+        width: "100%",
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",
@@ -99,7 +99,7 @@ export const styles = StyleSheet.create({
     },
 
     cancelButton: {
-        width: "46%",
+        width: "43%",
         height: verticalScale(45),
         backgroundColor: Color.White,
         borderRadius: moderateScale(10),
@@ -116,7 +116,7 @@ export const styles = StyleSheet.create({
     },
 
     saveButton: {
-        width: "46%",
+        width: "43%",
         height: verticalScale(45),
         backgroundColor: Color.Purple,
         borderRadius: moderateScale(10),

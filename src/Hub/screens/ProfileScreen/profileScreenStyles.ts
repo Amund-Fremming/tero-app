@@ -180,7 +180,7 @@ export const styles = StyleSheet.create({
         height: verticalScale(60),
         borderRadius: moderateScale(15),
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "flex-start",
         display: "flex",
         flexDirection: "row"
     },
@@ -195,8 +195,10 @@ export const styles = StyleSheet.create({
     },
 
     buttonText: {
-        paddingRight: horizontalScale(110),
-        fontSize: moderateScale(18)
+        flex: 1,
+        paddingLeft: horizontalScale(15),
+        fontSize: moderateScale(18),
+        textAlign: "left"
     },
 
     crown: {

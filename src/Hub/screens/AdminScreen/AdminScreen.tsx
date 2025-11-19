@@ -7,7 +7,7 @@ import { useNavigation } from "expo-router";
 import { screenHeight, verticalScale } from "@/src/common/utils/dimensions";
 import Color from "@/src/common/constants/color";
 import { useModalProvider } from "@/src/common/context/ModalProvider";
-import { ActivityStats, ClientPopup, ErrorLogCounts, SystemHealth } from "@/src/common/constants/types";
+import { ActivityStats, ClientPopup, LogCategoryCount, SystemHealth } from "@/src/common/constants/types";
 
 export const AdminScreen = () => {
   const navigation: any = useNavigation();
@@ -19,12 +19,12 @@ export const AdminScreen = () => {
   const [systemHealth, setSystemHealth] = useState<SystemHealth>({
     platform: false,
     session: false,
-    database: false
+    database: false,
   });
-  const [errorLogCounts, setErrorLogCounts] = useState<ErrorLogCounts>({
+  const [logCategoryCount, setLogCategoryCount] = useState<LogCategoryCount>({
     info: 0,
     warning: 0,
-    critical: 0
+    critical: 0,
   });
   const [stats, setStats] = useState<ActivityStats | undefined>(undefined);
   const [popup, setPopup] = useState<ClientPopup | undefined>(undefined);
@@ -34,7 +34,23 @@ export const AdminScreen = () => {
     getHealth();
     getUserActivityStats();
     getClientPopup();
+    getLogCategoryCount();
   }, []);
+
+  const getLogCategoryCount = async () => {
+    if (!accessToken) {
+      console.error("Access token was not present");
+      return;
+    }
+
+    const result = await commonService().getLogCounts(accessToken);
+    if (result.isError()) {
+      displayErrorModal("Klarte ikke hente log stats");
+      return;
+    }
+
+    setLogCategoryCount(result.value);
+  };
 
   const getHealth = async () => {
     const result = await commonService().healthDetailed();
@@ -44,7 +60,7 @@ export const AdminScreen = () => {
     }
 
     setSystemHealth(result.value);
-  }
+  };
 
   const getUserActivityStats = async () => {
     if (!accessToken) {
@@ -59,7 +75,7 @@ export const AdminScreen = () => {
     }
 
     setStats(result.value);
-  }
+  };
 
   const getClientPopup = async () => {
     const result = await userService().getGlobalPopup();
@@ -68,8 +84,8 @@ export const AdminScreen = () => {
       return;
     }
 
-    setPopup(result.value)
-  }
+    setPopup(result.value);
+  };
 
   const handleUpdateModal = async () => {
     if (!accessToken) {
@@ -90,11 +106,11 @@ export const AdminScreen = () => {
 
     setPopup(result.value);
     setPopupEditing(false);
-  }
+  };
 
   const handleErrorLogCardClick = () => {
     // TODO: Implement error log card click handler
-  }
+  };
 
   return (
     <ScrollView
@@ -122,15 +138,15 @@ export const AdminScreen = () => {
       <Pressable onPress={handleErrorLogCardClick} style={styles.healthCard}>
         <View style={styles.healthWrapper}>
           <Text style={styles.errorLogTextBold}>Info</Text>
-          <Text style={[styles.errorLogTextBold, { color: Color.Green }]}>{errorLogCounts.info}</Text>
+          <Text style={[styles.errorLogTextBold, { color: Color.Green }]}>{logCategoryCount.info}</Text>
         </View>
         <View style={styles.healthWrapper}>
           <Text style={styles.errorLogTextBold}>Warning</Text>
-          <Text style={[styles.errorLogTextBold, { color: Color.Yellow }]}>{errorLogCounts.warning}</Text>
+          <Text style={[styles.errorLogTextBold, { color: Color.Yellow }]}>{logCategoryCount.warning}</Text>
         </View>
         <View style={styles.healthWrapper}>
           <Text style={styles.errorLogTextBold}>Critical</Text>
-          <Text style={[styles.errorLogTextBold, { color: Color.Red }]}>{errorLogCounts.critical}</Text>
+          <Text style={[styles.errorLogTextBold, { color: Color.Red }]}>{logCategoryCount.critical}</Text>
         </View>
       </Pressable>
 
@@ -148,96 +164,86 @@ export const AdminScreen = () => {
           <Text style={styles.healthText}>{systemHealth.session ? "✅" : "❌"}</Text>
         </View>
       </View>
-      {
-        !stats && (
-          // TODO - load again button
-          <View style={styles.healthCard}>
-            <Text style={styles.healthText}>Klarte ikke laste stats...</Text>
+      {!stats && (
+        // TODO - load again button
+        <View style={styles.healthCard}>
+          <Text style={styles.healthText}>Klarte ikke laste stats...</Text>
+        </View>
+      )}
+      {stats && (
+        <View style={styles.healthCard}>
+          <Text>Brukere</Text>
+          <View style={styles.healthWrapper}>
+            <Text style={styles.healthText}>I dag</Text>
+            <Text style={styles.healthText}>{stats.recent.todays_users}</Text>
           </View>
-        )
-      }
-      {
-        stats && (
-          <View style={styles.healthCard}>
-            <Text>Brukere</Text>
-            <View style={styles.healthWrapper}>
-              <Text style={styles.healthText}>I dag</Text>
-              <Text style={styles.healthText}>{stats.recent.todays_users}</Text>
-            </View>
-            <View style={styles.healthWrapper}>
-              <Text style={styles.healthText}>Denne uken</Text>
-              <Text style={styles.healthText}>{stats.recent.this_week_users}</Text>
-            </View>
-            <View style={styles.healthWrapper}>
-              <Text style={styles.healthText}>Denne måneden</Text>
-              <Text style={styles.healthText}>{stats.recent.this_month_users}</Text>
-            </View>
+          <View style={styles.healthWrapper}>
+            <Text style={styles.healthText}>Denne uken</Text>
+            <Text style={styles.healthText}>{stats.recent.this_week_users}</Text>
           </View>
-        )
-      }
-      {
-        stats && (
-          <View style={styles.healthCard}>
-            <Text>Brukere</Text>
-            <View style={styles.healthWrapper}>
-              <Text style={styles.healthText}>Daglig</Text>
-              <Text style={styles.healthText}>{stats.average.avg_daily_users}</Text>
-            </View>
-            <View style={styles.healthWrapper}>
-              <Text style={styles.healthText}>Ukentlig</Text>
-              <Text style={styles.healthText}>{stats.average.avg_daily_users}</Text>
-            </View>
-            <View style={styles.healthWrapper}>
-              <Text style={styles.healthText}>Månedlig</Text>
-              <Text style={styles.healthText}>{stats.average.avg_month_users}</Text>
-            </View>
-            <View style={styles.healthWrapper}>
-              <Text style={styles.healthText}>Totalt</Text>
-              <Text style={styles.healthText}>{stats.total_user_count}</Text>
-            </View>
+          <View style={styles.healthWrapper}>
+            <Text style={styles.healthText}>Denne måneden</Text>
+            <Text style={styles.healthText}>{stats.recent.this_month_users}</Text>
           </View>
-        )
-      }
+        </View>
+      )}
+      {stats && (
+        <View style={styles.healthCard}>
+          <Text>Brukere</Text>
+          <View style={styles.healthWrapper}>
+            <Text style={styles.healthText}>Daglig</Text>
+            <Text style={styles.healthText}>{stats.average.avg_daily_users}</Text>
+          </View>
+          <View style={styles.healthWrapper}>
+            <Text style={styles.healthText}>Ukentlig</Text>
+            <Text style={styles.healthText}>{stats.average.avg_daily_users}</Text>
+          </View>
+          <View style={styles.healthWrapper}>
+            <Text style={styles.healthText}>Månedlig</Text>
+            <Text style={styles.healthText}>{stats.average.avg_month_users}</Text>
+          </View>
+          <View style={styles.healthWrapper}>
+            <Text style={styles.healthText}>Totalt</Text>
+            <Text style={styles.healthText}>{stats.total_user_count}</Text>
+          </View>
+        </View>
+      )}
 
-      {
-        !popup && (
-          // TODO - load again button
-          <View style={styles.healthCard}>
-            <Text style={styles.healthText}>Klarte ikke laste modal...</Text>
-          </View>
-        )
-      }
-      {
-        popup && !popupEditing && (
-          <View style={styles.healthCard}>
-            <Pressable style={styles.activeButton}>
-              <Text style={styles.modalIndicator}>{popup.active ? "✅" : "❌"}</Text>
-            </Pressable>
-            <Text>Popup</Text>
-            <Text style={styles.healthText}>{popup.heading}</Text>
-            <Text style={styles.healthText}>{popup.paragraph}</Text>
-            <Pressable onPress={() => setPopupEditing(true)} style={styles.popupButton}>
-              <Text style={styles.popupText}>Rediger</Text>
-            </Pressable>
-          </View>
-        )
-      }
-      {
-        popup && popupEditing && (
-          <View style={styles.healthCard}>
-            <Pressable onPress={() => setPopup(prev => prev ? { ...prev, active: !prev.active } : prev)} style={styles.activeButton}>
-              <Text style={styles.modalIndicator}>{popup.active ? "✅" : "❌"}</Text>
-            </Pressable>
-            <Text>Popup</Text>
-            <Text style={styles.healthText}>{popup.heading}</Text>
-            <Text style={styles.healthText}>{popup.paragraph}</Text>
-            <Pressable onPress={handleUpdateModal} style={styles.popupButton}>
-              <Text style={styles.popupText}>Lagre</Text>
-            </Pressable>
-          </View>
-        )
-      }
-
+      {!popup && (
+        // TODO - load again button
+        <View style={styles.healthCard}>
+          <Text style={styles.healthText}>Klarte ikke laste modal...</Text>
+        </View>
+      )}
+      {popup && !popupEditing && (
+        <View style={styles.healthCard}>
+          <Pressable style={styles.activeButton}>
+            <Text style={styles.modalIndicator}>{popup.active ? "✅" : "❌"}</Text>
+          </Pressable>
+          <Text>Popup</Text>
+          <Text style={styles.healthText}>{popup.heading}</Text>
+          <Text style={styles.healthText}>{popup.paragraph}</Text>
+          <Pressable onPress={() => setPopupEditing(true)} style={styles.popupButton}>
+            <Text style={styles.popupText}>Rediger</Text>
+          </Pressable>
+        </View>
+      )}
+      {popup && popupEditing && (
+        <View style={styles.healthCard}>
+          <Pressable
+            onPress={() => setPopup((prev) => (prev ? { ...prev, active: !prev.active } : prev))}
+            style={styles.activeButton}
+          >
+            <Text style={styles.modalIndicator}>{popup.active ? "✅" : "❌"}</Text>
+          </Pressable>
+          <Text>Popup</Text>
+          <Text style={styles.healthText}>{popup.heading}</Text>
+          <Text style={styles.healthText}>{popup.paragraph}</Text>
+          <Pressable onPress={handleUpdateModal} style={styles.popupButton}>
+            <Text style={styles.popupText}>Lagre</Text>
+          </Pressable>
+        </View>
+      )}
     </ScrollView>
   );
 };

@@ -4,10 +4,11 @@ import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { useEffect, useState } from "react";
 import { BaseUser, UserRole } from "@/src/common/constants/types";
 import { useServiceProvider } from "@/src/common/context/ServiceProvider";
-import { useNavigation } from '@react-navigation/native';
-import { Feather } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
+import { Feather } from "@expo/vector-icons";
 import Color from "@/src/common/constants/color";
 import Screen from "@/src/common/constants/screen";
+import { horizontalScale } from "@/src/common/utils/dimensions";
 
 export const ProfileScreen = () => {
   const navigation: any = useNavigation();
@@ -21,7 +22,7 @@ export const ProfileScreen = () => {
   const [avatar, setAvatar] = useState<string>("");
   const [userData, setUserData] = useState<BaseUser | undefined>(undefined);
 
-  const crown = require("../../../common/assets/images/crown.png")
+  const crown = require("../../../common/assets/images/crown.png");
 
   useEffect(() => {
     if (!pseudoId) {
@@ -34,7 +35,7 @@ export const ProfileScreen = () => {
 
   useEffect(() => {
     fetchUserData();
-  }, [accessToken])
+  }, [accessToken]);
 
   const fetchUserData = async () => {
     if (!pseudoId) {
@@ -59,7 +60,7 @@ export const ProfileScreen = () => {
     setUserData(userData);
     setAvatar(userService().getProfilePicture(pseudoId, userData.username));
     return;
-  }
+  };
 
   const handleLogout = async () => {
     const success = await triggerLogout();
@@ -70,13 +71,11 @@ export const ProfileScreen = () => {
     }
 
     navigation.goBack();
-  }
+  };
 
   if (!isLoggedIn) {
     navigation.goBack();
-    return (
-      <View />
-    );
+    return <View />;
   }
 
   return (
@@ -86,29 +85,27 @@ export const ProfileScreen = () => {
           <Feather name="chevron-left" size={32} color={Color.Black} />
         </Pressable>
 
-        {
-          isAdmin && (
-            <Pressable onPress={() => navigation.navigate(Screen.Admin)} style={styles.adminButton}>
-              <Text style={styles.adminText}>dashboard</Text>
-            </Pressable>
-          )
-        }
+        {isAdmin && (
+          <Pressable onPress={() => navigation.navigate(Screen.Admin)} style={styles.adminButton}>
+            <Text style={styles.adminText}>dashboard</Text>
+          </Pressable>
+        )}
 
-        {isLoggedIn && (<Pressable onPress={handleLogout}>
-          <Feather name="log-out" size={26} color={Color.Black} />
-        </Pressable>)}
+        {isLoggedIn && (
+          <Pressable onPress={handleLogout}>
+            <Feather name="log-out" size={26} color={Color.Black} />
+          </Pressable>
+        )}
       </View>
 
       <View style={styles.loggedIn}>
         <View style={styles.imageCard}>
-          {
-            isAdmin && (
-              <Image source={crown} style={styles.crown} />
-            )
-          }
+          {isAdmin && <Image source={crown} style={styles.crown} />}
           <Image source={{ uri: avatar }} style={styles.image} />
         </View>
-        <Text style={styles.name}>{userData?.given_name} {userData?.family_name}</Text>
+        <Text style={styles.name}>
+          {userData?.given_name} {userData?.family_name}
+        </Text>
         <Text style={styles.username}>@{userData?.username}</Text>
 
         <View style={styles.layover}>
@@ -117,33 +114,33 @@ export const ProfileScreen = () => {
               <Feather name="edit" size={30} color={Color.Black} />
             </View>
             <Text style={styles.buttonText}>Rediger profil</Text>
-            <Feather name="chevron-right" size={24} color={Color.Black} />
+            <Feather name="chevron-right" size={32} color={Color.Black} style={{ marginRight: horizontalScale(10) }} />
           </Pressable>
           <Pressable onPress={() => navigation.navigate(Screen.ChangePassword)} style={styles.bigButton}>
             <View style={styles.iconGuard}>
               <Feather name="lock" size={28} color={Color.Black} />
             </View>
             <Text style={styles.buttonText}>Bytt passord</Text>
-            <Feather name="chevron-right" size={28} color={Color.Black} />
+            <Feather name="chevron-right" size={32} color={Color.Black} style={{ marginRight: horizontalScale(10) }} />
           </Pressable>
           <Pressable onPress={() => navigation.navigate(Screen.TipsUs)} style={styles.bigButton}>
             <View style={styles.iconGuard}>
               <Feather name="sun" size={28} color={Color.Black} />
             </View>
             <Text style={styles.buttonText}>Tips oss</Text>
-            <Feather name="chevron-right" size={28} color={Color.Black} />
+            <Feather name="chevron-right" size={32} color={Color.Black} style={{ marginRight: horizontalScale(10) }} />
           </Pressable>
           <Pressable onPress={() => navigation.navigate(Screen.SavedGames)} style={styles.bigButton}>
             <View style={styles.iconGuard}>
               <Feather name="play" size={28} color={Color.Black} />
             </View>
             <Text style={styles.buttonText}>Dine spill</Text>
-            <Feather name="chevron-right" size={28} color={Color.Black} />
+            <Feather name="chevron-right" size={32} color={Color.Black} style={{ marginRight: horizontalScale(10) }} />
           </Pressable>
         </View>
       </View>
     </View>
-  )
-}
+  );
+};
 
 export default ProfileScreen;
