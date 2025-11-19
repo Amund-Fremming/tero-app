@@ -1,12 +1,12 @@
 import { Image, Pressable, Text, View } from "react-native";
 import { styles } from "./profileScreenStyles";
-import { useAuthProvider } from "@/src/Common/context/AuthProvider";
+import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { useEffect, useState } from "react";
 import { BaseUser, UserRole } from "@/src/common/constants/types";
-import { useServiceProvider } from "@/src/Common/context/ServiceProvider";
+import { useServiceProvider } from "@/src/common/context/ServiceProvider";
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
-import Color from "@/src/Common/constants/Color";
+import Color from "@/src/common/constants/color";
 import Screen from "@/src/common/constants/screen";
 
 export const ProfileScreen = () => {
