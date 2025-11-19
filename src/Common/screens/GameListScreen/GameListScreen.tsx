@@ -18,7 +18,7 @@ export const GameListScreen = () => {
 
   const { displayErrorModal, displayActionModal } = useModalProvider();
   const { pseudoId, accessToken } = useAuthProvider();
-  const { setUniversalGameValues, gameType } = useGlobalGameProvider();
+  const { gameType } = useGlobalGameProvider();
   const { gameService } = useServiceProvider();
 
   const [hasPrev, setHasPrev] = useState<boolean>(false);

@@ -1,5 +1,4 @@
 import styles from "./gameTypeListScreenStyles";
-import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
 import data from "./data.json";
 import { View, Text, Pressable, ScrollView, Dimensions, Image } from "react-native";
 import React from "react";

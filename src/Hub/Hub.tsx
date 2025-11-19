@@ -10,9 +10,11 @@ import HubScreen from "./screens/HubScreen/HubScreen";
 import JoinScreen from "./screens/JoinScreen/JoinScreen";
 import Screen from "../common/constants/screen";
 import AdminScreen from "./screens/AdminScreen/AdminScreen";
-import GameTypeListScreen from "../common/screens/GameTypeListScreen/GameTypeListScreen";
-import GameListScreen from "../common/screens/GameListScreen/GameListScreen";
+import GameTypeListScreen from "../Common/screens/gameTypeListScreen/GameTypeListScreen";
+import GameListScreen from "../Common/screens/gameListScreen/GameListScreen";
 import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
+import EditProfileScreen from "./screens/EditProfileScreen/EditProfileScreen";
+import ChangePasswordScreen from "./screens/ChangePasswordScreen/ChangePasswordScreen";
 import { SavedGamesScreen } from "./screens/SavedGamesScreen/SavedGamesScreen";
 import { TipsUsScreen } from "../common/screens/TipsUsScreen/TipsUsScreen";
 import { ErrorScreen } from "./screens/ErrorScreen/ErrorScreen";
@@ -31,6 +33,8 @@ export const Hub = () => {
     >
       <Stack.Screen name={Screen.Home} component={HomeScreen} />
       <Stack.Screen name={Screen.Profile} component={ProfileScreen} />
+      <Stack.Screen name={Screen.EditProfile} component={EditProfileScreen} />
+      <Stack.Screen name={Screen.ChangePassword} component={ChangePasswordScreen} />
       <Stack.Screen name={Screen.Hub} component={HubScreen} />
       <Stack.Screen name={Screen.Join} component={JoinScreen} />
       <Stack.Screen name={Screen.SpinGame} component={SpinGame} />
