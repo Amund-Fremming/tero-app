@@ -89,6 +89,12 @@ export const styles = StyleSheet.create({
     fontWeight: 400
   },
 
+  errorLogTextBold: {
+    fontFamily: Font.SintonyBold,
+    fontSize: moderateScale(20),
+    fontWeight: "bold"
+  },
+
   inputField: {
     fontFamily: Font.SintonyRegular,
     fontSize: moderateScale(18),
