@@ -15,7 +15,7 @@ import GameListScreen from "../common/screens/GameListScreen/GameListScreen";
 import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
 import { SavedGamesScreen } from "./screens/SavedGamesScreen/SavedGamesScreen";
 import { TipsUsScreen } from "../common/screens/TipsUsScreen/TipsUsScreen";
-import { ErrorScreen } from "./screens/ErrorScreen /ErrorScreen";
+import { ErrorScreen } from "./screens/ErrorScreen/ErrorScreen";
 
 const Stack = createStackNavigator();
 

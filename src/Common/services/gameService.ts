@@ -1,7 +1,7 @@
 import axios from "axios";
-import { CreateGameRequest, GameBase, GamePageQuery, GameType, InteractiveGameResponse, PagedResponse, SavedGamesPageQuery } from "../constants/types";
 import { err, ok, Result } from "../utils/result";
 import { getHeaders } from "./utils";
+import { CreateGameRequest, GameBase, GamePageQuery, GameType, InteractiveGameResponse, PagedResponse, SavedGamesPageQuery } from "../constants/types";
 
 export class GameService {
     #urlBase: string;

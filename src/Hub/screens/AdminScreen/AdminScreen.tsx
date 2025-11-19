@@ -3,11 +3,11 @@ import styles from "./adminScreenStyles";
 import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { useServiceProvider } from "@/src/common/context/ServiceProvider";
 import { useEffect, useState } from "react";
-import { ActivityStats, ClientPopup, ErrorLogCounts, SystemHealth } from "@/src/common/constants/types";
 import { useNavigation } from "expo-router";
 import { screenHeight, verticalScale } from "@/src/common/utils/dimensions";
 import Color from "@/src/common/constants/color";
 import { useModalProvider } from "@/src/common/context/ModalProvider";
+import { ActivityStats, ClientPopup, ErrorLogCounts, SystemHealth } from "@/src/common/constants/types";
 
 export const AdminScreen = () => {
   const navigation: any = useNavigation();

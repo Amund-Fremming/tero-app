@@ -8,7 +8,7 @@ import CreateScreen from "../spinGame/screens/CreateScreen/CreateScreen";
 import StartedScreen from "./screens/StartedScreen/StartedScreen";
 import { GameScreen } from "./screens/GameScreen/GameScreen";
 import GameListScreen from "../common/screens/GameListScreen/GameListScreen";
-import { GameEntryMode } from "@/src/common/constants/types";
+import { GameEntryMode } from "../common/constants/types";
 
 const Stack = createStackNavigator();
 

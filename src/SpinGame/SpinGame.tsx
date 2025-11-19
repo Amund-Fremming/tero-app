@@ -4,21 +4,17 @@ import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
 import { SpinScreen } from "./constants/spinScreen";
 import SpinGameProvider from "./context/SpinGameProvider";
 import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
-import { GameEntryMode } from "@/src/common/constants/types";
 import { GameScreen } from "./screens/GameScreen/GameScreen";
 import CreateScreen from "./screens/CreateScreen/CreateScreen";
 import GameListScreen from "../common/screens/GameListScreen/GameListScreen";
+import { GameEntryMode } from "../common/constants/types";
 
 const Stack = createStackNavigator();
 
 export const SpinGame = () => {
-  const { universalGameValues, gameEntryMode } = useGlobalGameProvider();
-
-  useEffect(() => { }, [universalGameValues]);
+  const {  gameEntryMode } = useGlobalGameProvider();
 
   const getInitialScreen = () => {
-    console.log("OB", universalGameValues);
-
     switch (gameEntryMode) {
       case GameEntryMode.Creator:
         return SpinScreen.Create;

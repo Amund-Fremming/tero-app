@@ -1,7 +1,6 @@
 import { View, Text, Pressable, Button } from "react-native";
 import Screen from "../../../common/constants/screen";
 import styles from "./homeScreenStyles";
-import { ClientPopup, GameEntryMode } from "../../../common/constants/types";
 import { useGlobalGameProvider } from "../../../common/context/GlobalGameProvider";
 import { useEffect, useState } from "react";
 import { useServiceProvider } from "@/src/common/context/ServiceProvider";
@@ -9,6 +8,7 @@ import { useModalProvider } from "@/src/common/context/ModalProvider";
 import DiagonalSplit from "../../../common/components/BuzzifyShapes/DiagonalSplit";
 import ArcWithCircles from "../../../common/components/BuzzifyShapes/ArcWithCircles";
 import ScatteredCircles from "../../../common/components/BuzzifyShapes/ScatteredCircles";
+import { GameEntryMode } from "@/src/common/constants/types";
 
 const subHeaderList = [
   "klar for en runde?",

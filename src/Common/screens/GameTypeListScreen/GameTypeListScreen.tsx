@@ -5,11 +5,11 @@ import { View, Text, Pressable, ScrollView, Dimensions, Image } from "react-nati
 import React from "react";
 import { useNavigation } from "expo-router";
 import { useGlobalGameProvider } from "../../context/GlobalGameProvider";
-import { GameEntryMode, GameType } from "../../constants/types";
 import Screen from "../../constants/screen";
 import { verticalScale } from "../../utils/dimensions";
 import { Feather } from "@expo/vector-icons";
 import Color from "../../constants/color";
+import { GameEntryMode, GameType } from "../../constants/types";
 
 const { height } = Dimensions.get("window");
 
