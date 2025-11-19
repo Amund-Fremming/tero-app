@@ -3,7 +3,7 @@ import styles from "./adminScreenStyles";
 import { useAuthProvider } from "@/src/common/context/AuthProvider";
 import { useServiceProvider } from "@/src/common/context/ServiceProvider";
 import { useEffect, useState } from "react";
-import { ActivityStats, ClientPopup, SystemHealth } from "@/src/common/constants/types";
+import { ActivityStats, ClientPopup, ErrorLogCounts, SystemHealth } from "@/src/common/constants/types";
 import { useNavigation } from "expo-router";
 import { screenHeight, verticalScale } from "@/src/common/utils/dimensions";
 import Color from "@/src/common/constants/color";
@@ -20,6 +20,11 @@ export const AdminScreen = () => {
     platform: false,
     session: false,
     database: false
+  });
+  const [errorLogCounts, setErrorLogCounts] = useState<ErrorLogCounts>({
+    info: 0,
+    warning: 0,
+    critical: 0
   });
   const [stats, setStats] = useState<ActivityStats | undefined>(undefined);
   const [popup, setPopup] = useState<ClientPopup | undefined>(undefined);
@@ -87,6 +92,10 @@ export const AdminScreen = () => {
     setPopupEditing(false);
   }
 
+  const handleErrorLogCardClick = () => {
+    // TODO: Implement error log card click handler
+  }
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -107,6 +116,21 @@ export const AdminScreen = () => {
           <Text style={styles.header}>Admin</Text>
         </Pressable>
       </View>
+
+      <Pressable onPress={handleErrorLogCardClick} style={styles.healthCard}>
+        <View style={styles.healthWrapper}>
+          <Text style={styles.errorLogTextBold}>Info</Text>
+          <Text style={[styles.errorLogTextBold, { color: Color.Green }]}>{errorLogCounts.info}</Text>
+        </View>
+        <View style={styles.healthWrapper}>
+          <Text style={styles.errorLogTextBold}>Warning</Text>
+          <Text style={[styles.errorLogTextBold, { color: Color.Yellow }]}>{errorLogCounts.warning}</Text>
+        </View>
+        <View style={styles.healthWrapper}>
+          <Text style={styles.errorLogTextBold}>Critical</Text>
+          <Text style={[styles.errorLogTextBold, { color: Color.Red }]}>{errorLogCounts.critical}</Text>
+        </View>
+      </Pressable>
 
       <Text>Redirect uri: {redirectUri}</Text>
       <View style={styles.healthCard}>
