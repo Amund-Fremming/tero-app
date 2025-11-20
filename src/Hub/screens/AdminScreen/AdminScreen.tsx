@@ -109,7 +109,7 @@ export const AdminScreen = () => {
   };
 
   const handleErrorLogCardClick = () => {
-    // TODO: Implement error log card click handler
+    navigation.navigate(Screen.Logs);
   };
 
   return (
