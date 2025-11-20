@@ -8,6 +8,7 @@ export enum Screen {
   GameTypeList = "GameTypeList",
   GameList = "GameList",
   Admin = "Admin",
+  Logs = "Logs",
   Profile = "Profile",
   EditProfile = "EditProfile",
   ChangePassword = "ChangePassword",
