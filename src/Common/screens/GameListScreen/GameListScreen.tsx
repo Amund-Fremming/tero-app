@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, View, TouchableOpacity } from "react-native";
 import VerticalScroll from "../../wrappers/VerticalScroll";
 import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
 import { useEffect, useState } from "react";
@@ -12,12 +12,14 @@ import styles from "./gameListScreenStyles";
 import { useServiceProvider } from "../../context/ServiceProvider";
 import { GameBase, GameCategory, GamePageQuery, PagedResponse } from "../../constants/types";
 import Screen from "../../constants/screen";
+import { Feather } from "@expo/vector-icons";
+import Color from "../../constants/color";
 
 export const GameListScreen = () => {
   const navigation: any = useNavigation();
 
   const { displayErrorModal, displayActionModal } = useModalProvider();
-  const { pseudoId, accessToken } = useAuthProvider();
+  const { pseudoId, accessToken, triggerLogin } = useAuthProvider();
   const { gameType } = useGlobalGameProvider();
   const { gameService } = useServiceProvider();
 
@@ -86,7 +88,15 @@ export const GameListScreen = () => {
 
   const handleSaveGame = async (gameId: string) => {
     if (!accessToken) {
-      displayActionModal("Vil du logge inn for å lagre spill?", () => { }, () => navigation.navigate(Screen.Profile))
+      displayActionModal(
+        "Du må logge inn for å lagre spill", 
+        () => { }, 
+        () => {
+          navigation.navigate(Screen.Hub);
+          // Small delay to ensure navigation completes
+          setTimeout(() => triggerLogin(), 200);
+        }
+      );
       return;
     }
 
@@ -108,14 +118,27 @@ export const GameListScreen = () => {
         {games.length === 0 && <Text>Det finnes ingen spill av denne typen enda</Text>}
 
         {games.map((game) => (
-          <Pressable key={game.id}>
-            <Text style={styles.cardHeader}>{game.name}</Text>
-            <Text style={styles.cardDescription}>{game.description}</Text>
-            <Text style={styles.cardCategory}>{game.category}</Text>
-            <Pressable onPress={() => handleSaveGame(game.id)} >
-              <Text>Lagre</Text>
+          <TouchableOpacity key={game.id} style={styles.card}>
+            <View style={styles.innerCard}>
+              <View style={styles.iconCardOuter}>
+                <View style={styles.iconCardInner}>
+                  <Text style={styles.iconCardText}>{game.gameType || "GAME"}</Text>
+                </View>
+              </View>
+
+              <View style={styles.textWrapper}>
+                <Text style={styles.cardHeader}>{game.name}</Text>
+                <Text style={styles.cardDescription}>{game.description || "Ingen beskrivelse"}</Text>
+                <Text style={styles.cardCategory}>{GameCategory[game.category]}</Text>
+              </View>
+            </View>
+            <Pressable 
+              style={styles.saveIcon} 
+              onPress={() => handleSaveGame(game.id)}
+            >
+              <Feather name="bookmark" size={28} color={Color.Purple} />
             </Pressable>
-          </Pressable>
+          </TouchableOpacity>
         ))}
 
 
