@@ -114,5 +114,3 @@ export const styles = StyleSheet.create({
     color: Color.White,
   },
 });
-
-export default styles;

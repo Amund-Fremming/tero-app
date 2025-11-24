@@ -1,4 +1,4 @@
-import { Pressable, Text, TextInput, View, TouchableOpacity, ScrollView } from "react-native";
+import { Text, TextInput, View, TouchableOpacity, ScrollView } from "react-native";
 import styles from "./createScreenStyles";
 import { useModalProvider } from "@/src/common/context/ModalProvider";
 import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
@@ -35,7 +35,7 @@ export const CreateScreen = ({ navigation }: any) => {
 
   const handleCreate = async () => {
     console.info("Request:", request);
-    let result = await service.createInteractiveGame(guestId, accessToken, GameType.Quiz, request);
+    let result = await service.createInteractiveGame(guestId, accessToken, GameType.Spin, request);
     if (result.isError()) {
       displayErrorModal(result.error);
       return;

@@ -15,6 +15,14 @@ import Screen from "../../constants/screen";
 import { Feather } from "@expo/vector-icons";
 import Color from "../../constants/color";
 
+const CATEGORY_LABELS: Record<GameCategory, string> = {
+  [GameCategory.Default]: "Standard",
+  [GameCategory.Random]: "Tilfeldig",
+  [GameCategory.Casual]: "Casual",
+  [GameCategory.Ladies]: "Damer",
+  [GameCategory.Boys]: "Gutter",
+};
+
 export const GameListScreen = () => {
   const navigation: any = useNavigation();
 
@@ -122,14 +130,14 @@ export const GameListScreen = () => {
             <View style={styles.innerCard}>
               <View style={styles.iconCardOuter}>
                 <View style={styles.iconCardInner}>
-                  <Text style={styles.iconCardText}>{game.gameType || "GAME"}</Text>
+                  <Text style={styles.iconCardText}>{game.gameType || "SPILL"}</Text>
                 </View>
               </View>
 
               <View style={styles.textWrapper}>
                 <Text style={styles.cardHeader}>{game.name}</Text>
                 <Text style={styles.cardDescription}>{game.description || "Ingen beskrivelse"}</Text>
-                <Text style={styles.cardCategory}>{GameCategory[game.category]}</Text>
+                <Text style={styles.cardCategory}>{CATEGORY_LABELS[game.category]}</Text>
               </View>
             </View>
             <Pressable 
