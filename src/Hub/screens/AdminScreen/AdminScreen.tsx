@@ -1,5 +1,5 @@
 import { Pressable, ScrollView, Text, View } from "react-native";
-import styles from "./adminScreenStyles";
+import styles from "./AdminScreenStyles";
 import { useAuthProvider } from "@/src/Common/context/AuthProvider";
 import { useServiceProvider } from "@/src/Common/context/ServiceProvider";
 import { useEffect, useState } from "react";
@@ -8,6 +8,7 @@ import { screenHeight, verticalScale } from "@/src/Common/utils/dimensions";
 import Color from "@/src/Common/constants/Color";
 import { useModalProvider } from "@/src/Common/context/ModalProvider";
 import { ActivityStats, ClientPopup, LogCategoryCount, SystemHealth } from "@/src/Common/constants/Types";
+import Screen from "@/src/Common/constants/Screen";
 
 export const AdminScreen = () => {
   const navigation: any = useNavigation();

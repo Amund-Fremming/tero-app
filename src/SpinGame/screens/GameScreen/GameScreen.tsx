@@ -2,7 +2,7 @@ import { Pressable, Text, View } from "react-native";
 import styles from "./gameScreenStyles";
 import AbsoluteHomeButton from "@/src/Common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import { useEffect, useState } from "react";
-import { SpinGameState } from "../../constants/spinTypes";
+import { SpinGameState } from "../../constants/SpinTypes";
 import { useGlobalGameProvider } from "@/src/Common/context/GlobalGameProvider";
 import { GameEntryMode } from "@/src/Common/constants/Types";
 import Color from "@/src/Common/constants/Color";
@@ -19,78 +19,21 @@ export const GameScreen = ({ navigation }: any) => {
   const [state, setState] = useState<SpinGameState>(SpinGameState.RoundStarted);
 
   const { disconnect, connect, setListener, invokeFunction } = useHubConnectionProvider();
-  const { universalGameValues, gameEntryMode } = useGlobalGameProvider();
+  const { gameEntryMode } = useGlobalGameProvider();
   const { displayErrorModal } = useModalProvider();
   const { pseudoId: userId } = useAuthProvider();
 
   const isHost = gameEntryMode === GameEntryMode.Creator || gameEntryMode === GameEntryMode.Host;
 
-  useEffect(() => {
-    createHubConnection();
-    return () => {
-      disconnect();
-    };
-  }, [universalGameValues]);
-
-  const createHubConnection = async () => {
-    if (!universalGameValues) {
-      return;
-    }
-
-    const result = await connect(universalGameValues.gameType, universalGameValues.gameId);
-    if (result.isError()) {
-      displayErrorModal(result.error, () => navigation.navigate(Screen.Home));
-      return;
-    }
-
-    setListener(HubChannel.Game, (playerId: number) => {
-      console.log(`Received: ${playerId}`);
-      setBgColor(userId === playerId ? Color.Green : Color.Red);
-    });
-
-    setListener(HubChannel.Message, (challenge: string) => {
-      console.log(`Received: ${challenge}`);
-      setChallenge(challenge);
-    });
-
-    setListener(HubChannel.State, (state: SpinGameState) => {
-      console.log(`Received: ${state}`); // TODO - remove log
-      setState(state);
-      if (state === SpinGameState.RoundStarted) {
-        setBgColor(Color.Gray);
-      }
-    });
-
-    setListener(HubChannel.Error, (message: string) => {
-      console.log(`Received error. ${message}`); // TODO - remove log
-      disconnect();
-      displayErrorModal(message, () => navigation.navigate(Screen.Home));
-    });
-  };
-
-  const handleStartRound = async () => {
-    const result = await invokeFunction("StartRound", userId, universalGameValues?.gameId);
-    if (result.isError()) {
-      displayErrorModal(result.error);
-    }
-  };
-
-  const handleStartSpin = async () => {
-    const result = await invokeFunction("StartSpin", userId, universalGameValues?.gameId);
-    if (result.isError()) {
-      displayErrorModal(result.error);
-    }
-  };
-
   return (
     <View style={{ ...styles.container, backgroundColor: bgColor }}>
       {isHost && state === SpinGameState.RoundStarted && (
-        <Pressable style={styles.button} onPress={handleStartSpin}>
+        <Pressable style={styles.button}>
           <Text style={styles.buttonText}>Start spin</Text>
         </Pressable>
       )}
       {isHost && state === SpinGameState.RoundFinished && (
-        <Pressable style={styles.button} onPress={handleStartRound}>
+        <Pressable style={styles.button}>
           <Text style={styles.buttonText}>Neste runde</Text>
         </Pressable>
       )}

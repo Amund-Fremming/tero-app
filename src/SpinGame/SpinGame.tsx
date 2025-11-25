@@ -1,7 +1,7 @@
 import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
 import React, { useEffect } from "react";
 import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
-import { SpinScreen } from "./constants/spinScreen";
+import SpinScreen from "./constants/SpinScreen";
 import SpinGameProvider from "./context/SpinGameProvider";
 import { useGlobalGameProvider } from "@/src/Common/context/GlobalGameProvider";
 import { GameScreen } from "./screens/GameScreen/GameScreen";
@@ -12,7 +12,7 @@ import { GameEntryMode } from "../Common/constants/Types";
 const Stack = createStackNavigator();
 
 export const SpinGame = () => {
-  const {  gameEntryMode } = useGlobalGameProvider();
+  const { gameEntryMode } = useGlobalGameProvider();
 
   const getInitialScreen = () => {
     switch (gameEntryMode) {

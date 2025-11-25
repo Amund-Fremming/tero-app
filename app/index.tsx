@@ -1,10 +1,10 @@
 import { useCallback } from "react";
-import HubConnectionProvider from "../src/common/context/HubConnectionProvider";
-import GlobalGameProvider from "../src/common/context/GlobalGameProvider";
-import ModalProvider from "@/src/common/context/ModalProvider";
-import Hub from "@/src/hub/Hub";
-import AuthProvider from "../src/common/context/AuthProvider";
-import ServiceProvider from "@/src/common/context/ServiceProvider";
+import HubConnectionProvider from "@/src/Common/context/HubConnectionProvider";
+import GlobalGameProvider from "../src/Common/context/GlobalGameProvider";
+import ModalProvider from "@/src/Common/context/ModalProvider";
+import Hub from "@/src/Hub/Hub";
+import AuthProvider from "../src/Common/context/AuthProvider";
+import ServiceProvider from "@/src/Common/context/ServiceProvider";
 import { View, StatusBar, Dimensions } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
@@ -32,11 +32,11 @@ export default () => (
 
 const FontLoader = ({ children }: { children: React.ReactNode }) => {
   const [fontsLoaded] = Font.useFonts({
-    "PassionOne-Regular": require("../src/common/assets/fonts/PassionOne-Regular.ttf"),
-    "PassionOne-Bold": require("../src/common/assets/fonts/PassionOne-Bold.ttf"),
-    "SpaceMono-Regular": require("../src/common/assets/fonts/SpaceMono-Regular.ttf"),
-    "Sintony-Regular": require("../src/common/assets/fonts/Sintony-Regular.ttf"),
-    "Sintony-Bold": require("../src/common/assets/fonts/Sintony-Bold.ttf"),
+    "PassionOne-Regular": require("../src/Common/assets/fonts/PassionOne-Regular.ttf"),
+    "PassionOne-Bold": require("../src/Common/assets/fonts/PassionOne-Bold.ttf"),
+    "SpaceMono-Regular": require("../src/Common/assets/fonts/SpaceMono-Regular.ttf"),
+    "Sintony-Regular": require("../src/Common/assets/fonts/Sintony-Regular.ttf"),
+    "Sintony-Bold": require("../src/Common/assets/fonts/Sintony-Bold.ttf"),
   });
 
   const onLayoutRootView = useCallback(async () => {
@@ -50,7 +50,7 @@ const FontLoader = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <View style={{ width, height, position: 'absolute', top: 0, left: 0 }} onLayout={onLayoutRootView}>
+    <View style={{ width, height, position: "absolute", top: 0, left: 0 }} onLayout={onLayoutRootView}>
       {children}
     </View>
   );
