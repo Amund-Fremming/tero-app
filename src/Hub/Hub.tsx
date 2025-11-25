@@ -10,6 +10,7 @@ import HubScreen from "./screens/HubScreen/HubScreen";
 import JoinScreen from "./screens/JoinScreen/JoinScreen";
 import Screen from "../common/constants/screen";
 import AdminScreen from "./screens/AdminScreen/AdminScreen";
+import LogsScreen from "./screens/LogsScreen/LogsScreen";
 import GameTypeListScreen from "../common/screens/GameTypeListScreen/GameTypeListScreen";
 import GameListScreen from "../common/screens/GameListScreen/GameListScreen";
 import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
@@ -42,6 +43,7 @@ export const Hub = () => {
       <Stack.Screen name={Screen.GameList} component={GameListScreen} />
       <Stack.Screen name={Screen.GameTypeList} component={GameTypeListScreen} />
       <Stack.Screen name={Screen.Admin} component={AdminScreen} />
+      <Stack.Screen name={Screen.Logs} component={LogsScreen} />
       <Stack.Screen name={Screen.SavedGames} component={SavedGamesScreen} />
       <Stack.Screen name={Screen.TipsUs} component={TipsUsScreen} />
       <Stack.Screen name={Screen.Error} component={ErrorScreen} />
