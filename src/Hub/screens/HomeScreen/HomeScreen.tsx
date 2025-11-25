@@ -1,14 +1,14 @@
 import { View, Text, Pressable, Button } from "react-native";
-import Screen from "../../../common/constants/screen";
+import Screen from "../../../Common/constants/Screen";
 import styles from "./homeScreenStyles";
-import { useGlobalGameProvider } from "../../../common/context/GlobalGameProvider";
+import { useGlobalGameProvider } from "../../../Common/context/GlobalGameProvider";
 import { useEffect, useState } from "react";
-import { useServiceProvider } from "@/src/common/context/ServiceProvider";
-import { useModalProvider } from "@/src/common/context/ModalProvider";
-import DiagonalSplit from "../../../common/components/BuzzifyShapes/DiagonalSplit";
-import ArcWithCircles from "../../../common/components/BuzzifyShapes/ArcWithCircles";
-import ScatteredCircles from "../../../common/components/BuzzifyShapes/ScatteredCircles";
-import { GameEntryMode } from "@/src/common/constants/types";
+import { useServiceProvider } from "@/src/Common/context/ServiceProvider";
+import { useModalProvider } from "@/src/Common/context/ModalProvider";
+import DiagonalSplit from "../../../Common/components/BuzzifyShapes/DiagonalSplit";
+import ArcWithCircles from "../../../Common/components/BuzzifyShapes/ArcWithCircles";
+import ScatteredCircles from "../../../Common/components/BuzzifyShapes/ScatteredCircles";
+import { GameEntryMode } from "@/src/Common/constants/Types";
 
 const subHeaderList = [
   "klar for en runde?",

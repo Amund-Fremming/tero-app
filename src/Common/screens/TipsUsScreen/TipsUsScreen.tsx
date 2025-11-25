@@ -4,7 +4,7 @@ import { Pressable, TextInput } from "react-native-gesture-handler";
 import { useNavigation } from "expo-router";
 import { useModalProvider } from "../../context/ModalProvider";
 import { Feather } from "@expo/vector-icons";
-import Color from "../../constants/color";
+import Color from "../../constants/Color";
 
 export const TipsUsScreen = () => {
     const navigation: any = useNavigation();

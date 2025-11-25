@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
-import { Color } from "../../constants/color";
+import { Color } from "../../constants/Color";
 import { horizontalScale, moderateScale, verticalScale } from "../../utils/dimensions";
-import { Font } from "../../constants/font";
+import { Font } from "../../constants/Font";
 
 export const styles = StyleSheet.create({
   overlay: {

@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useContext, useRef } from "react";
 import { GameService } from "../services/gameService";
-import { PLATFORM_URL_BASE } from "../constants/endpoints";
+import { PLATFORM_URL_BASE } from "../constants/Endpoints";
 import { UserService } from "../services/userService";
 import { CommonService } from "../services/commonService";
 

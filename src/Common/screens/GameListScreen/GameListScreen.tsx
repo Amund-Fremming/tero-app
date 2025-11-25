@@ -3,15 +3,15 @@ import VerticalScroll from "../../wrappers/VerticalScroll";
 import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
 import { useEffect, useState } from "react";
 import { useModalProvider } from "../../context/ModalProvider";
-import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
+import { useGlobalGameProvider } from "@/src/Common/context/GlobalGameProvider";
 import { useAuthProvider } from "../../context/AuthProvider";
 import { useNavigation } from "@react-navigation/native";
-import { useSpinGameProvider } from "@/src/spinGame/context/SpinGameProvider";
+import { useSpinGameProvider } from "@/src/SpinGame/context/SpinGameProvider";
 import { useQuizGameProvider } from "@/src/quizGame/context/AskGameProvider";
 import styles from "./gameListScreenStyles";
 import { useServiceProvider } from "../../context/ServiceProvider";
-import { GameBase, GameCategory, GamePageQuery, PagedResponse } from "../../constants/types";
-import Screen from "../../constants/screen";
+import { GameBase, GameCategory, GamePageQuery, PagedResponse } from "../../constants/Types";
+import Screen from "../../constants/Screen";
 
 export const GameListScreen = () => {
   const navigation: any = useNavigation();

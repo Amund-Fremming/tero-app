@@ -1,7 +1,7 @@
 import { Pressable } from "react-native";
 import { styles } from "./checkBoxStyles";
 import { useState } from "react";
-import Color from "@/src/common/constants/color";
+import Color from "@/src/Common/constants/Color";
 
 interface CheckBoxProps {
   checked: boolean;

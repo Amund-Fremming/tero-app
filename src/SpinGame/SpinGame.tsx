@@ -3,11 +3,11 @@ import React, { useEffect } from "react";
 import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
 import { SpinScreen } from "./constants/spinScreen";
 import SpinGameProvider from "./context/SpinGameProvider";
-import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
+import { useGlobalGameProvider } from "@/src/Common/context/GlobalGameProvider";
 import { GameScreen } from "./screens/GameScreen/GameScreen";
 import CreateScreen from "./screens/CreateScreen/CreateScreen";
-import GameListScreen from "../common/screens/GameListScreen/GameListScreen";
-import { GameEntryMode } from "../common/constants/types";
+import GameListScreen from "../Common/screens/GameListScreen/GameListScreen";
+import { GameEntryMode } from "../Common/constants/Types";
 
 const Stack = createStackNavigator();
 

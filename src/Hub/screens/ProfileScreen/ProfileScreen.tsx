@@ -1,14 +1,14 @@
 import { Image, Pressable, Text, View } from "react-native";
 import { styles } from "./profileScreenStyles";
-import { useAuthProvider } from "@/src/common/context/AuthProvider";
+import { useAuthProvider } from "@/src/Common/context/AuthProvider";
 import { useEffect, useState } from "react";
-import { BaseUser, UserRole } from "@/src/common/constants/types";
-import { useServiceProvider } from "@/src/common/context/ServiceProvider";
+import { BaseUser, UserRole } from "@/src/Common/constants/Types";
+import { useServiceProvider } from "@/src/Common/context/ServiceProvider";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
-import Color from "@/src/common/constants/color";
-import Screen from "@/src/common/constants/screen";
-import { horizontalScale } from "@/src/common/utils/dimensions";
+import Color from "@/src/Common/constants/Color";
+import Screen from "@/src/Common/constants/Screen";
+import { horizontalScale } from "@/src/Common/utils/dimensions";
 
 export const ProfileScreen = () => {
   const navigation: any = useNavigation();
@@ -22,7 +22,7 @@ export const ProfileScreen = () => {
   const [avatar, setAvatar] = useState<string>("");
   const [userData, setUserData] = useState<BaseUser | undefined>(undefined);
 
-  const crown = require("../../../common/assets/images/crown.png");
+  const crown = require("../../../Common/assets/images/crown.png");
 
   useEffect(() => {
     if (!pseudoId) {

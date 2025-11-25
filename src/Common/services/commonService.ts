@@ -1,6 +1,6 @@
 import axios from "axios";
 import { err, ok, Result } from "../utils/result";
-import { Log, LogCategory, LogCategoryCount, PagedResponse, SystemHealth } from "../constants/types";
+import { Log, LogCategory, LogCategoryCount, PagedResponse, SystemHealth } from "../constants/Types";
 import { getHeaders } from "./utils";
 
 export class CommonService {

@@ -1,5 +1,5 @@
-import Color from "@/src/common/constants/color";
-import { moderateScale, verticalScale } from "@/src/common/utils/dimensions";
+import Color from "@/src/Common/constants/Color";
+import { moderateScale, verticalScale } from "@/src/Common/utils/dimensions";
 import { version } from "react";
 import { StyleSheet } from "react-native";
 
