@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, View, TouchableOpacity } from "react-native";
 import VerticalScroll from "../../wrappers/VerticalScroll";
 import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
 import { useEffect, useState } from "react";
@@ -12,12 +12,22 @@ import styles from "./gameListScreenStyles";
 import { useServiceProvider } from "../../context/ServiceProvider";
 import { GameBase, GameCategory, GamePageQuery, PagedResponse } from "../../constants/Types";
 import Screen from "../../constants/Screen";
+import { Feather } from "@expo/vector-icons";
+import Color from "../../constants/Color";
+
+const CATEGORY_LABELS: Record<GameCategory, string> = {
+  [GameCategory.Default]: "Standard",
+  [GameCategory.Random]: "Tilfeldig",
+  [GameCategory.Casual]: "Casual",
+  [GameCategory.Ladies]: "Damer",
+  [GameCategory.Boys]: "Gutter",
+};
 
 export const GameListScreen = () => {
   const navigation: any = useNavigation();
 
   const { displayErrorModal, displayActionModal } = useModalProvider();
-  const { pseudoId, accessToken } = useAuthProvider();
+  const { pseudoId, accessToken, triggerLogin } = useAuthProvider();
   const { gameType } = useGlobalGameProvider();
   const { gameService } = useServiceProvider();
 
@@ -33,14 +43,14 @@ export const GameListScreen = () => {
 
   const handleNextPage = async () => {
     if (!hasNext) {
-      return
+      return;
     }
 
     const page = pageNum + 1;
     setPageNum(page);
-    setHasPrev(true)
+    setHasPrev(true);
     await getPage(page);
-  }
+  };
 
   const handlePrevPage = async () => {
     if (pageNum == 0) {
@@ -48,21 +58,21 @@ export const GameListScreen = () => {
     }
 
     if (pageNum == 1) {
-      setHasPrev(false)
+      setHasPrev(false);
     }
 
     const page = pageNum - 1;
     setPageNum(page);
     await getPage(page);
-  }
+  };
 
   const createPageQuery = (pageNum: number): GamePageQuery => {
     return {
       page_num: pageNum,
       game_type: gameType,
-      category: category
-    }
-  }
+      category: category,
+    };
+  };
 
   const getPage = async (pageNum: number) => {
     if (!pseudoId) {
@@ -82,11 +92,19 @@ export const GameListScreen = () => {
     console.log("has next:", pagedResponse.has_next);
     setGames(pagedResponse.items);
     setHasNext(pagedResponse.has_next);
-  }
+  };
 
   const handleSaveGame = async (gameId: string) => {
     if (!accessToken) {
-      displayActionModal("Vil du logge inn for å lagre spill?", () => { }, () => navigation.navigate(Screen.Profile))
+      displayActionModal(
+        "Du må logge inn for å lagre spill",
+        () => {},
+        () => {
+          navigation.navigate(Screen.Hub);
+          // Small delay to ensure navigation completes
+          setTimeout(() => triggerLogin(), 200);
+        }
+      );
       return;
     }
 
@@ -94,7 +112,7 @@ export const GameListScreen = () => {
     if (result.isError()) {
       displayErrorModal("Det har skjedd en feil, forsøk igjen senere");
     }
-  }
+  };
 
   const { setSpinGame } = useSpinGameProvider();
   const { setQuizGame } = useQuizGameProvider();
@@ -104,20 +122,28 @@ export const GameListScreen = () => {
       <VerticalScroll>
         <Text style={styles.header}>Velg ett spill</Text>
 
-
         {games.length === 0 && <Text>Det finnes ingen spill av denne typen enda</Text>}
 
         {games.map((game) => (
-          <Pressable key={game.id}>
-            <Text style={styles.cardHeader}>{game.name}</Text>
-            <Text style={styles.cardDescription}>{game.description}</Text>
-            <Text style={styles.cardCategory}>{game.category}</Text>
-            <Pressable onPress={() => handleSaveGame(game.id)} >
-              <Text>Lagre</Text>
-            </Pressable>
-          </Pressable>
-        ))}
+          <TouchableOpacity key={game.id} style={styles.card}>
+            <View style={styles.innerCard}>
+              <View style={styles.iconCardOuter}>
+                <View style={styles.iconCardInner}>
+                  <Text style={styles.iconCardText}>{game.gameType || "SPILL"}</Text>
+                </View>
+              </View>
 
+              <View style={styles.textWrapper}>
+                <Text style={styles.cardHeader}>{game.name}</Text>
+                <Text style={styles.cardDescription}>{game.description || "Ingen beskrivelse"}</Text>
+                <Text style={styles.cardCategory}>{CATEGORY_LABELS[game.category]}</Text>
+              </View>
+            </View>
+            <Pressable style={styles.saveIcon} onPress={() => handleSaveGame(game.id)}>
+              <Feather name="bookmark" size={28} color={Color.Purple} />
+            </Pressable>
+          </TouchableOpacity>
+        ))}
 
         <View style={styles.navButtons}>
           {hasPrev && (
@@ -131,9 +157,7 @@ export const GameListScreen = () => {
             </Pressable>
           )}
         </View>
-        <Text style={styles.paragraph}>
-          Side {pageNum}
-        </Text>
+        <Text style={styles.paragraph}>Side {pageNum}</Text>
       </VerticalScroll>
 
       <AbsoluteHomeButton />
