@@ -1,6 +1,6 @@
 import { Text, TouchableOpacity } from "react-native";
 import { styles } from "./mediumButtonStyles";
-import { Color } from "../../constants/color";
+import { Color } from "../../constants/Color";
 
 interface IMediumButton {
   text: string;

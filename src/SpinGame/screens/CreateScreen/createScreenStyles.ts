@@ -1,7 +1,7 @@
-import { horizontalScale, moderateScale, verticalScale } from "@/src/common/utils/dimensions";
+import { horizontalScale, moderateScale, verticalScale } from "@/src/Common/utils/dimensions";
 import { StyleSheet } from "react-native";
-import Color from "@/src/common/constants/color";
-import Font from "@/src/common/constants/font";
+import Color from "@/src/Common/constants/Color";
+import Font from "@/src/Common/constants/Font";
 
 export const styles = StyleSheet.create({
   scrollContainer: {

@@ -1,13 +1,13 @@
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { styles } from "./changePasswordScreenStyles";
-import { useAuthProvider } from "@/src/common/context/AuthProvider";
+import { useAuthProvider } from "@/src/Common/context/AuthProvider";
 import { useState } from "react";
-import { useServiceProvider } from "@/src/common/context/ServiceProvider";
+import { useServiceProvider } from "@/src/Common/context/ServiceProvider";
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
-import Color from "@/src/common/constants/color";
+import Color from "@/src/Common/constants/Color";
 import { TextInput } from "react-native-gesture-handler";
-import { useModalProvider } from "@/src/common/context/ModalProvider";
+import { useModalProvider } from "@/src/Common/context/ModalProvider";
 
 export const ChangePasswordScreen = () => {
   const navigation: any = useNavigation();

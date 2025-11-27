@@ -3,13 +3,13 @@ import { View, Text, TouchableOpacity } from "react-native";
 import styles from "./joinScreenStyles";
 import { Pressable, TextInput } from "react-native-gesture-handler";
 import { useEffect, useState } from "react";
-import { useModalProvider } from "@/src/common/context/ModalProvider";
-import { useAuthProvider } from "@/src/common/context/AuthProvider";
-import { useGlobalGameProvider } from "../../../common/context/GlobalGameProvider";
+import { useModalProvider } from "@/src/Common/context/ModalProvider";
+import { useAuthProvider } from "@/src/Common/context/AuthProvider";
+import { useGlobalGameProvider } from "../../../Common/context/GlobalGameProvider";
 import { Feather } from "@expo/vector-icons";
-import Color from "@/src/common/constants/color";
-import BigButton from "@/src/common/components/BigButton/BigButton";
-import { GameEntryMode } from "@/src/common/constants/types";
+import Color from "@/src/Common/constants/Color";
+import BigButton from "@/src/Common/components/BigButton/BigButton";
+import { GameEntryMode } from "@/src/Common/constants/Types";
 
 export const JoinScreen = ({ navigation }: any) => {
   const [userInput, setUserInput] = useState<string>("");

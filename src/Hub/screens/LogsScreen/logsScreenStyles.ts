@@ -23,51 +23,48 @@ export const styles = StyleSheet.create({
     fontFamily: Font.PassionOneBold
   },
 
-  activeButton: {
-    position: "absolute",
-    top: verticalScale(20),
-    right: horizontalScale(20),
-    width: moderateScale(60),
-    height: moderateScale(60),
-    justifyContent: "center",
-    alignItems: "center",
+  categoryBar: {
+    flexDirection: "row",
+    width: "90%",
+    gap: horizontalScale(10),
+    marginTop: verticalScale(10),
   },
 
-  modalIndicator: {
-    fontSize: moderateScale(20),
-    position: "absolute",
-    top: verticalScale(5),
-    right: horizontalScale(5),
-  },
-
-  popupText: {
-    fontFamily: Font.SintonyBold,
-    fontSize: moderateScale(19),
-    color: Color.Purple
-  },
-
-  popupButton: {
+  categoryButton: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: moderateScale(10),
     height: verticalScale(45),
     borderWidth: moderateScale(3),
-    borderColor: Color.Purple
+    borderColor: Color.Purple,
+    backgroundColor: Color.White,
   },
 
-  singleButton: {
-    marginTop: verticalScale(20),
+  categoryButtonActive: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    width: "100%",
     borderRadius: moderateScale(10),
     height: verticalScale(45),
     borderWidth: moderateScale(3),
-    borderColor: Color.Purple
+    borderColor: Color.Purple,
+    backgroundColor: Color.Purple,
   },
 
-  healthCard: {
+  categoryText: {
+    fontFamily: Font.SintonyBold,
+    fontSize: moderateScale(16),
+    color: Color.Purple
+  },
+
+  categoryTextActive: {
+    fontFamily: Font.SintonyBold,
+    fontSize: moderateScale(16),
+    color: Color.White
+  },
+
+  logCard: {
     borderRadius: moderateScale(10),
     backgroundColor: Color.White,
     width: "90%",
@@ -78,63 +75,68 @@ export const styles = StyleSheet.create({
     position: "relative",
   },
 
-  healthWrapper: {
-    justifyContent: "space-between",
-    flexDirection: "row",
-  },
-
-  healthText: {
-    fontFamily: Font.SintonyRegular,
-    fontSize: moderateScale(20),
-    fontWeight: 400
-  },
-
-  errorLogTextBold: {
+  logCategory: {
     fontFamily: Font.SintonyBold,
-    fontSize: moderateScale(20),
+    fontSize: moderateScale(18),
     fontWeight: "bold"
   },
 
-  inputField: {
+  logMessage: {
     fontFamily: Font.SintonyRegular,
-    fontSize: moderateScale(18),
-    borderWidth: moderateScale(2),
-    borderColor: Color.Purple,
-    borderRadius: moderateScale(8),
-    paddingHorizontal: horizontalScale(12),
-    paddingVertical: verticalScale(10),
-    backgroundColor: Color.White,
-    width: "100%",
+    fontSize: moderateScale(16),
+    color: Color.OffBlack
   },
 
-  multilineInput: {
-    minHeight: verticalScale(120),
-    maxHeight: verticalScale(200),
-    textAlignVertical: "top",
+  logTimestamp: {
+    fontFamily: Font.SintonyRegular,
+    fontSize: moderateScale(14),
+    color: Color.Gray
   },
 
-  buttonContainer: {
+  logSource: {
+    fontFamily: Font.SintonyRegular,
+    fontSize: moderateScale(14),
+    color: Color.Gray,
+    fontStyle: "italic"
+  },
+
+  navButtons: {
     flexDirection: "row",
     gap: horizontalScale(10),
-    marginTop: verticalScale(10),
-    width: "100%",
+    width: "90%",
+    marginTop: verticalScale(20),
+    marginBottom: verticalScale(10),
   },
 
-  cancelButton: {
+  navButton: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: moderateScale(10),
     height: verticalScale(45),
     borderWidth: moderateScale(3),
-    borderColor: Color.LightGray,
-    backgroundColor: Color.LightGray,
+    borderColor: Color.Purple
   },
 
-  cancelText: {
+  navButtonText: {
     fontFamily: Font.SintonyBold,
     fontSize: moderateScale(19),
-    color: Color.Black
+    color: Color.Purple
+  },
+
+  pageInfo: {
+    fontFamily: Font.SintonyRegular,
+    fontSize: moderateScale(16),
+    color: Color.OffBlack,
+    marginBottom: verticalScale(20),
+  },
+
+  emptyText: {
+    fontFamily: Font.SintonyRegular,
+    fontSize: moderateScale(18),
+    color: Color.Gray,
+    textAlign: "center",
+    marginTop: verticalScale(40),
   }
 });
 

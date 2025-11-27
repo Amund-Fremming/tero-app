@@ -1,9 +1,9 @@
-import Color from "@/src/common/constants/color";
-import MediumButton from "@/src/common/components/MediumButton/MediumButton";
+import Color from "@/src/Common/constants/Color";
+import MediumButton from "@/src/Common/components/MediumButton/MediumButton";
 import { Text, View } from "react-native";
 import { useQuizGameProvider } from "../../context/AskGameProvider";
 import styles from "./gameScreenStyles";
-import AbsoluteHomeButton from "@/src/common/components/AbsoluteHomeButton/AbsoluteHomeButton";
+import AbsoluteHomeButton from "@/src/Common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 
 export const GameScreen = ({ navigation }: any) => {
   const { quizGame: askGame, setQuizGame: setAskGame } = useQuizGameProvider();

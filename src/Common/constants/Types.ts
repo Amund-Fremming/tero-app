@@ -46,6 +46,20 @@ export interface LogCategoryCount {
   critical: number
 }
 
+export enum LogCategory {
+  Info = "Info",
+  Warning = "Warning",
+  Critical = "Critical"
+}
+
+export interface Log {
+  id: string,
+  category: LogCategory,
+  message: string,
+  timestamp: string,
+  source?: string
+}
+
 export interface BaseUser {
   id: string,
   username: string,

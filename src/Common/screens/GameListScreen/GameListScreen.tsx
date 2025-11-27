@@ -3,17 +3,17 @@ import VerticalScroll from "../../wrappers/VerticalScroll";
 import AbsoluteHomeButton from "../../components/AbsoluteHomeButton/AbsoluteHomeButton";
 import { useEffect, useState } from "react";
 import { useModalProvider } from "../../context/ModalProvider";
-import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
+import { useGlobalGameProvider } from "@/src/Common/context/GlobalGameProvider";
 import { useAuthProvider } from "../../context/AuthProvider";
 import { useNavigation } from "@react-navigation/native";
-import { useSpinGameProvider } from "@/src/spinGame/context/SpinGameProvider";
+import { useSpinGameProvider } from "@/src/SpinGame/context/SpinGameProvider";
 import { useQuizGameProvider } from "@/src/quizGame/context/AskGameProvider";
 import styles from "./gameListScreenStyles";
 import { useServiceProvider } from "../../context/ServiceProvider";
-import { GameBase, GameCategory, GamePageQuery, PagedResponse } from "../../constants/types";
-import Screen from "../../constants/screen";
+import { GameBase, GameCategory, GamePageQuery, PagedResponse } from "../../constants/Types";
+import Screen from "../../constants/Screen";
 import { Feather } from "@expo/vector-icons";
-import Color from "../../constants/color";
+import Color from "../../constants/Color";
 
 const CATEGORY_LABELS: Record<GameCategory, string> = {
   [GameCategory.Default]: "Standard",
@@ -43,14 +43,14 @@ export const GameListScreen = () => {
 
   const handleNextPage = async () => {
     if (!hasNext) {
-      return
+      return;
     }
 
     const page = pageNum + 1;
     setPageNum(page);
-    setHasPrev(true)
+    setHasPrev(true);
     await getPage(page);
-  }
+  };
 
   const handlePrevPage = async () => {
     if (pageNum == 0) {
@@ -58,21 +58,21 @@ export const GameListScreen = () => {
     }
 
     if (pageNum == 1) {
-      setHasPrev(false)
+      setHasPrev(false);
     }
 
     const page = pageNum - 1;
     setPageNum(page);
     await getPage(page);
-  }
+  };
 
   const createPageQuery = (pageNum: number): GamePageQuery => {
     return {
       page_num: pageNum,
       game_type: gameType,
-      category: category
-    }
-  }
+      category: category,
+    };
+  };
 
   const getPage = async (pageNum: number) => {
     if (!pseudoId) {
@@ -92,13 +92,13 @@ export const GameListScreen = () => {
     console.log("has next:", pagedResponse.has_next);
     setGames(pagedResponse.items);
     setHasNext(pagedResponse.has_next);
-  }
+  };
 
   const handleSaveGame = async (gameId: string) => {
     if (!accessToken) {
       displayActionModal(
-        "Du må logge inn for å lagre spill", 
-        () => { }, 
+        "Du må logge inn for å lagre spill",
+        () => {},
         () => {
           navigation.navigate(Screen.Hub);
           // Small delay to ensure navigation completes
@@ -112,7 +112,7 @@ export const GameListScreen = () => {
     if (result.isError()) {
       displayErrorModal("Det har skjedd en feil, forsøk igjen senere");
     }
-  }
+  };
 
   const { setSpinGame } = useSpinGameProvider();
   const { setQuizGame } = useQuizGameProvider();
@@ -121,7 +121,6 @@ export const GameListScreen = () => {
     <View style={styles.container}>
       <VerticalScroll>
         <Text style={styles.header}>Velg ett spill</Text>
-
 
         {games.length === 0 && <Text>Det finnes ingen spill av denne typen enda</Text>}
 
@@ -140,15 +139,11 @@ export const GameListScreen = () => {
                 <Text style={styles.cardCategory}>{CATEGORY_LABELS[game.category]}</Text>
               </View>
             </View>
-            <Pressable 
-              style={styles.saveIcon} 
-              onPress={() => handleSaveGame(game.id)}
-            >
+            <Pressable style={styles.saveIcon} onPress={() => handleSaveGame(game.id)}>
               <Feather name="bookmark" size={28} color={Color.Purple} />
             </Pressable>
           </TouchableOpacity>
         ))}
-
 
         <View style={styles.navButtons}>
           {hasPrev && (
@@ -162,9 +157,7 @@ export const GameListScreen = () => {
             </Pressable>
           )}
         </View>
-        <Text style={styles.paragraph}>
-          Side {pageNum}
-        </Text>
+        <Text style={styles.paragraph}>Side {pageNum}</Text>
       </VerticalScroll>
 
       <AbsoluteHomeButton />

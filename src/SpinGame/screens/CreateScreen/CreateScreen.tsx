@@ -1,19 +1,14 @@
 import { Text, TextInput, View, TouchableOpacity, ScrollView } from "react-native";
-import styles from "./createScreenStyles";
-import { useModalProvider } from "@/src/common/context/ModalProvider";
-import { useGlobalGameProvider } from "@/src/common/context/GlobalGameProvider";
-import AbsoluteHomeButton from "@/src/common/components/AbsoluteHomeButton/AbsoluteHomeButton";
-import { PLATFORM_URL_BASE } from "@/src/common/constants/endpoints";
-import { GameService } from "@/src/common/services/gameService";
-import { useAuthProvider } from "@/src/common/context/AuthProvider";
-import { CreateGameRequest, GameType, GameCategory } from "@/src/common/constants/types";
-import SpinGame from "../../SpinGame";
 import { useState } from "react";
-import { CreateAskGameRequest } from "@/src/quizGame/constants/spinTypes";
-import Color from "@/src/common/constants/color";
+import Color from "@/src/Common/constants/Color";
 import { Feather } from "@expo/vector-icons";
-
-const service = new GameService(PLATFORM_URL_BASE);
+import { CreateGameRequest, GameCategory, GameType } from "@/src/Common/constants/Types";
+import { useModalProvider } from "@/src/Common/context/ModalProvider";
+import { useAuthProvider } from "@/src/Common/context/AuthProvider";
+import { useQuizGameProvider } from "@/src/quizGame/context/AskGameProvider";
+import { useServiceProvider } from "@/src/Common/context/ServiceProvider";
+import { styles } from "./createScreenStyles";
+import AbsoluteHomeButton from "@/src/Common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 
 const CATEGORY_OPTIONS = [
   { label: "Standard", value: GameCategory.Default },
@@ -24,18 +19,24 @@ const CATEGORY_OPTIONS = [
 ];
 
 export const CreateScreen = ({ navigation }: any) => {
-  const { setUniversalGameValues } = useGlobalGameProvider();
   const { displayErrorModal } = useModalProvider();
-  const { pseudoId: guestId, accessToken } = useAuthProvider();
+  const { pseudoId, accessToken } = useAuthProvider();
+  const { gameService } = useServiceProvider();
 
-  const [request, setRequest] = useState<CreateGameRequest>({ 
-    name: "", 
-    category: GameCategory.Default 
+  const [request, setRequest] = useState<CreateGameRequest>({
+    name: "",
+    category: GameCategory.Default,
   });
 
   const handleCreate = async () => {
+    if (!pseudoId) {
+      console.error("No pseudo id present");
+      // TODO - handle
+      return;
+    }
+
     console.info("Request:", request);
-    let result = await service.createInteractiveGame(guestId, accessToken, GameType.Spin, request);
+    let result = await gameService().createInteractiveGame(pseudoId, accessToken, GameType.Spin, request);
     if (result.isError()) {
       displayErrorModal(result.error);
       return;
@@ -45,13 +46,10 @@ export const CreateScreen = ({ navigation }: any) => {
   };
 
   return (
-    <ScrollView 
-      contentContainerStyle={styles.scrollContainer}
-      showsVerticalScrollIndicator={false}
-    >
+    <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <Text style={styles.header}>Opprett spill</Text>
-        
+
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Spillnavn</Text>
           <TextInput
@@ -59,7 +57,7 @@ export const CreateScreen = ({ navigation }: any) => {
             placeholder="Skriv spillnavn her"
             placeholderTextColor={Color.Gray}
             value={request.name}
-            onChangeText={(input) => setRequest(prev => ({ ...prev, name: input }))}
+            onChangeText={(input) => setRequest((prev) => ({ ...prev, name: input }))}
           />
         </View>
 
@@ -72,7 +70,7 @@ export const CreateScreen = ({ navigation }: any) => {
             value={request.description}
             multiline
             numberOfLines={3}
-            onChangeText={(input) => setRequest(prev => ({ ...prev, description: input }))}
+            onChangeText={(input) => setRequest((prev) => ({ ...prev, description: input }))}
           />
         </View>
 
@@ -82,16 +80,15 @@ export const CreateScreen = ({ navigation }: any) => {
             {CATEGORY_OPTIONS.map((category) => (
               <TouchableOpacity
                 key={category.value}
-                style={[
-                  styles.categoryButton,
-                  request.category === category.value && styles.categoryButtonSelected
-                ]}
-                onPress={() => setRequest(prev => ({ ...prev, category: category.value }))}
+                style={[styles.categoryButton, request.category === category.value && styles.categoryButtonSelected]}
+                onPress={() => setRequest((prev) => ({ ...prev, category: category.value }))}
               >
-                <Text style={[
-                  styles.categoryButtonText,
-                  request.category === category.value && styles.categoryButtonTextSelected
-                ]}>
+                <Text
+                  style={[
+                    styles.categoryButtonText,
+                    request.category === category.value && styles.categoryButtonTextSelected,
+                  ]}
+                >
                   {category.label}
                 </Text>
               </TouchableOpacity>

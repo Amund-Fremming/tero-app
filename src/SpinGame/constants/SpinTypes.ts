@@ -1,4 +1,4 @@
-import { Category, UserBase, GameBase } from "@/src/common/constants/types";
+import { Category, UserBase, GameBase } from "@/src/Common/constants/Types";
 
 export interface SpinGame extends GameBase {
   category: Category;

@@ -1,22 +1,23 @@
 import React, { useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TransitionPresets } from "@react-navigation/stack";
-import Color from "../common/constants/color";
+import Color from "../Common/constants/Color";
 
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
-import SpinGame from "../spinGame/SpinGame";
+import SpinGame from "../SpinGame/SpinGame";
 import QuizGame from "../quizGame/QuizGame";
 import HubScreen from "./screens/HubScreen/HubScreen";
 import JoinScreen from "./screens/JoinScreen/JoinScreen";
-import Screen from "../common/constants/screen";
+import Screen from "../Common/constants/Screen";
 import AdminScreen from "./screens/AdminScreen/AdminScreen";
-import GameTypeListScreen from "../common/screens/GameTypeListScreen/GameTypeListScreen";
-import GameListScreen from "../common/screens/GameListScreen/GameListScreen";
+import LogsScreen from "./screens/LogsScreen/LogsScreen";
+import GameTypeListScreen from "../Common/screens/GameTypeListScreen/GameTypeListScreen";
+import GameListScreen from "../Common/screens/GameListScreen/GameListScreen";
 import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
 import EditProfileScreen from "./screens/EditProfileScreen/EditProfileScreen";
 import ChangePasswordScreen from "./screens/ChangePasswordScreen/ChangePasswordScreen";
 import { SavedGamesScreen } from "./screens/SavedGamesScreen/SavedGamesScreen";
-import { TipsUsScreen } from "../common/screens/TipsUsScreen/TipsUsScreen";
+import { TipsUsScreen } from "../Common/screens/TipsUsScreen/TipsUsScreen";
 import { ErrorScreen } from "./screens/ErrorScreen/ErrorScreen";
 
 const Stack = createStackNavigator();
@@ -42,6 +43,7 @@ export const Hub = () => {
       <Stack.Screen name={Screen.GameList} component={GameListScreen} />
       <Stack.Screen name={Screen.GameTypeList} component={GameTypeListScreen} />
       <Stack.Screen name={Screen.Admin} component={AdminScreen} />
+      <Stack.Screen name={Screen.Logs} component={LogsScreen} />
       <Stack.Screen name={Screen.SavedGames} component={SavedGamesScreen} />
       <Stack.Screen name={Screen.TipsUs} component={TipsUsScreen} />
       <Stack.Screen name={Screen.Error} component={ErrorScreen} />

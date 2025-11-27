@@ -1,6 +1,6 @@
 import axios from "axios";
 import { err, ok, Result } from "../utils/result";
-import { LogCategoryCount, SystemHealth } from "../constants/types";
+import { Log, LogCategory, LogCategoryCount, PagedResponse, SystemHealth } from "../constants/Types";
 import { getHeaders } from "./utils";
 
 export class CommonService {
@@ -50,6 +50,22 @@ export class CommonService {
     } catch (error) {
       console.error("getLogCounts:", error);
       return err("Failed to get error log counts");
+    }
+  }
+
+  async getLogs(token: string, category: LogCategory | null, pageNum: number): Promise<Result<PagedResponse<Log>>> {
+    try {
+      const categoryParam = category ? `&category=${category}` : '';
+      const url = `${this.#urlBase}/logs?page_num=${pageNum}${categoryParam}`;
+      const response = await axios.get<PagedResponse<Log>>(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return ok(response.data);
+    } catch (error) {
+      console.error("getLogs:", error);
+      return err("Failed to get logs");
     }
   }
 }

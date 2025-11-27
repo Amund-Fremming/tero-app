@@ -1,7 +1,7 @@
 import { err, ok, Result } from "../utils/result";
 import axios from 'axios';
 
-import { ActivityStats, BaseUser, ClientPopup, PatchUserRequest, UserWithRole } from "../constants/types";
+import { ActivityStats, BaseUser, ClientPopup, PatchUserRequest, UserWithRole } from "../constants/Types";
 import { getHeaders } from "./utils";
 
 export class UserService {
