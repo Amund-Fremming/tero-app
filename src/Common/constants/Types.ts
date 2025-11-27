@@ -1,87 +1,107 @@
 export enum UserType {
   Guest,
-  Registered
+  Registered,
 }
 
 export enum Gender {
   Male = "Male",
   Female = "Female",
-  Unknown = "Unknown"
+  Unknown = "Unknown",
 }
 
 export interface ClientPopup {
-  heading: string,
-  paragraph: string,
-  active: boolean,
+  heading: string;
+  paragraph: string;
+  active: boolean;
 }
 
 export interface ActivityStats {
-  total_game_count: number,
-  total_user_count: number,
-  recent: RecentUserStats,
-  average: AverageUserStats,
+  total_game_count: number;
+  total_user_count: number;
+  recent: RecentUserStats;
+  average: AverageUserStats;
 }
 
 export interface RecentUserStats {
-  this_month_users: number,
-  this_week_users: number,
-  todays_users: number,
+  this_month_users: number;
+  this_week_users: number;
+  todays_users: number;
 }
 
 export interface AverageUserStats {
-  avg_month_users: number,
-  avg_week_users: number,
-  avg_daily_users: number,
+  avg_month_users: number;
+  avg_week_users: number;
+  avg_daily_users: number;
 }
 
 export interface SystemHealth {
-  platform: boolean,
-  database: boolean,
-  session: boolean
+  platform: boolean;
+  database: boolean;
+  session: boolean;
 }
 
 export interface LogCategoryCount {
-  info: number,
-  warning: number,
-  critical: number
+  info: number;
+  warning: number;
+  critical: number;
 }
 
-export enum LogCategory {
+export enum LogCeverity {
   Info = "Info",
   Warning = "Warning",
-  Critical = "Critical"
+  Critical = "Critical",
 }
 
-export interface Log {
-  id: string,
-  category: LogCategory,
-  message: string,
-  timestamp: string,
-  source?: string
+export enum SubjectType {
+  RegisteredUser,
+  GuestUser,
+  Integration,
+  System,
+}
+
+export enum LogAction {
+  Create,
+  Read,
+  Update,
+  Delete,
+  Sync,
+  Other,
+}
+
+export interface SystemLog {
+  id: number;
+  subject_id: String;
+  subject_type: SubjectType;
+  action: LogAction;
+  ceverity: LogCeverity;
+  file_name: String;
+  description: String;
+  metadata?: string;
+  created_at: string;
 }
 
 export interface BaseUser {
-  id: string,
-  username: string,
-  auth0_id?: string,
-  userType: UserType,
-  last_active?: string,
-  gender: Gender,
-  email?: string,
-  email_verified?: boolean,
-  updated_at: string,
-  family_name?: string,
-  given_name?: string,
-  created_at?: string,
-  birth_date?: string
+  id: string;
+  username: string;
+  auth0_id?: string;
+  userType: UserType;
+  last_active?: string;
+  gender: Gender;
+  email?: string;
+  email_verified?: boolean;
+  updated_at: string;
+  family_name?: string;
+  given_name?: string;
+  created_at?: string;
+  birth_date?: string;
 }
 
 export interface PatchUserRequest {
-  username?: string,
-  gender?: Gender,
-  family_name?: string,
-  given_name?: string,
-  birth_date?: string
+  username?: string;
+  gender?: Gender;
+  family_name?: string;
+  given_name?: string;
+  birth_date?: string;
 }
 
 export enum UserRole {
@@ -90,8 +110,8 @@ export enum UserRole {
 }
 
 export interface UserWithRole {
-  role: UserRole,
-  user: BaseUser
+  role: UserRole;
+  user: BaseUser;
 }
 
 export enum GameType {
@@ -100,9 +120,9 @@ export enum GameType {
 }
 
 export interface CreateGameRequest {
-  name: string,
-  description?: string,
-  category?: GameCategory,
+  name: string;
+  description?: string;
+  category?: GameCategory;
 }
 
 export enum GameCategory {
@@ -114,8 +134,8 @@ export enum GameCategory {
 }
 
 export interface InteractiveGameResponse {
-  key_word: string,
-  hub_address: string,
+  key_word: string;
+  hub_address: string;
 }
 
 export enum GameEntryMode {
@@ -126,8 +146,8 @@ export enum GameEntryMode {
 }
 
 export interface PagedResponse<T> {
-  items: T[],
-  has_next: boolean
+  items: T[];
+  has_next: boolean;
 }
 
 export interface GamePageQuery {
@@ -137,16 +157,16 @@ export interface GamePageQuery {
 }
 
 export interface SavedGamesPageQuery {
-  page_num: number
+  page_num: number;
 }
 
 export interface GameBase {
-  id: string,
-  name: string,
-  description?: string,
-  gameType: GameType,
-  category: GameCategory,
-  iterations: number,
-  timesPlayed: number,
-  lastPlayed: string,
+  id: string;
+  name: string;
+  description?: string;
+  gameType: GameType;
+  category: GameCategory;
+  iterations: number;
+  timesPlayed: number;
+  lastPlayed: string;
 }

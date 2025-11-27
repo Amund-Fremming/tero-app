@@ -1,6 +1,6 @@
 import axios from "axios";
 import { err, ok, Result } from "../utils/result";
-import { Log, LogCategory, LogCategoryCount, PagedResponse, SystemHealth } from "../constants/Types";
+import { LogCeverity, LogCategoryCount, PagedResponse, SystemHealth, SystemLog } from "../constants/Types";
 import { getHeaders } from "./utils";
 
 export class CommonService {
@@ -53,15 +53,20 @@ export class CommonService {
     }
   }
 
-  async getLogs(token: string, category: LogCategory | null, pageNum: number): Promise<Result<PagedResponse<Log>>> {
+  async getLogs(
+    token: string,
+    ceverity: LogCeverity | null,
+    pageNum: number
+  ): Promise<Result<PagedResponse<SystemLog>>> {
     try {
-      const categoryParam = category ? `&category=${category}` : '';
+      const categoryParam = ceverity ? `&ceverity=${ceverity}` : "";
       const url = `${this.#urlBase}/logs?page_num=${pageNum}${categoryParam}`;
-      const response = await axios.get<PagedResponse<Log>>(url, {
+      const response = await axios.get<PagedResponse<SystemLog>>(url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(response.data);
       return ok(response.data);
     } catch (error) {
       console.error("getLogs:", error);
