@@ -23,10 +23,10 @@ export const ActionModal = ({ message, onLeftClick, onRightClick }: IActionModal
         <Text style={styles.message}>{message}</Text>
         <View style={styles.buttonsWrapper}>
           <Pressable onPress={handleLeftPressed} style={styles.button}>
-            <Text style={styles.buttonText}>Nei</Text>
+            <Text style={styles.buttonText}>Ja</Text>
           </Pressable>
           <Pressable onPress={handleRightPressed} style={styles.button}>
-            <Text style={styles.buttonText}>Ja</Text>
+            <Text style={styles.buttonText}>Nei</Text>
           </Pressable>
         </View>
       </View>
