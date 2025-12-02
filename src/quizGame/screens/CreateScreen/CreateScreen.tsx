@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Text, View, KeyboardAvoidingView, Platform } from "react-native";
 import styles from "./createScreenStyles";
 import Color from "@/src/Common/constants/Color";
 import { useState } from "react";
@@ -53,7 +53,12 @@ export const CreateScreen = ({ navigation }: any) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView 
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+    >
+      <View style={styles.container}>
       <Text style={styles.header}>Opprett spill</Text>
 
       <TextInput
@@ -77,5 +82,6 @@ export const CreateScreen = ({ navigation }: any) => {
 
       <AbsoluteHomeButton primary={Color.Beige} secondary={Color.White} />
     </View>
+    </KeyboardAvoidingView>
   );
 };

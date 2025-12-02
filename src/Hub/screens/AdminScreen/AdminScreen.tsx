@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View, KeyboardAvoidingView, Platform, TextInput } from "react-native";
 import styles from "./AdminScreenStyles";
 import { useAuthProvider } from "@/src/Common/context/AuthProvider";
 import { useServiceProvider } from "@/src/Common/context/ServiceProvider";
@@ -114,20 +114,25 @@ export const AdminScreen = () => {
   };
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      scrollEnabled={true}
-      style={{
-        width: "100%",
-        backgroundColor: Color.LightGray,
-        height: screenHeight(),
-      }}
-      contentContainerStyle={{
-        alignItems: "center",
-        gap: verticalScale(15),
-        paddingBottom: verticalScale(200),
-      }}
+    <KeyboardAvoidingView 
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
     >
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        scrollEnabled={true}
+        style={{
+          width: "100%",
+          backgroundColor: Color.LightGray,
+          height: screenHeight(),
+        }}
+        contentContainerStyle={{
+          alignItems: "center",
+          gap: verticalScale(15),
+          paddingBottom: verticalScale(200),
+        }}
+      >
       <View style={styles.leadContainer}>
         <Pressable onPress={() => navigation.goBack()}>
           <Text style={styles.header}>Admin</Text>
@@ -238,14 +243,26 @@ export const AdminScreen = () => {
             <Text style={styles.modalIndicator}>{popup.active ? "✅" : "❌"}</Text>
           </Pressable>
           <Text>Popup</Text>
-          <Text style={styles.healthText}>{popup.heading}</Text>
-          <Text style={styles.healthText}>{popup.paragraph}</Text>
+          <TextInput
+            style={[styles.healthText, styles.textInput]}
+            value={popup.heading}
+            onChangeText={(text) => setPopup((prev) => (prev ? { ...prev, heading: text } : prev))}
+            placeholder="Heading"
+          />
+          <TextInput
+            style={[styles.healthText, styles.textInput]}
+            value={popup.paragraph}
+            onChangeText={(text) => setPopup((prev) => (prev ? { ...prev, paragraph: text } : prev))}
+            placeholder="Paragraph"
+            multiline
+          />
           <Pressable onPress={handleUpdateModal} style={styles.popupButton}>
             <Text style={styles.popupText}>Lagre</Text>
           </Pressable>
         </View>
       )}
     </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

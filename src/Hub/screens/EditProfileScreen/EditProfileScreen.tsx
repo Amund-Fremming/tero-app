@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View, KeyboardAvoidingView, Platform } from "react-native";
 import { styles } from "./editProfileScreenStyles";
 import { useAuthProvider } from "@/src/Common/context/AuthProvider";
 import { useEffect, useState } from "react";
@@ -125,23 +125,28 @@ export const EditProfileScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.iconsBar}>
-        <Pressable onPress={() => navigation.goBack()}>
-          <Feather name="chevron-left" size={32} color={Color.Black} />
-        </Pressable>
-      </View>
+    <KeyboardAvoidingView 
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+    >
+      <View style={styles.container}>
+        <View style={styles.iconsBar}>
+          <Pressable onPress={() => navigation.goBack()}>
+            <Feather name="chevron-left" size={32} color={Color.Black} />
+          </Pressable>
+        </View>
 
-      <View style={styles.content}>
-        <Text style={styles.email}>{userData?.email}</Text>
-        <Text style={styles.username}></Text>
+        <View style={styles.content}>
+          <Text style={styles.email}>{userData?.email}</Text>
+          <Text style={styles.username}></Text>
 
-        <View style={styles.layoverEdit}>
-          <ScrollView
-            style={styles.layoverEditScroll}
-            contentContainerStyle={styles.layoverEditContent}
-            showsVerticalScrollIndicator={false}
-          >
+          <View style={styles.layoverEdit}>
+            <ScrollView
+              style={styles.layoverEditScroll}
+              contentContainerStyle={styles.layoverEditContent}
+              showsVerticalScrollIndicator={false}
+            >
             <View style={styles.inputWrapper}>
               <Text style={styles.inputLabel}>Fornavn</Text>
               <TextInput
@@ -241,6 +246,7 @@ export const EditProfileScreen = () => {
         </View>
       </View>
     </View>
+    </KeyboardAvoidingView>
   );
 };
 
