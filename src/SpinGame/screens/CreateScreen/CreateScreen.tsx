@@ -1,4 +1,4 @@
-import { Text, TextInput, View, TouchableOpacity, ScrollView } from "react-native";
+import { Text, TextInput, View, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { useState } from "react";
 import Color from "@/src/Common/constants/Color";
 import { Feather } from "@expo/vector-icons";
@@ -46,8 +46,13 @@ export const CreateScreen = ({ navigation }: any) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
+    <KeyboardAvoidingView 
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
         <Text style={styles.header}>Opprett spill</Text>
 
         <View style={styles.inputContainer}>
@@ -104,6 +109,7 @@ export const CreateScreen = ({ navigation }: any) => {
         <AbsoluteHomeButton />
       </View>
     </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

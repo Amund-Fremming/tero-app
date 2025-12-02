@@ -95,6 +95,16 @@ export const styles = StyleSheet.create({
     fontWeight: "bold"
   },
 
+  textInput: {
+    borderWidth: moderateScale(1),
+    borderColor: Color.Purple,
+    borderRadius: moderateScale(8),
+    paddingHorizontal: horizontalScale(12),
+    paddingVertical: verticalScale(10),
+    backgroundColor: Color.White,
+    minHeight: verticalScale(40),
+  },
+
   inputField: {
     fontFamily: Font.SintonyRegular,
     fontSize: moderateScale(18),
