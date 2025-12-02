@@ -17,9 +17,8 @@ const subHeaderList = [
   "vi kjører på",
   "få i gang kvelden",
   "rolige vibber, gode valg",
-  "klart for neste?"
+  "klart for neste?",
 ];
-
 
 export const HomeScreen = ({ navigation }: any) => {
   const { setGameEntryMode } = useGlobalGameProvider();
@@ -53,13 +52,13 @@ export const HomeScreen = ({ navigation }: any) => {
       return;
     }
 
-    displayInfoModal(popup.paragraph, popup.heading, () => setPopupCloseCount(prev => prev + 1));
-  }
+    displayInfoModal(popup.paragraph, popup.heading, () => setPopupCloseCount((prev) => prev + 1));
+  };
 
   const setSubHeader = () => {
     const idx = Math.floor(Math.random() * subHeaderList.length);
     setSubheader(subHeaderList[idx]);
-  }
+  };
 
   const systemHealth = async () => {
     const result = await commonService().healthDetailed();
@@ -74,7 +73,7 @@ export const HomeScreen = ({ navigation }: any) => {
       console.error("Failed health, returning error page");
       navigation.navigate(Screen.Error);
     }*/
-  }
+  };
 
   const handlePress = (gameEntryMode: GameEntryMode, destination: Screen) => {
     setGameEntryMode(gameEntryMode);
@@ -124,8 +123,8 @@ export const HomeScreen = ({ navigation }: any) => {
           <ScatteredCircles />
           <View style={styles.buttonTextWrapper}>
             <View style={styles.textCircle}>
-            <Text style={{ ...styles.textBase, ...styles.textBottomRight }}>BLI</Text>
-            <Text style={{ ...styles.textBase, ...styles.textBottomRight }}>MED</Text>
+              <Text style={{ ...styles.textBase, ...styles.textBottomRight }}>BLI</Text>
+              <Text style={{ ...styles.textBase, ...styles.textBottomRight }}>MED</Text>
             </View>
           </View>
         </Pressable>

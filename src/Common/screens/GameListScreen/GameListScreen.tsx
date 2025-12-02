@@ -98,12 +98,12 @@ export const GameListScreen = () => {
     if (!accessToken) {
       displayActionModal(
         "Du må logge inn for å lagre spill",
-        () => {},
         () => {
           navigation.navigate(Screen.Hub);
           // Small delay to ensure navigation completes
           setTimeout(() => triggerLogin(), 200);
-        }
+        },
+        () => {}
       );
       return;
     }

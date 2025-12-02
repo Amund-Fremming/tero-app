@@ -16,9 +16,11 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: horizontalScale(350),
-    height: verticalScale(220),
-    borderWidth: moderateScale(2.5),
-    gap: verticalScale(20),
+    height: verticalScale(240),
+    borderWidth: moderateScale(2),
+    borderRadius: moderateScale(15),
+    gap: verticalScale(15),
+    paddingHorizontal: horizontalScale(20),
   },
   messageContainer: {
     backgroundColor: Color.White,
@@ -29,19 +31,28 @@ export const styles = StyleSheet.create({
     borderColor: Color.Red,
   },
   header: {
-    fontFamily: Font.SpaceMonoRegular,
-    fontSize: moderateScale(30),
+    fontFamily: Font.PassionOneBold,
+    fontSize: moderateScale(34),
+    color: Color.Black,
   },
   message: {
     fontFamily: Font.SpaceMonoRegular,
-    fontSize: moderateScale(18),
+    fontSize: moderateScale(16),
+    textAlign: "center",
+    color: Color.Black,
   },
   button: {
-    borderBottomWidth: moderateScale(2),
+    backgroundColor: Color.Purple,
+    paddingVertical: verticalScale(10),
+    paddingHorizontal: horizontalScale(40),
+    borderRadius: moderateScale(8),
+    marginTop: verticalScale(5),
   },
   buttonText: {
     fontFamily: Font.SpaceMonoRegular,
-    fontSize: moderateScale(14),
+    fontSize: moderateScale(16),
+    color: Color.White,
+    fontWeight: "600",
   },
 });
 
