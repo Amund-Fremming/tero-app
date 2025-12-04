@@ -126,11 +126,11 @@ export interface CreateGameRequest {
 }
 
 export enum GameCategory {
-  Casual,
-  Random,
-  Ladies,
-  Boys,
-  Default,
+  Casual = "Casual",
+  Random = "Random",
+  Ladies = "Ladies",
+  Boys = "Boys",
+  Default = "Default",
 }
 
 export interface InteractiveGameResponse {

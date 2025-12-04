@@ -15,7 +15,7 @@ import QuizGame from "../../QuizGame";
 export const CreateScreen = ({ navigation }: any) => {
   const { pseudoId } = useAuthProvider();
   const { displayErrorModal } = useModalProvider();
-  const { gameService} = useServiceProvider();
+  const { gameService } = useServiceProvider();
   const { accessToken } = useAuthProvider();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -30,14 +30,14 @@ export const CreateScreen = ({ navigation }: any) => {
       return;
     }
 
-    if(!pseudoId) {
+    if (!pseudoId) {
       console.error("No pseudo id present");
       displayErrorModal("En feil har skjedd, forsøk å åpne appen på nytt");
       return;
     }
 
     setLoading(true);
-    const result = await gameService().createInteractiveGame(pseudoId, accessToken, GameType.Quiz, createRequest);
+    const result = await gameService().createInteractiveGame(accessToken, GameType.Quiz, createRequest);
 
     if (result.isError()) {
       displayErrorModal(result.error);

@@ -10,7 +10,17 @@ import { useEffect, useRef, useState } from "react";
 export const HubScreen = () => {
   const navigation: any = useNavigation();
 
-  const { logValues, rotateTokens, pseudoId: guestId, resetPseudoId: resetGuestId, redirectUri, triggerLogin, triggerLogout, accessToken, invalidateAccessToken } = useAuthProvider();
+  const {
+    logValues,
+    rotateTokens,
+    pseudoId: guestId,
+    resetPseudoId: resetGuestId,
+    redirectUri,
+    triggerLogin,
+    triggerLogout,
+    accessToken,
+    invalidateAccessToken,
+  } = useAuthProvider();
 
   const [displayDebugTools, setDisplayDebugTools] = useState<boolean>(true);
 
@@ -22,6 +32,8 @@ export const HubScreen = () => {
       shouldNavigateAfterLogin.current = false;
       navigation.navigate(Screen.Profile);
     }
+
+    console.log("Redirect URI:", redirectUri);
   }, [accessToken, navigation]);
 
   const handleProfilePressed = () => {
@@ -32,8 +44,7 @@ export const HubScreen = () => {
 
     shouldNavigateAfterLogin.current = true;
     triggerLogin();
-  }
-
+  };
 
   return (
     <View style={styles.container}>
@@ -46,23 +57,19 @@ export const HubScreen = () => {
         </Pressable>
       </View>
 
-      {
-        displayDebugTools && (
-          <View style={styles.debugBox}>
-            <Text style={styles.debugHeader}>
-              Debug tools
-            </Text>
-            <Text>Peseudo id: {guestId}</Text>
-            <Text>Redirect uri: {redirectUri}</Text>
+      {displayDebugTools && (
+        <View style={styles.debugBox}>
+          <Text style={styles.debugHeader}>Debug tools</Text>
+          <Text>Peseudo id: {guestId}</Text>
+          <Text>Redirect uri: {redirectUri}</Text>
 
-            <Button title="Invalidate AT" onPress={invalidateAccessToken} />
-            <Button title="reset guest id" onPress={resetGuestId} />
-            <Button title="log values" onPress={logValues} />
-            <Button title="rotate tokens" onPress={rotateTokens} />
-            <Button title="logout" onPress={triggerLogout} />
-          </View>
-        )
-      }
+          <Button title="Invalidate AT" onPress={invalidateAccessToken} />
+          <Button title="reset guest id" onPress={resetGuestId} />
+          <Button title="log values" onPress={logValues} />
+          <Button title="rotate tokens" onPress={rotateTokens} />
+          <Button title="logout" onPress={triggerLogout} />
+        </View>
+      )}
     </View>
   );
 };
