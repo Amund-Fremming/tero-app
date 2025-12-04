@@ -12,10 +12,10 @@ import {
 } from "../constants/Types";
 
 export class GameService {
-  #urlBase: string;
+  urlBase: string;
 
   constructor(urlBase: string) {
-    this.#urlBase = urlBase;
+    this.urlBase = urlBase;
   }
 
   async createInteractiveGame(
@@ -24,7 +24,13 @@ export class GameService {
     request: CreateGameRequest
   ): Promise<Result<InteractiveGameResponse>> {
     try {
-      const response = await axios.post<InteractiveGameResponse>(`${this.#urlBase}/games/${type}/create`, request, {
+      const url = `${this.urlBase}/games/${type}/create`;
+      const payload = JSON.stringify(request);
+
+      console.debug("url:", url);
+      console.debug("payload:", payload);
+
+      const response = await axios.post<InteractiveGameResponse>(`${this.urlBase}/games/${type}/create`, request, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -40,7 +46,7 @@ export class GameService {
 
   async deleteGame(guest_id: string, token: string | null, game_type: string, game_id: string): Promise<Result<void>> {
     try {
-      await axios.delete(`${this.#urlBase}/games/${game_type}/${game_id}`, {
+      await axios.delete(`${this.urlBase}/games/${game_type}/${game_id}`, {
         headers: getHeaders(guest_id, token),
       });
       return ok(undefined);
@@ -58,7 +64,7 @@ export class GameService {
   ): Promise<Result<void>> {
     try {
       await axios.patch(
-        `${this.#urlBase}/keys/${game_type}/free/${key_word}`,
+        `${this.urlBase}/keys/${game_type}/free/${key_word}`,
         {},
         {
           headers: getHeaders(guest_id, token),
@@ -76,7 +82,7 @@ export class GameService {
   async saveGame(token: string, game_id: string): Promise<Result<void>> {
     try {
       await axios.post(
-        `${this.#urlBase}/games/general/save/${game_id}`,
+        `${this.urlBase}/games/general/save/${game_id}`,
         {},
         {
           headers: {
@@ -94,7 +100,7 @@ export class GameService {
 
   async unsaveGame(token: string, game_id: string): Promise<Result<void>> {
     try {
-      await axios.delete(`${this.#urlBase}/games/general/unsave/${game_id}`, {
+      await axios.delete(`${this.urlBase}/games/general/unsave/${game_id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -109,7 +115,7 @@ export class GameService {
 
   async getSavedGames(token: string, page_num: number): Promise<Result<PagedResponse<GameBase>>> {
     try {
-      const response = await axios.get(`${this.#urlBase}/games/general/saved?page_num=${page_num}`, {
+      const response = await axios.get(`${this.urlBase}/games/general/saved?page_num=${page_num}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -124,7 +130,7 @@ export class GameService {
 
   async getGamePage<T>(guest_id: string, request: GamePageQuery): Promise<Result<PagedResponse<T>>> {
     try {
-      const response = await axios.post(`${this.#urlBase}/games/general/page`, request, {
+      const response = await axios.post(`${this.urlBase}/games/general/page`, request, {
         headers: getHeaders(guest_id, null),
       });
 
@@ -158,7 +164,7 @@ export class GameService {
   ): Promise<Result<InteractiveGameResponse>> {
     try {
       const response = await axios.post(
-        `${this.#urlBase}/games/interactive/${game_type}/initiate/${game_id}`,
+        `${this.urlBase}/games/interactive/${game_type}/initiate/${game_id}`,
         {},
         {
           headers: getHeaders(guest_id, token),
@@ -181,7 +187,7 @@ export class GameService {
   ): Promise<Result<InteractiveGameResponse>> {
     try {
       const response = await axios.post(
-        `${this.#urlBase}/games/interactive/${game_type}/join/${game_id}`,
+        `${this.urlBase}/games/interactive/${game_type}/join/${game_id}`,
         {},
         {
           headers: getHeaders(guest_id, token),
