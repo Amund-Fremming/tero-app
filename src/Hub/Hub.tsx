@@ -19,6 +19,7 @@ import ChangePasswordScreen from "./screens/ChangePasswordScreen/ChangePasswordS
 import { SavedGamesScreen } from "./screens/SavedGamesScreen/SavedGamesScreen";
 import { TipsUsScreen } from "../Common/screens/TipsUsScreen/TipsUsScreen";
 import { ErrorScreen } from "./screens/ErrorScreen/ErrorScreen";
+import { ProblemScreen } from "./screens/ProblemScreen/ProblemScreen";
 
 const Stack = createStackNavigator();
 
@@ -47,6 +48,7 @@ export const Hub = () => {
       <Stack.Screen name={Screen.SavedGames} component={SavedGamesScreen} />
       <Stack.Screen name={Screen.TipsUs} component={TipsUsScreen} />
       <Stack.Screen name={Screen.Error} component={ErrorScreen} />
+      <Stack.Screen name={Screen.Problem} component={ProblemScreen} />
     </Stack.Navigator >
   );
 };

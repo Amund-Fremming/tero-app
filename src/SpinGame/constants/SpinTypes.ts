@@ -1,5 +1,14 @@
 import { BaseUser, GameBase, GameCategory } from "@/src/Common/constants/Types";
 
+export const enum SpinGameScreen {
+  Lobby = "Lobby",
+  Started = "Started",
+  Finished = "Finished",
+  Create = "Create",
+  Choose = "Choose",
+  Game = "Game",
+}
+
 export interface SpinGame extends GameBase {
   category: GameCategory;
   state: SpinGameState;

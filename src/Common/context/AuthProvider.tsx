@@ -5,6 +5,9 @@ import * as AuthSession from "expo-auth-session";
 import { useModalProvider } from "./ModalProvider";
 import * as WebBrowser from "expo-web-browser";
 import { useServiceProvider } from "./ServiceProvider";
+import { useNavigation } from "expo-router";
+import Screen from "../constants/Screen";
+import { err, ok, Result } from "../utils/result";
 
 const REFRESH_TOKEN_KEY = "refresh_token";
 
@@ -26,7 +29,7 @@ interface IAuthContext {
 
 const defaultContextValue: IAuthContext = {
   redirectUri: "[NOT_SET]",
-  pseudoId: "[NOT_SET]",
+  pseudoId: null,
   setPseudoId: () => { },
   accessToken: null,
   callUpdateUserActivity: async () => { },
@@ -53,6 +56,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [pseudoId, setPseudoId] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
+  const navigation:any = useNavigation();
   const { displayErrorModal } = useModalProvider();
   const { userService } = useServiceProvider();
 
@@ -68,31 +72,34 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setRedirectUri(Auth0Config.redirectUri)
   }, []);
 
-  const handleAuth = async () => {
+  const handleAuth = async (): Promise<Result<string>> => {
     const storedPseudoId = await SecureStore.getItemAsync("pseudo_id");
     await rotateTokens();
 
     if (storedPseudoId) {
       setPseudoId(storedPseudoId);
-      console.log("Pseudo id retrieved from localstorage:", storedPseudoId); // TODO - remove log
+      console.log("Pseudo id retrieved from localstorage:", storedPseudoId);
+      return ok(storedPseudoId);
     }
 
     let result = await userService().ensurePseudoId(storedPseudoId);
     if (result.isError()) {
-      console.error(result.error); // TODO - remove log
-      return;
+      console.error(result.error); 
+      return err("Failed to get pseudo id");
     }
 
     setPseudoId(result.value);
     await SecureStore.setItemAsync("pseudo_id", result.value);
     console.log("Pseudo user created with id: ", result.value);
+
+    return ok(result.value);
   };
 
   const callUpdateUserActivity = async () => {
 
     if (!pseudoId) {
-      // TODO handle
-      console.error("No user id!");
+      console.error("No pseudo id!");
+      navigation.navigate(Screen.Problem);
       return;
     }
 

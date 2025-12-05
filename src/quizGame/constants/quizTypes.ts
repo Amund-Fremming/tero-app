@@ -1,6 +1,6 @@
 import { GameCategory } from "@/src/Common/constants/Types";
 
-export enum SpinGameScreen {
+export enum QuizGameScreen {
   Create,
   Game,
   Lobby,

@@ -14,7 +14,8 @@ export enum Screen {
   ChangePassword = "ChangePassword",
   SavedGames = "SavedGames",
   TipsUs = "TipsUs",
-  Error = "Error"
+  Error = "Error",
+  Problem = "Problem"
 }
 
 export default Screen;

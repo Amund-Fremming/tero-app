@@ -4,43 +4,64 @@ import CreateScreen from "../SpinGame/screens/CreateScreen/CreateScreen";
 import StartedScreen from "./screens/StartedScreen/StartedScreen";
 import { GameScreen } from "./screens/GameScreen/GameScreen";
 import { GameEntryMode } from "../Common/constants/Types";
-import { SpinGameScreen } from "./constants/spinTypes";
 import { useEffect, useState } from "react";
+import { useHubConnectionProvider } from "../Common/context/HubConnectionProvider";
+import { useModalProvider } from "../Common/context/ModalProvider";
+import { useNavigation } from "expo-router";
+import Screen from "../Common/constants/Screen";
+import { QuizGameScreen } from "./constants/quizTypes";
 
 export const QuizGame = () => {
-  const [screen, setScreen] = useState<SpinGameScreen>(SpinGameScreen.Lobby);
+  const { connect, setListener } = useHubConnectionProvider();
+  const {gameKey, hubAddress} = useGlobalGameProvider();
+  const { gameEntryMode } = useGlobalGameProvider();
+  const {displayErrorModal, displayInfoModal } = useModalProvider(); 
+  const navigation: any = useNavigation();
+
+  const [screen, setScreen] = useState<QuizGameScreen>(QuizGameScreen.Lobby);
 
   useEffect(() => {
     const initScreen = getInitialScreen();
-    setScreen(initScreen);
+    setScreen(initScreen); 
+    createHubConnection();
   }, []);
 
-  const { gameEntryMode } = useGlobalGameProvider();
+  const createHubConnection = async () => {
+    const result = await connect(hubAddress);
+    if(result.isError()) {
+      displayErrorModal("Klarte ikke koble deg til spillet"); 
+      return;
+    }
 
-  const getInitialScreen = (): SpinGameScreen => {
+    setListener("disconnect", (message: string) => {
+      displayInfoModal(message, "Heisann", () => navigation.navigate(Screen.Home));
+    })
+  }
+
+  const getInitialScreen = (): QuizGameScreen => {
     switch (gameEntryMode) {
       case GameEntryMode.Creator:
-        return SpinGameScreen.Create;
+        return QuizGameScreen.Create;
       case GameEntryMode.Host:
-        return SpinGameScreen.Game;
+        return QuizGameScreen.Game;
       case GameEntryMode.Participant || GameEntryMode.Member:
-        return SpinGameScreen.Lobby;
+        return QuizGameScreen.Lobby;
       default:
-        return SpinGameScreen.Lobby;
+        return QuizGameScreen.Lobby;
     }
   };
 
   switch (screen) {
-    case SpinGameScreen.Create:
+    case QuizGameScreen.Create:
       return <CreateScreen />;
-    case SpinGameScreen.Game:
+    case QuizGameScreen.Game:
       return <GameScreen />;
-    case SpinGameScreen.Lobby:
+    case QuizGameScreen.Lobby:
       return <LobbyScreen />;
-    case SpinGameScreen.Started:
+    case QuizGameScreen.Started:
       return <StartedScreen />;
     default:
-      return SpinGameScreen.Lobby;
+      return QuizGameScreen.Lobby;
   }
 };
 
