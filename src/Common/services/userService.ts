@@ -5,11 +5,10 @@ import { ActivityStats, BaseUser, ClientPopup, PatchUserRequest, UserWithRole } 
 import { getHeaders } from "./utils";
 
 export class UserService {
-
-    #baseUrl: string;
+    baseUrl: string;
 
     constructor(baseUrl: string) {
-        this.#baseUrl = baseUrl;
+        this.baseUrl = baseUrl;
     }
 
     getProfilePicture(guest_id: string, username?: string): string {
@@ -26,9 +25,9 @@ export class UserService {
         try {
             let url: string;
             if (pseudo_id) {
-                url = `${this.#baseUrl}/pseudo-users?pseudo_id=${pseudo_id}`;
+                url = `${this.baseUrl}/pseudo-users?pseudo_id=${pseudo_id}`;
             } else {
-                url = `${this.#baseUrl}/pseudo-users`;
+                url = `${this.baseUrl}/pseudo-users`;
             }
 
             const response = await axios.post<string>(url);
@@ -41,7 +40,7 @@ export class UserService {
 
     async getUser(token: string): Promise<Result<UserWithRole>> {
         try {
-            let url = `${this.#baseUrl}/users/me`;
+            let url = `${this.baseUrl}/users/me`;
             let response = await axios.get<UserWithRole>(url, {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -57,7 +56,7 @@ export class UserService {
 
     async patchUser(token: string, user_id: string, request: PatchUserRequest): Promise<Result<BaseUser>> {
         try {
-            const url = `${this.#baseUrl}/users/${user_id}`;
+            const url = `${this.baseUrl}/users/${user_id}`;
             const response = await axios.patch<BaseUser>(url, request, {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -73,7 +72,7 @@ export class UserService {
 
     async patchUserActivity(guest_id: string): Promise<Result<void>> {
         try {
-            let url = `${this.#baseUrl}/users/activity`;
+            let url = `${this.baseUrl}/users/activity`;
             let response = axios.patch(url, {
                 headers: getHeaders(guest_id, null)
             });
@@ -91,7 +90,7 @@ export class UserService {
 
     async deleteUser(token: string, user_id: string): Promise<Result<void>> {
         try {
-            let url = `${this.#baseUrl}/users/delete?user_id=${user_id}`;
+            let url = `${this.baseUrl}/users/delete?user_id=${user_id}`;
             let response = await axios.delete(url, {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -110,7 +109,7 @@ export class UserService {
 
     async listUsers(token: string): Promise<Result<BaseUser[]>> {
         try {
-            let url = `${this.#baseUrl}/users`
+            let url = `${this.baseUrl}/users`
             let response = await axios.get<BaseUser[]>(url, {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -125,7 +124,7 @@ export class UserService {
 
     async validateToken(token: string): Promise<Result<boolean>> {
         try {
-            let response = await fetch(`${this.#baseUrl}/valid-token`, {
+            let response = await fetch(`${this.baseUrl}/valid-token`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -148,7 +147,7 @@ export class UserService {
 
     async getGlobalPopup(): Promise<Result<ClientPopup>> {
         try {
-            const url = `${this.#baseUrl}/pseudo-users/popups`;
+            const url = `${this.baseUrl}/pseudo-users/popups`;
             const response = await axios.get<ClientPopup>(url);
             console.log(response.data);
             return ok(response.data)
@@ -160,7 +159,7 @@ export class UserService {
 
     async updateGlobalPopup(token: string, popup: ClientPopup): Promise<Result<ClientPopup>> {
         try {
-            const response = await axios.put<ClientPopup>(`${this.#baseUrl}/popups`, popup, {
+            const response = await axios.put<ClientPopup>(`${this.baseUrl}/popups`, popup, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -175,7 +174,7 @@ export class UserService {
 
     async getUserStats(token: string): Promise<Result<ActivityStats>> {
         try {
-            const url = `${this.#baseUrl}/users/activity-stats`;
+            const url = `${this.baseUrl}/users/activity-stats`;
             const response = await axios.get<ActivityStats>(url, {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -195,7 +194,7 @@ export class UserService {
 
     async changePassword(token: string, oldPassword: string, newPassword: string): Promise<Result<void>> {
         try {
-            const url = `${this.#baseUrl}/users/password`;
+            const url = `${this.baseUrl}/users/password`;
             const response = await axios.patch(url, {
                 old_password: oldPassword,
                 new_password: newPassword
