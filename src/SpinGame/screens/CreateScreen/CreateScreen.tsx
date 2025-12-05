@@ -2,13 +2,15 @@ import { Text, TextInput, View, TouchableOpacity, ScrollView } from "react-nativ
 import { useState } from "react";
 import Color from "@/src/Common/constants/Color";
 import { Feather } from "@expo/vector-icons";
-import { CreateGameRequest, GameCategory, GameType } from "@/src/Common/constants/Types";
+import { CreateGameRequest, GameCategory, GameEntryMode, GameType } from "@/src/Common/constants/Types";
 import { useModalProvider } from "@/src/Common/context/ModalProvider";
 import { useAuthProvider } from "@/src/Common/context/AuthProvider";
-import { useQuizGameProvider } from "@/src/quizGame/context/AskGameProvider";
 import { useServiceProvider } from "@/src/Common/context/ServiceProvider";
 import { styles } from "./createScreenStyles";
 import AbsoluteHomeButton from "@/src/Common/components/AbsoluteHomeButton/AbsoluteHomeButton";
+import { useGlobalGameProvider } from "@/src/Common/context/GlobalGameProvider";
+import { useHubConnectionProvider } from "@/src/Common/context/HubConnectionProvider";
+import Screen from "@/src/Common/constants/Screen";
 
 const CATEGORY_OPTIONS = [
   { label: "Standard", value: GameCategory.Default },
@@ -22,6 +24,8 @@ export const CreateScreen = ({ navigation }: any) => {
   const { displayErrorModal } = useModalProvider();
   const { pseudoId, accessToken } = useAuthProvider();
   const { gameService } = useServiceProvider();
+  const { setGameKey, setGameEntryMode } = useGlobalGameProvider();
+  const {} = useHubConnectionProvider();
 
   const [request, setRequest] = useState<CreateGameRequest>({
     name: "",
@@ -35,14 +39,24 @@ export const CreateScreen = ({ navigation }: any) => {
       return;
     }
 
-    console.info("Request:", request);
     let result = await gameService().createInteractiveGame(pseudoId, accessToken, GameType.Spin, request);
     if (result.isError()) {
       displayErrorModal(result.error);
       return;
     }
 
-    // TODO HANDLE MROE!
+    const gameKey = result.value.key_word;
+    const hubAddress = result.value.hub_address;
+
+    // DEBUG
+    console.debug("key:", gameKey);
+    console.debug("hubAdress:", hubAddress);
+
+    // HER
+    setGameKey(gameKey);
+    setGameEntryMode(GameEntryMode.Creator);
+
+    navigation.navigate(Screen.SpinGame);
   };
 
   return (

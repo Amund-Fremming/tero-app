@@ -1,11 +1,11 @@
-import { Category, UserBase, GameBase } from "@/src/Common/constants/Types";
+import { BaseUser, GameBase, GameCategory } from "@/src/Common/constants/Types";
 
 export interface SpinGame extends GameBase {
-  category: Category;
+  category: GameCategory;
   state: SpinGameState;
   hubGroupName: string;
   hostId: number;
-  Host: UserBase | undefined;
+  Host: BaseUser | undefined;
   players: SpinPlayer[];
   challenges: Challenge[];
 }
@@ -16,7 +16,7 @@ export interface SpinPlayer {
   userId: number;
   active: boolean;
   spinGame: SpinGame;
-  user: UserBase;
+  user: BaseUser;
 }
 
 export interface Challenge {
@@ -30,7 +30,7 @@ export interface Challenge {
 export interface CreateSpinGameRequest {
   userId: number;
   name: string;
-  category?: Category;
+  category?: GameCategory;
 }
 
 export enum SpinGameState {

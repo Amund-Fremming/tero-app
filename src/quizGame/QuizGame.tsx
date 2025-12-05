@@ -1,49 +1,47 @@
-import { createStackNavigator } from "@react-navigation/stack";
-import { TransitionPresets } from "@react-navigation/stack";
-import AskScreen from "./constants/quizScreen";
-import QuizGameProvider from "./context/AskGameProvider";
 import { useGlobalGameProvider } from "@/src/Common/context/GlobalGameProvider";
 import LobbyScreen from "./screens/LobbyScreen/LobbyScreen";
 import CreateScreen from "../SpinGame/screens/CreateScreen/CreateScreen";
 import StartedScreen from "./screens/StartedScreen/StartedScreen";
 import { GameScreen } from "./screens/GameScreen/GameScreen";
-import GameListScreen from "../Common/screens/GameListScreen/GameListScreen";
 import { GameEntryMode } from "../Common/constants/Types";
-
-const Stack = createStackNavigator();
+import { SpinGameScreen } from "./constants/spinTypes";
+import { useEffect, useState } from "react";
 
 export const QuizGame = () => {
+  const [screen, setScreen] = useState<SpinGameScreen>(SpinGameScreen.Lobby);
+
+  useEffect(() => {
+    const initScreen = getInitialScreen();
+    setScreen(initScreen);
+  }, []);
+
   const { gameEntryMode } = useGlobalGameProvider();
 
-  const getInitialScreen = () => {
+  const getInitialScreen = (): SpinGameScreen => {
     switch (gameEntryMode) {
       case GameEntryMode.Creator:
-        return AskScreen.Create;
+        return SpinGameScreen.Create;
       case GameEntryMode.Host:
-        return AskScreen.Choose;
-      case GameEntryMode.Participant:
-        return AskScreen.Lobby;
+        return SpinGameScreen.Game;
+      case GameEntryMode.Participant || GameEntryMode.Member:
+        return SpinGameScreen.Lobby;
+      default:
+        return SpinGameScreen.Lobby;
     }
   };
 
-  return (
-    <QuizGameProvider>
-      <Stack.Navigator
-        initialRouteName={getInitialScreen()}
-        screenOptions={{
-          ...TransitionPresets.FadeFromBottomAndroid,
-          headerShown: false,
-          headerStatusBarHeight: 0,
-        }}
-      >
-        <Stack.Screen name={AskScreen.Lobby} component={LobbyScreen} />
-        <Stack.Screen name={AskScreen.Create} component={CreateScreen} />
-        <Stack.Screen name={AskScreen.Started} component={StartedScreen} />
-        <Stack.Screen name={AskScreen.Game} component={GameScreen} />
-        <Stack.Screen name={AskScreen.Choose} component={GameListScreen} />
-      </Stack.Navigator>
-    </QuizGameProvider>
-  );
+  switch (screen) {
+    case SpinGameScreen.Create:
+      return <CreateScreen />;
+    case SpinGameScreen.Game:
+      return <GameScreen />;
+    case SpinGameScreen.Lobby:
+      return <LobbyScreen />;
+    case SpinGameScreen.Started:
+      return <StartedScreen />;
+    default:
+      return SpinGameScreen.Lobby;
+  }
 };
 
 export default QuizGame;

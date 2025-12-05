@@ -7,7 +7,7 @@ import { useGlobalGameProvider } from "@/src/Common/context/GlobalGameProvider";
 import { useAuthProvider } from "../../context/AuthProvider";
 import { useNavigation } from "@react-navigation/native";
 import { useSpinGameProvider } from "@/src/SpinGame/context/SpinGameProvider";
-import { useQuizGameProvider } from "@/src/quizGame/context/AskGameProvider";
+import { useQuizGameProvider } from "@/src/quizGame/context/QuizGameProvider";
 import styles from "./gameListScreenStyles";
 import { useServiceProvider } from "../../context/ServiceProvider";
 import { GameBase, GameCategory, GamePageQuery, PagedResponse } from "../../constants/Types";
@@ -115,7 +115,7 @@ export const GameListScreen = () => {
   };
 
   const { setSpinGame } = useSpinGameProvider();
-  const { setQuizGame } = useQuizGameProvider();
+  const { setQuizSession: setQuizGame } = useQuizGameProvider();
 
   return (
     <View style={styles.container}>

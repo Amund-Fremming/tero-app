@@ -1,16 +1,20 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { AskGame as QuizGame } from "../constants/spinTypes";
+import { QuizSession } from "../constants/spinTypes";
 
 interface IQuizGameContext {
   clearQuizGameValues: () => void;
-  quizGame: QuizGame | undefined;
-  setQuizGame: React.Dispatch<React.SetStateAction<QuizGame | undefined>>;
+  quizSession: QuizSession | undefined;
+  setQuizSession: React.Dispatch<React.SetStateAction<QuizSession | undefined>>;
+  iterations: number;
+  setIterations: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const defaultContextValue: IQuizGameContext = {
-  clearQuizGameValues: () => { },
-  quizGame: undefined,
-  setQuizGame: () => { },
+  clearQuizGameValues: () => {},
+  quizSession: undefined,
+  setQuizSession: () => {},
+  iterations: 0,
+  setIterations: () => {},
 };
 
 const QuizGameContext = createContext<IQuizGameContext>(defaultContextValue);
@@ -22,16 +26,19 @@ interface QuizGameProviderProps {
 }
 
 export const QuizGameProvider = ({ children }: QuizGameProviderProps) => {
-  const [quizGame, setQuizGame] = useState<QuizGame | undefined>(undefined);
+  const [quizSession, setQuizSession] = useState<QuizSession | undefined>(undefined);
+  const [iterations, setIterations] = useState<number>(0);
 
   const clearQuizGameValues = () => {
-    setQuizGame(undefined);
+    setQuizSession(undefined);
   };
 
   const value = {
     clearQuizGameValues,
-    quizGame,
-    setQuizGame,
+    quizSession,
+    setQuizSession,
+    iterations,
+    setIterations,
   };
 
   return <QuizGameContext.Provider value={value}>{children}</QuizGameContext.Provider>;

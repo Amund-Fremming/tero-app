@@ -19,16 +19,24 @@ export class GameService {
   }
 
   async createInteractiveGame(
+    pseudoId: string,
     token: string | null,
     type: GameType,
     request: CreateGameRequest
   ): Promise<Result<InteractiveGameResponse>> {
     try {
-      const response = await axios.post<InteractiveGameResponse>(`${this.#urlBase}/games/${type}/create`, request, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      // TODO - remove logs
+      const url = `${this.#urlBase}/games/general/${type}/create`;
+      console.debug("Url:", url);
+      console.debug("Request:", request);
+
+      const response = await axios.post<InteractiveGameResponse>(
+        `${this.#urlBase}/games/general/${type}/create`,
+        request,
+        {
+          headers: getHeaders(pseudoId, token),
+        }
+      );
 
       let result: InteractiveGameResponse = response.data;
       return ok(result);

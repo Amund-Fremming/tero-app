@@ -4,7 +4,7 @@ import Screen from "../../constants/Screen";
 import { useNavigation } from "@react-navigation/native";
 import { useHubConnectionProvider } from "@/src/Common/context/HubConnectionProvider";
 import { useGlobalGameProvider } from "../../context/GlobalGameProvider";
-import { useQuizGameProvider } from "@/src/quizGame/context/AskGameProvider";
+import { useQuizGameProvider } from "@/src/quizGame/context/QuizGameProvider";
 import Color from "../../constants/Color";
 
 interface AbsoluteHomeButtonProps {

@@ -2,21 +2,25 @@ import React, { createContext, ReactNode, useContext, useState } from "react";
 import { GameEntryMode, GameType } from "../constants/Types";
 
 interface IGlobalGameContext {
-  clearValues: () => void;
   gameEntryMode: GameEntryMode;
   setGameEntryMode: React.Dispatch<React.SetStateAction<GameEntryMode>>;
-  setIterations: React.Dispatch<React.SetStateAction<number>>;
   gameType: GameType;
   setGameType: React.Dispatch<React.SetStateAction<GameType>>;
+  gameKey: string;
+  setGameKey: React.Dispatch<React.SetStateAction<string>>;
+  hubAddress: string;
+  setHubAddress: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const defaultContextValue: IGlobalGameContext = {
-  clearValues: () => { },
   gameEntryMode: GameEntryMode.Host,
-  setGameEntryMode: () => { },
-  setIterations: () => { },
+  setGameEntryMode: () => {},
   gameType: GameType.Spin,
-  setGameType: () => { },
+  setGameType: () => {},
+  gameKey: "",
+  setGameKey: () => {},
+  hubAddress: "",
+  setHubAddress: () => {},
 };
 
 const GlobalGameContext = createContext<IGlobalGameContext>(defaultContextValue);
@@ -30,19 +34,18 @@ interface GlobalGameProviderProps {
 export const GlobalGameProvider = ({ children }: GlobalGameProviderProps) => {
   const [gameEntryMode, setGameEntryMode] = useState<GameEntryMode>(GameEntryMode.Host);
   const [gameType, setGameType] = useState<GameType>(GameType.Spin);
-  const [iterations, setIterations] = useState<number>(0);
-
-  const clearValues = () => {
-    setIterations(0);
-  }
+  const [gameKey, setGameKey] = useState<string>("");
+  const [hubAddress, setHubAddress] = useState<string>("");
 
   const value = {
-    clearValues,
-    setIterations,
     gameEntryMode,
     setGameEntryMode,
     gameType,
     setGameType,
+    gameKey,
+    setGameKey,
+    hubAddress,
+    setHubAddress,
   };
 
   return <GlobalGameContext.Provider value={value}>{children}</GlobalGameContext.Provider>;

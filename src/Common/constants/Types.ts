@@ -132,7 +132,6 @@ export enum GameCategory {
   Boys = "Boys",
   Default = "Default",
 }
-
 export interface InteractiveGameResponse {
   key_word: string;
   hub_address: string;

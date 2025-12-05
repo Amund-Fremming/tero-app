@@ -10,85 +10,63 @@ import { useGlobalGameProvider } from "@/src/Common/context/GlobalGameProvider";
 import AbsoluteHomeButton from "@/src/Common/components/AbsoluteHomeButton/AbsoluteHomeButton";
 import Screen from "@/src/Common/constants/Screen";
 import { HubChannel } from "@/src/Common/constants/HubChannel";
-import AskScreen from "../../constants/quizScreen";
-import { AskGame, AskGameState } from "../../constants/spinTypes";
 import { GameEntryMode } from "@/src/Common/constants/Types";
-import { useQuizGameProvider } from "../../context/AskGameProvider";
+import { useQuizGameProvider } from "../../context/QuizGameProvider";
+import { SpinGameState } from "@/src/SpinGame/constants/SpinTypes";
+import { QuizSession } from "../../constants/spinTypes";
 
 export const LobbyScreen = ({ navigation }: any) => {
   const [question, setQuestion] = useState<string>("");
 
-  const { gameEntryMode, universalGameValues, setIterations } = useGlobalGameProvider();
+  const { gameEntryMode, gameKey, hubAddress } = useGlobalGameProvider();
   const { connect, disconnect, setListener, invokeFunction } = useHubConnectionProvider();
   const { displayErrorModal } = useModalProvider();
-  const { setQuizGame: setAskGame } = useQuizGameProvider();
+  const { setQuizSession, setIterations, iterations } = useQuizGameProvider();
 
   useEffect(() => {
-    if (universalGameValues) {
+    if (gameKey) {
       createHubConnection();
     }
-  }, [universalGameValues]);
+  }, [gameKey]);
 
   const createHubConnection = async () => {
-    if (!universalGameValues) return;
-
-    const result = await connect(universalGameValues.gameType, universalGameValues.gameId);
+    const result = await connect(hubAddress);
     if (result.isError()) {
       displayErrorModal(result.error);
       return;
     }
 
     setListener(HubChannel.Iterations, (iterations: number) => {
-      console.log(`Received: ${iterations}`); // TODO - remove log
+      console.log(`Received: ${iterations}`);
       setIterations(iterations);
     });
 
-    setListener(HubChannel.State, (state: AskGameState) => {
-      console.log(`Received: ${state}`); // TODO - remove log
-      if (state === AskGameState.Closed && gameEntryMode !== GameEntryMode.Creator) {
-        navigation.navigate(AskScreen.Started);
-      }
-    });
-
     setListener(HubChannel.Error, (message: string) => {
-      console.log(`Received: ${message}`); // TODO - remove log
+      console.log(`Received: ${message}`);
       disconnect();
       displayErrorModal(message, () => navigation.navigate(Screen.Home));
     });
 
-    setListener(HubChannel.Game, async (game: AskGame) => {
-      setAskGame(game);
+    setListener(HubChannel.Game, async (game: QuizSession) => {
+      setQuizSession(game);
+      // TODO - set scrfeen in quiz context provider
       await disconnect();
-      await navigation.navigate(AskScreen.Game);
     });
   };
 
   const handleAddQuestion = async () => {
-    if (!universalGameValues) {
-      displayErrorModal("Finner ikke spill verdier, noe har gått galt 1.");
-      return;
-    }
-
-    setQuestion("");
-    const result = await invokeFunction("AddQuestion", universalGameValues.gameId, question);
-    if (result.isError()) {
-      displayErrorModal(result.error);
-    }
+    //
   };
 
   const handleStartGame = async () => {
-    if (!universalGameValues) {
-      displayErrorModal("Finner ikke spill verdier, noe har gått galt 2.");
-      return;
-    }
-    const result = invokeFunction("StartGame", universalGameValues.gameId);
+    //
   };
 
   return (
     <View style={styles.container}>
-      <Text>Universal game id: {universalGameValues?.universalGameId}</Text>
+      <Text>Universal game id: {gameKey}</Text>
       <Text style={styles.header}>Legg til spørsmål</Text>
-      <Text style={styles.paragraph}>Antall spørsmål: {universalGameValues?.iterations}</Text>
+      <Text style={styles.paragraph}>Antall spørsmål: {iterations}</Text>
       <TextInput style={styles.input} value={question} onChangeText={(input) => setQuestion(input)} />
       <MediumButton text="Legg til" color={Color.Beige} onClick={handleAddQuestion} />
       {gameEntryMode === GameEntryMode.Creator && (

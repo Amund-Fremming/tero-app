@@ -7,14 +7,14 @@ import Screen from "../constants/Screen";
 import { ok, err, Result } from "../utils/result";
 
 interface IHubConnectionContext {
-  connect: (hubName: string, gameId: number) => Promise<Result<signalR.HubConnection>>;
+  connect: (hubAddress: string) => Promise<Result<signalR.HubConnection>>;
   disconnect: () => Promise<Result>;
   setListener: <T>(channel: string, fn: (item: T) => void) => Result;
   invokeFunction: (functionName: string, ...params: any[]) => Promise<Result>;
 }
 
 const defaultContextValue: IHubConnectionContext = {
-  connect: async (_hubName: string, _gameId: number) => err(""),
+  connect: async (_hubName: string) => err(""),
   disconnect: async () => err(""),
   setListener: (_channel: string, _fn: (item: any) => void) => err(""),
   invokeFunction: async (_functionName: string, ..._params: any[]) => err(""),
@@ -59,13 +59,13 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
     return () => clearInterval(interval);
   }, []);
 
-  async function connect(hubName: string, gameId: number): Promise<Result<signalR.HubConnection>> {
+  async function connect(hubAddress: string): Promise<Result<signalR.HubConnection>> {
     try {
       if (connectionRef.current) {
         const curHubName = (connectionRef.current as any)._hubName;
         const curHubId = (connectionRef.current as any)._hubId;
 
-        if (curHubName !== hubName || curHubId !== gameId) {
+        if (curHubName !== hubAddress) {
           return err("Finnes allerede en åpen socket til feil hub. (HubConnectionProvider)");
         }
 
@@ -73,15 +73,13 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
         return ok(connectionRef.current);
       }
 
-      const endpoint = `${HUB_URL_BASE}/${hubName}?GameId=${gameId}`;
-      console.warn("Endpoint: ", endpoint);
+      console.warn("Address:", hubAddress);
       const hubConnection = new signalR.HubConnectionBuilder()
-        .withUrl(endpoint)
+        .withUrl(hubAddress)
         .configureLogging(signalR.LogLevel.Information)
         .build();
 
-      (hubConnection as any)._hubName = hubName;
-      (hubConnection as any)._hubId = gameId;
+      (hubConnection as any)._hubName = hubAddress;
 
       await hubConnection.start();
       hubConnection.onclose(async () => {
@@ -94,7 +92,7 @@ export const HubConnectionProvider = ({ children }: HubConnectionProviderProps) 
       setConnectedState(true);
       connectedStateRef.current = true;
 
-      console.info(`Established connection: ${hubName}:${gameId}`);
+      console.info(`Established connection: ${hubAddress}`);
       return ok(hubConnection);
     } catch (error) {
       setConnectedState(false);
